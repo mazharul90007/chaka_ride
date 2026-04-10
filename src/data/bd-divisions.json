@@ -1,0 +1,114 @@
+[
+  {
+    "slug": "dhaka",
+    "name": { "en": "Dhaka", "bn": "ঢাকা" },
+    "districts": [
+      { "slug": "dhaka", "name": { "en": "Dhaka", "bn": "ঢাকা" } },
+      { "slug": "faridpur", "name": { "en": "Faridpur", "bn": "ফরিদপুর" } },
+      { "slug": "gazipur", "name": { "en": "Gazipur", "bn": "গাজীপুর" } },
+      { "slug": "gopalganj", "name": { "en": "Gopalganj", "bn": "গোপালগঞ্জ" } },
+      { "slug": "kishoreganj", "name": { "en": "Kishoreganj", "bn": "কিশোরগঞ্জ" } },
+      { "slug": "madaripur", "name": { "en": "Madaripur", "bn": "মাদারীপুর" } },
+      { "slug": "manikganj", "name": { "en": "Manikganj", "bn": "মানিকগঞ্জ" } },
+      { "slug": "munshiganj", "name": { "en": "Munshiganj", "bn": "মুন্সীগঞ্জ" } },
+      { "slug": "narayanganj", "name": { "en": "Narayanganj", "bn": "নারায়ণগঞ্জ" } },
+      { "slug": "narsingdi", "name": { "en": "Narsingdi", "bn": "নরসিংদী" } },
+      { "slug": "rajbari", "name": { "en": "Rajbari", "bn": "রাজবাড়ী" } },
+      { "slug": "shariatpur", "name": { "en": "Shariatpur", "bn": "শরীয়তপুর" } },
+      { "slug": "tangail", "name": { "en": "Tangail", "bn": "টাঙ্গাইল" } }
+    ]
+  },
+  {
+    "slug": "chittagong",
+    "name": { "en": "Chittagong", "bn": "চট্টগ্রাম" },
+    "districts": [
+      { "slug": "bandarban", "name": { "en": "Bandarban", "bn": "বান্দরবান" } },
+      { "slug": "brahmanbaria", "name": { "en": "Brahmanbaria", "bn": "ব্রাহ্মণবাড়িয়া" } },
+      { "slug": "chandpur", "name": { "en": "Chandpur", "bn": "চাঁদপুর" } },
+      { "slug": "chittagong", "name": { "en": "Chittagong", "bn": "চট্টগ্রাম" } },
+      { "slug": "comilla", "name": { "en": "Comilla", "bn": "কুমিল্লা" } },
+      { "slug": "coxs-bazar", "name": { "en": "Cox's Bazar", "bn": "কক্সবাজার" } },
+      { "slug": "feni", "name": { "en": "Feni", "bn": "ফেনী" } },
+      { "slug": "khagrachhari", "name": { "en": "Khagrachhari", "bn": "খাগড়াছড়ি" } },
+      { "slug": "lakshmipur", "name": { "en": "Lakshmipur", "bn": "লক্ষ্মীপুর" } },
+      { "slug": "noakhali", "name": { "en": "Noakhali", "bn": "নোয়াখালী" } },
+      { "slug": "rangamati", "name": { "en": "Rangamati", "bn": "রাঙামাটি" } }
+    ]
+  },
+  {
+    "slug": "barishal",
+    "name": { "en": "Barishal", "bn": "বরিশাল" },
+    "districts": [
+      { "slug": "barguna", "name": { "en": "Barguna", "bn": "বরগুনা" } },
+      { "slug": "barishal", "name": { "en": "Barishal", "bn": "বরিশাল" } },
+      { "slug": "bhola", "name": { "en": "Bhola", "bn": "ভোলা" } },
+      { "slug": "jhalokati", "name": { "en": "Jhalokati", "bn": "ঝালকাঠি" } },
+      { "slug": "patuakhali", "name": { "en": "Patuakhali", "bn": "পটুয়াখালী" } },
+      { "slug": "pirojpur", "name": { "en": "Pirojpur", "bn": "পিরোজপুর" } }
+    ]
+  },
+  {
+    "slug": "khulna",
+    "name": { "en": "Khulna", "bn": "খুলনা" },
+    "districts": [
+      { "slug": "bagerhat", "name": { "en": "Bagerhat", "bn": "বাগেরহাট" } },
+      { "slug": "chuadanga", "name": { "en": "Chuadanga", "bn": "চুয়াডাঙ্গা" } },
+      { "slug": "jessore", "name": { "en": "Jessore", "bn": "যশোর" } },
+      { "slug": "jhenaidah", "name": { "en": "Jhenaidah", "bn": "ঝিনাইদহ" } },
+      { "slug": "khulna", "name": { "en": "Khulna", "bn": "খুলনা" } },
+      { "slug": "kushtia", "name": { "en": "Kushtia", "bn": "কুষ্টিয়া" } },
+      { "slug": "magura", "name": { "en": "Magura", "bn": "মাগুরা" } },
+      { "slug": "meherpur", "name": { "en": "Meherpur", "bn": "মেহেরপুর" } },
+      { "slug": "narail", "name": { "en": "Narail", "bn": "নড়াইল" } },
+      { "slug": "satkhira", "name": { "en": "Satkhira", "bn": "সাতক্ষীরা" } }
+    ]
+  },
+  {
+    "slug": "mymensingh",
+    "name": { "en": "Mymensingh", "bn": "ময়মনসিংহ" },
+    "districts": [
+      { "slug": "jamalpur", "name": { "en": "Jamalpur", "bn": "জামালপুর" } },
+      { "slug": "mymensingh", "name": { "en": "Mymensingh", "bn": "ময়মনসিংহ" } },
+      { "slug": "netrokona", "name": { "en": "Netrokona", "bn": "নেত্রকোণা" } },
+      { "slug": "sherpur", "name": { "en": "Sherpur", "bn": "শেরপুর" } }
+    ]
+  },
+  {
+    "slug": "rajshahi",
+    "name": { "en": "Rajshahi", "bn": "রাজশাহী" },
+    "districts": [
+      { "slug": "bogura", "name": { "en": "Bogura", "bn": "বগুড়া" } },
+      { "slug": "chapainawabganj", "name": { "en": "Chapainawabganj", "bn": "চাঁপাইনবাবগঞ্জ" } },
+      { "slug": "joypurhat", "name": { "en": "Joypurhat", "bn": "জয়পুরহাট" } },
+      { "slug": "naogaon", "name": { "en": "Naogaon", "bn": "নওগাঁ" } },
+      { "slug": "natore", "name": { "en": "Natore", "bn": "নাটোর" } },
+      { "slug": "pabna", "name": { "en": "Pabna", "bn": "পাবনা" } },
+      { "slug": "rajshahi", "name": { "en": "Rajshahi", "bn": "রাজশাহী" } },
+      { "slug": "sirajganj", "name": { "en": "Sirajganj", "bn": "সিরাজগঞ্জ" } }
+    ]
+  },
+  {
+    "slug": "rangpur",
+    "name": { "en": "Rangpur", "bn": "রংপুর" },
+    "districts": [
+      { "slug": "dinajpur", "name": { "en": "Dinajpur", "bn": "দিনাজপুর" } },
+      { "slug": "gaibandha", "name": { "en": "Gaibandha", "bn": "গাইবান্ধা" } },
+      { "slug": "kurigram", "name": { "en": "Kurigram", "bn": "কুড়িগ্রাম" } },
+      { "slug": "lalmonirhat", "name": { "en": "Lalmonirhat", "bn": "লালমনিরহাট" } },
+      { "slug": "nilphamari", "name": { "en": "Nilphamari", "bn": "নীলফামারী" } },
+      { "slug": "panchagarh", "name": { "en": "Panchagarh", "bn": "পঞ্চগড়" } },
+      { "slug": "rangpur", "name": { "en": "Rangpur", "bn": "রংপুর" } },
+      { "slug": "thakurgaon", "name": { "en": "Thakurgaon", "bn": "ঠাকুরগাঁও" } }
+    ]
+  },
+  {
+    "slug": "sylhet",
+    "name": { "en": "Sylhet", "bn": "সিলেট" },
+    "districts": [
+      { "slug": "habiganj", "name": { "en": "Habiganj", "bn": "হবিগঞ্জ" } },
+      { "slug": "moulvibazar", "name": { "en": "Moulvibazar", "bn": "মৌলভীবাজার" } },
+      { "slug": "sunamganj", "name": { "en": "Sunamganj", "bn": "সুনামগঞ্জ" } },
+      { "slug": "sylhet", "name": { "en": "Sylhet", "bn": "সিলেট" } }
+    ]
+  }
+]
