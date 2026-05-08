@@ -1,160 +1,233 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { useSession } from "@/lib/auth-client";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Users, 
   Car, 
-  TrendingUp, 
-  AlertCircle,
-  FileText,
   ShieldCheck,
-  MoreVertical,
-  Search
+  Search,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  ArrowUpRight,
+  Activity,
+  Plus
 } from "lucide-react";
+import { useAdminStats, useAdminDrivers, useUpdateDriverStatus } from "@/hooks/useAdmin";
 
 export default function AdminDashboard() {
   const { data: session } = useSession();
-  const user = session?.user;
-
+  const { data: statsData, isLoading: isStatsLoading } = useAdminStats();
+  const { data: driversData, isLoading: isDriversLoading } = useAdminDrivers();
+  const updateStatus = useUpdateDriverStatus();
+  
   const stats = [
-    { label: "Active Users", value: "1,284", icon: Users, color: "text-blue-600", bg: "bg-blue-100" },
-    { label: "Total Drivers", value: "452", icon: ShieldCheck, color: "text-purple-600", bg: "bg-purple-100" },
-    { label: "Revenue", value: "৳452,000", icon: TrendingUp, color: "text-green-600", bg: "bg-green-100" },
-    { label: "Active Trips", value: "84", icon: Car, color: "text-orange-600", bg: "bg-orange-100" },
+    { 
+      label: "Total Drivers", 
+      value: statsData?.data?.totalDrivers || 0, 
+      icon: ShieldCheck, 
+      color: "text-blue-700", 
+      bg: "bg-blue-50" 
+    },
+    { 
+      label: "Total Passengers", 
+      value: statsData?.data?.totalPassengers || 0, 
+      icon: Users, 
+      color: "text-indigo-700", 
+      bg: "bg-indigo-50" 
+    },
+    { 
+      label: "Total Cars", 
+      value: statsData?.data?.totalCars || 0, 
+      icon: Car, 
+      color: "text-emerald-700", 
+      bg: "bg-emerald-50" 
+    },
+    { 
+      label: "Pending Verifications", 
+      value: statsData?.data?.pendingDrivers || 0, 
+      icon: Clock, 
+      color: "text-amber-700", 
+      bg: "bg-amber-50" 
+    },
   ];
 
+  const pendingDrivers = driversData?.data?.filter((d: any) => d.status === "PENDING") || [];
+
   return (
-    <div className="p-6 lg:p-10">
-      <header className="mb-10 flex flex-wrap items-center justify-between gap-4">
+    <div className="p-4 md:p-8 space-y-6 md:space-y-8">
+      {/* Header */}
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-slate-200 pb-6 md:pb-8">
         <div>
-          <motion.h1 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="text-3xl font-bold text-slate-900"
-          >
-            System Overview
-          </motion.h1>
-          <p className="mt-2 text-slate-500 font-medium">Monitoring Chaka Ride platform performance.</p>
+          <h1 className="text-xl md:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
+            <Activity className="size-5 md:size-6 text-(--brand-primary)" />
+            Dashboard Overview
+          </h1>
+          <p className="mt-1 text-sm text-slate-500 font-medium">
+            Welcome, {session?.user?.name?.split(' ')[0] || "Admin"}. Tracking Chaka Ride stats.
+          </p>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="relative">
+        
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1 sm:flex-initial">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
             <input 
               type="text" 
               placeholder="Search..." 
-              className="rounded-xl border border-slate-200 bg-white py-2 pl-10 pr-4 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+              className="h-10 w-full sm:w-48 md:w-60 rounded-lg border border-slate-200 bg-white pl-9 pr-4 text-sm font-medium outline-none transition-all focus:border-(--brand-primary) focus:ring-2 focus:ring-(--brand-primary)/10"
             />
           </div>
-          <button className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition-all hover:bg-slate-800">
-            Export Report
+          <button className="h-10 px-4 rounded-lg bg-(--brand-primary) text-xs md:text-sm font-semibold text-white transition-all hover:opacity-90 active:scale-95 shadow-sm whitespace-nowrap">
+            <span className="hidden sm:inline">Generate Reports</span>
+            <span className="sm:hidden flex items-center gap-1"><Plus size={14}/> Report</span>
           </button>
         </div>
       </header>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, i) => (
           <motion.div
             key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:shadow-md"
+            transition={{ delay: i * 0.05 }}
+            className="relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5 md:p-6 shadow-sm"
           >
-            <div className={`flex size-12 items-center justify-center rounded-2xl ${stat.bg} ${stat.color} mb-4`}>
-              <stat.icon className="size-6" />
+            <div className="flex items-start justify-between">
+              <div className={`flex size-10 md:size-12 items-center justify-center rounded-lg ${stat.bg} ${stat.color}`}>
+                <stat.icon className="size-5 md:size-6" />
+              </div>
+              <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">
+                <ArrowUpRight className="size-3" /> 8%
+              </div>
             </div>
-            <p className="text-sm font-medium text-slate-500">{stat.label}</p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">{stat.value}</p>
+            <div className="mt-4">
+              <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">{stat.label}</p>
+              <p className="mt-1 text-xl md:text-2xl font-bold text-slate-900">
+                {isStatsLoading ? "..." : stat.value.toLocaleString()}
+              </p>
+            </div>
           </motion.div>
         ))}
       </div>
 
-      <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-3">
         {/* Verification Queue */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="lg:col-span-2 rounded-3xl border border-slate-100 bg-white shadow-sm overflow-hidden"
-        >
-          <div className="p-8 border-b border-slate-50 flex items-center justify-between">
-            <h2 className="text-xl font-bold text-slate-900">Driver Verification Queue</h2>
-            <button className="text-sm font-bold text-blue-600 hover:text-blue-700">View All</button>
+        <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col">
+          <div className="p-5 md:p-6 border-b border-slate-100 flex items-center justify-between">
+            <h2 className="text-base md:text-lg font-bold text-slate-900 tracking-tight">Pending Verifications</h2>
+            <span className="text-[10px] font-bold bg-amber-50 text-amber-600 px-2.5 py-1 rounded-full uppercase">
+              {pendingDrivers.length} Pending
+            </span>
           </div>
           
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto scrollbar-hide">
+            <table className="w-full text-left border-collapse min-w-[500px]">
               <thead>
                 <tr className="bg-slate-50/50">
-                  <th className="px-8 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Driver</th>
-                  <th className="px-8 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Vehicle</th>
-                  <th className="px-8 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Status</th>
-                  <th className="px-8 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Action</th>
+                  <th className="px-5 md:px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">Driver</th>
+                  <th className="px-5 md:px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">Vehicle</th>
+                  <th className="px-5 md:px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">Status</th>
+                  <th className="px-5 md:px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-50">
-                {[1, 2, 3].map((id) => (
-                  <tr key={id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="px-8 py-5">
-                      <div className="flex items-center gap-3">
-                        <div className="size-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 font-bold">
-                          {id === 1 ? "MA" : id === 2 ? "RK" : "SH"}
-                        </div>
-                        <div>
-                          <p className="text-sm font-bold text-slate-900">Driver Name {id}</p>
-                          <p className="text-xs font-medium text-slate-500">Joined 2h ago</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-8 py-5">
-                      <p className="text-sm font-medium text-slate-700">Toyota Noah</p>
-                      <p className="text-xs text-slate-400 font-medium">Dhaka Metro-GA-1234</p>
-                    </td>
-                    <td className="px-8 py-5">
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-50 px-2.5 py-1 text-xs font-bold text-orange-600">
-                        Pending
-                      </span>
-                    </td>
-                    <td className="px-8 py-5 text-right">
-                      <button className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 transition-colors">
-                        <MoreVertical className="size-4" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+              <tbody className="divide-y divide-slate-100">
+                <AnimatePresence mode="popLayout">
+                  {isDriversLoading ? (
+                    <tr><td colSpan={4} className="px-6 py-10 text-center text-slate-400 text-sm">Loading...</td></tr>
+                  ) : pendingDrivers.length === 0 ? (
+                    <tr><td colSpan={4} className="px-6 py-16 text-center text-slate-400 font-medium">No pending requests.</td></tr>
+                  ) : (
+                    pendingDrivers.map((driver: any) => (
+                      <motion.tr 
+                        key={driver.id} 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="hover:bg-slate-50/50 transition-colors"
+                      >
+                        <td className="px-5 md:px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="size-8 md:size-10 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-500 overflow-hidden border border-slate-200">
+                              {driver.user.image ? <img src={driver.user.image} className="size-full object-cover" /> : driver.user.name?.[0]}
+                            </div>
+                            <div>
+                              <p className="text-xs md:text-sm font-bold text-slate-900">{driver.user.name}</p>
+                              <p className="text-[10px] font-medium text-slate-400 truncate max-w-[120px]">{driver.user.email}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-5 md:px-6 py-4">
+                          <p className="text-xs md:text-sm font-semibold text-slate-700">{driver.vehicleModel || "Standard"}</p>
+                          <p className="text-[10px] text-slate-400 font-medium uppercase">{driver.vehicleType}</p>
+                        </td>
+                        <td className="px-5 md:px-6 py-4">
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2 py-0.5 text-[9px] md:text-[10px] font-bold text-amber-600 uppercase">
+                            PENDING
+                          </span>
+                        </td>
+                        <td className="px-5 md:px-6 py-4">
+                          <div className="flex items-center justify-end gap-1.5 md:gap-2">
+                            <button 
+                              onClick={() => updateStatus.mutate({ id: driver.id, status: "APPROVED" })}
+                              className="size-7 md:size-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all shadow-sm"
+                            >
+                              <CheckCircle2 className="size-3.5 md:size-4" />
+                            </button>
+                            <button 
+                              onClick={() => updateStatus.mutate({ id: driver.id, status: "REJECTED" })}
+                              className="size-7 md:size-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white transition-all shadow-sm"
+                            >
+                              <XCircle className="size-3.5 md:size-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </motion.tr>
+                    ))
+                  )}
+                </AnimatePresence>
               </tbody>
             </table>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Notifications/Logs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm"
-        >
-          <h2 className="text-xl font-bold text-slate-900 mb-6">Recent Activity</h2>
-          <div className="space-y-6">
-            {[1, 2, 3, 4].map((id) => (
-              <div key={id} className="flex gap-4">
-                <div className={`mt-1 flex size-8 shrink-0 items-center justify-center rounded-full ${
-                  id % 2 === 0 ? "bg-blue-50 text-blue-600" : "bg-green-50 text-green-600"
-                }`}>
-                  {id % 2 === 0 ? <FileText className="size-4" /> : <ShieldCheck className="size-4" />}
+        {/* Sidebar Status */}
+        <div className="space-y-4 md:space-y-6">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 md:p-6 shadow-sm">
+            <h3 className="text-sm font-bold text-slate-900 mb-4">Platform Health</h3>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold">
+                  <span className="text-slate-500">Service Uptime</span>
+                  <span className="text-emerald-500">99.9%</span>
                 </div>
-                <div>
-                  <p className="text-sm font-bold text-slate-900">
-                    {id % 2 === 0 ? "System report generated" : "New driver verified"}
-                  </p>
-                  <p className="text-xs font-medium text-slate-500 mt-0.5">2 minutes ago</p>
+                <div className="h-1.5 w-full rounded-full bg-slate-100 overflow-hidden">
+                  <div className="h-full w-[99%] rounded-full bg-emerald-500" />
                 </div>
               </div>
-            ))}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold">
+                  <span className="text-slate-500">Query Response</span>
+                  <span className="text-blue-500">Fast</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-slate-100 overflow-hidden">
+                  <div className="h-full w-[75%] rounded-full bg-blue-500" />
+                </div>
+              </div>
+            </div>
           </div>
-        </motion.div>
+          
+          <div className="rounded-xl bg-(--brand-primary) p-5 md:p-6 text-white shadow-lg shadow-blue-900/20">
+            <h3 className="font-bold text-sm">System Update</h3>
+            <p className="text-[11px] md:text-xs text-blue-100 mt-2 leading-relaxed">
+              New analytics engine is now active. Check the reports section for deeper insights.
+            </p>
+            <button className="mt-4 w-full h-8 md:h-9 rounded-lg bg-white/10 hover:bg-white/20 text-[10px] md:text-xs font-bold transition-all">
+              Learn More
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

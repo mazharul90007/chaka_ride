@@ -15,8 +15,37 @@ export interface User {
   name: string;
   image?: string | null;
   role: "PASSENGER" | "DRIVER" | "ADMIN" | "SUPER_ADMIN";
+  dob?: string | Date | null;
+  gender?: string | null;
   createdAt: string;
   updatedAt: string;
+  passenger?: Passenger | null;
+  driver?: Driver | null;
+  admin?: Admin | null;
+}
+
+export interface Passenger {
+  id: string;
+  phone?: string | null;
+  address?: string | null;
+  userId: string;
+}
+
+export interface Driver {
+  id: string;
+  phone?: string | null;
+  licenseNumber?: string | null;
+  vehicleType?: string | null;
+  vehicleModel?: string | null;
+  vehicleNumber?: string | null;
+  userId: string;
+  status: "PENDING" | "APPROVED" | "REJECTED";
+}
+
+export interface Admin {
+  id: string;
+  phone?: string | null;
+  userId: string;
 }
 
 export interface Car {
