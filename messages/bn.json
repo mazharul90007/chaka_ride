@@ -16,6 +16,10 @@
     "closeMenu": "মেনু বন্ধ করুন",
     "mainNav": "প্রধান নেভিগেশন",
     "logoAlt": "চাকা রাইড",
+    "login": "লগইন",
+    "signup": "সাইন আপ",
+    "dashboard": "ড্যাশবোর্ড",
+    "logout": "লগআউট",
     "rent": "ভাড়া"
   },
   "NavDropdown": {
@@ -686,5 +690,36 @@
     "ctaTitle": "গ্রুপ ট্রিপ প্ল্যান করছেন?",
     "ctaBody": "এখনই টয়োটা হায়েস বুক করুন — পুরো টিমের জায়গা, পুরো রাস্তায় আরাম।",
     "ctaButton": "হোয়াটসঅ্যাপে বুক করুন"
+  },
+  "Auth": {
+    "login": {
+      "title": "স্বাগতম",
+      "subtitle": "আপনার রাইডগুলো ম্যানেজ করতে লগইন করুন",
+      "emailLabel": "ইমেইল ঠিকানা",
+      "emailPlaceholder": "আপনার ইমেইল লিখুন",
+      "passwordLabel": "পাসওয়ার্ড",
+      "passwordPlaceholder": "••••••••",
+      "submit": "লগইন করুন",
+      "forgotPassword": "পাসওয়ার্ড ভুলে গেছেন?",
+      "noAccount": "অ্যাকাউন্ট নেই?",
+      "signUp": "নতুন তৈরি করুন",
+      "googleSignIn": "গুগল দিয়ে লগইন করুন"
+    },
+    "signup": {
+      "title": "অ্যাকাউন্ট তৈরি করুন",
+      "subtitle": "আজই চাকা রাইডে যোগ দিন",
+      "nameLabel": "পূর্ণ নাম",
+      "namePlaceholder": "জন ডো",
+      "emailLabel": "ইমেইল ঠিকানা",
+      "emailPlaceholder": "john@example.com",
+      "passwordLabel": "পাসওয়ার্ড",
+      "passwordPlaceholder": "••••••••",
+      "roleLabel": "আমি চাই",
+      "passengerRole": "যাত্রী হতে",
+      "driverRole": "ড্রাইভার হতে",
+      "submit": "অ্যাকাউন্ট তৈরি করুন",
+      "hasAccount": "আগে থেকেই অ্যাকাউন্ট আছে?",
+      "login": "লগইন করুন"
+    }
   }
 }

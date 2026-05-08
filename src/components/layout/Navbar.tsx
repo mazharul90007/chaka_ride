@@ -2,6 +2,8 @@
 
 import { Link, usePathname } from "@/i18n/navigation";
 import LocaleSwitcher from "@/components/layout/LocaleSwitcher";
+import UserNav from "@/components/layout/UserNav";
+import { useSession } from "@/lib/auth-client";
 import { BD_DIVISIONS } from "@/data/bd-divisions";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -165,11 +167,10 @@ function NavLink({
       : pathname === p || pathname.startsWith(`${p}/`),
   );
 
-  const classes = `inline-flex items-center gap-1 text-[15px] font-medium tracking-tight transition-colors ${
-    active
-      ? "text-(--brand-primary)"
-      : "text-slate-900 hover:text-(--brand-primary)"
-  }`;
+  const classes = `inline-flex items-center gap-1 text-[15px] font-medium tracking-tight transition-colors ${active
+    ? "text-(--brand-primary)"
+    : "text-slate-900 hover:text-(--brand-primary)"
+    }`;
 
   return (
     <div className="group relative">
@@ -261,6 +262,8 @@ function MobileNavMenu({
   items: { label: string; href: string; dropdown?: DropdownItem[] }[];
   onNavigate: () => void;
 }) {
+  const { data: session } = useSession();
+  const tNav = useTranslations("Nav");
   return (
     <div className="flex flex-col gap-0.5">
       {items.map((item) =>
@@ -285,6 +288,17 @@ function MobileNavMenu({
             {item.label}
           </Link>
         ),
+      )}
+      {!session && (
+        <div className="flex flex-col gap-2 mt-4 border-t border-slate-100 pt-4">
+          <Link
+            href="/login"
+            className="flex items-center justify-center rounded-xl border border-slate-200 py-3 text-sm font-bold text-slate-700"
+            onClick={onNavigate}
+          >
+            {tNav("login")}
+          </Link>
+        </div>
       )}
     </div>
   );
@@ -449,6 +463,9 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <div className="hidden lg:block">
+            <UserNav />
+          </div>
           <div className="hidden sm:block">
             <LocaleSwitcher />
           </div>

@@ -7,6 +7,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { Geist, Geist_Mono, Noto_Sans_Bengali } from "next/font/google";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -63,6 +64,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         className={`flex min-h-full flex-col font-sans ${locale === "bn" ? "font-bengali" : ""}`}
       >
         <QueryProviders>
+          <Toaster richColors position="top-right" />
           <NextIntlClientProvider locale={locale} messages={messages}>
             <LenisProvider>
               <MotionProvider>{children}</MotionProvider>

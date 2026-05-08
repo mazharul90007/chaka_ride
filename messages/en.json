@@ -16,7 +16,11 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "mainNav": "Main navigation",
-    "logoAlt": "Chaka Ride"
+    "logoAlt": "Chaka Ride",
+    "login": "Login",
+    "signup": "Sign Up",
+    "dashboard": "Dashboard",
+    "logout": "Logout"
   },
   "NavDropdown": {
     "home": {
@@ -687,5 +691,36 @@
     "ctaTitle": "Planning a group trip?",
     "ctaBody": "Book a Toyota Hiace now — space for the whole team, comfort for the whole journey.",
     "ctaButton": "Book on WhatsApp"
+  },
+  "Auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Login to your account to manage your rides",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Sign in",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "signUp": "Create one",
+      "googleSignIn": "Sign in with Google"
+    },
+    "signup": {
+      "title": "Create an account",
+      "subtitle": "Join Chaka Ride today",
+      "nameLabel": "Full name",
+      "namePlaceholder": "John Doe",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "john@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "roleLabel": "I want to",
+      "passengerRole": "Ride with Chaka",
+      "driverRole": "Drive with Chaka",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in"
+    }
   }
 }
