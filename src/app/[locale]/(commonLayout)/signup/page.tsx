@@ -4,13 +4,19 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useSignup } from "@/hooks/useAuth";
+import { signIn } from "@/lib/auth-client";
 import { motion } from "framer-motion";
-import { Mail, Lock, Loader2, ArrowRight, User, Car, ShieldCheck } from "lucide-react";
+import { Mail, Lock, Loader2, ArrowRight, User, Car, ShieldCheck, Eye, EyeOff } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
+import Swal from "sweetalert2";
 
 export default function SignupPage() {
   const t = useTranslations("Auth.signup");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [name, setName] = useState("");
   const [role, setRole] = useState<"PASSENGER" | "DRIVER">("PASSENGER");
 
@@ -18,11 +24,29 @@ export default function SignupPage() {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Mismatch!",
+        text: "Passwords do not match. Please try again.",
+        confirmButtonColor: "var(--brand-primary)",
+      });
+      return;
+    }
+
     signupMutation.mutate({
       email,
       password,
       name,
       role,
+      callbackURL: "/",
+    });
+  };
+
+  const handleSocialLogin = async (provider: "google") => {
+    await signIn.social({
+      provider,
       callbackURL: "/",
     });
   };
@@ -68,21 +92,21 @@ export default function SignupPage() {
                 onClick={() => setRole("PASSENGER")}
                 className={`relative flex flex-col items-center justify-center gap-3 rounded-2xl border-2 p-4 transition-all ${
                   role === "PASSENGER"
-                    ? "border-blue-600 bg-blue-50/50 ring-4 ring-blue-500/10"
+                    ? "border-(--brand-primary) bg-blue-50/50 ring-4 ring-blue-500/10"
                     : "border-slate-100 bg-slate-50 hover:border-slate-200"
                 }`}
               >
                 <div className={`flex size-12 items-center justify-center rounded-full ${
-                  role === "PASSENGER" ? "bg-blue-600 text-white" : "bg-white text-slate-400"
+                  role === "PASSENGER" ? "bg-(--brand-primary) text-white" : "bg-white text-slate-400"
                 }`}>
                   <User className="size-6" />
                 </div>
-                <span className={`text-sm font-bold ${role === "PASSENGER" ? "text-blue-700" : "text-slate-500"}`}>
+                <span className={`text-sm font-bold ${role === "PASSENGER" ? "text-(--brand-primary)" : "text-slate-500"}`}>
                   {t("passengerRole")}
                 </span>
                 {role === "PASSENGER" && (
                   <motion.div layoutId="active-role" className="absolute top-2 right-2">
-                    <ShieldCheck className="size-5 text-blue-600" />
+                    <ShieldCheck className="size-5 text-(--brand-primary)" />
                   </motion.div>
                 )}
               </button>
@@ -126,7 +150,7 @@ export default function SignupPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={t("namePlaceholder")}
-                  className="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none"
+                  className="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-slate-900 transition-all placeholder:text-slate-400 focus:border-(--brand-primary) focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none"
                 />
               </div>
             </div>
@@ -145,55 +169,114 @@ export default function SignupPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t("emailPlaceholder")}
-                  className="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none"
+                  className="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-slate-900 transition-all placeholder:text-slate-400 focus:border-(--brand-primary) focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none"
                 />
               </div>
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-slate-700 ml-1">
-                {t("passwordLabel")}
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                  <Lock className="size-5 text-slate-400" />
+            <div className="space-y-6">
+              <div className="space-y-1.5">
+                <label className="text-sm font-semibold text-slate-700 ml-1">
+                  {t("passwordLabel")}
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                    <Lock className="size-5 text-slate-400" />
+                  </div>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder={t("passwordPlaceholder")}
+                    className="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-12 text-slate-900 transition-all placeholder:text-slate-400 focus:border-(--brand-primary) focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 hover:text-slate-600 transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+                  </button>
                 </div>
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder={t("passwordPlaceholder")}
-                  className="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none"
-                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-semibold text-slate-700 ml-1">
+                  Confirm Password
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                    <Lock className="size-5 text-slate-400" />
+                  </div>
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-12 text-slate-900 transition-all placeholder:text-slate-400 focus:border-(--brand-primary) focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 hover:text-slate-600 transition-colors"
+                  >
+                    {showConfirmPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+                  </button>
+                </div>
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className={`group relative flex w-full items-center justify-center overflow-hidden rounded-2xl py-4 px-6 text-sm font-bold text-white transition-all focus:outline-none focus:ring-4 disabled:opacity-70 ${
+              className={`group relative flex w-full items-center justify-center overflow-hidden rounded-2xl py-4 px-6 text-sm font-bold text-white transition-all focus:outline-none focus:ring-4 disabled:opacity-70 shadow-lg ${
                 role === "PASSENGER" 
-                  ? "bg-blue-600 hover:bg-blue-700 focus:ring-blue-500/10" 
-                  : "bg-orange-600 hover:bg-orange-700 focus:ring-orange-500/10"
+                  ? "bg-(--brand-primary) hover:opacity-90 focus:ring-blue-500/10 shadow-blue-900/20" 
+                  : "bg-orange-600 hover:bg-orange-700 focus:ring-orange-500/10 shadow-orange-900/20"
               }`}
             >
               {loading ? (
                 <Loader2 className="size-5 animate-spin" />
               ) : (
                 <>
-                  <span className="relative z-10">{t("submit")}</span>
+                  <span className="relative z-10">
+                    {role === "PASSENGER" ? "Create Passenger Account" : "Create Driver Account"}
+                  </span>
                   <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                 </>
               )}
             </button>
           </form>
 
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-200"></div>
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-white px-3 text-slate-400 font-medium">Or continue with</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
+            <button
+              onClick={() => handleSocialLogin("google")}
+              className="flex items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white py-3.5 px-4 text-sm font-bold text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 active:scale-[0.98]"
+            >
+              <FcGoogle className="size-6" />
+              <span>Sign up as Passenger</span>
+            </button>
+            <p className="text-[10px] text-center text-red-500 font-semibold -mt-2 italic">
+              * Social signup is available for Passenger accounts only.
+            </p>
+          </div>
+
           <p className="mt-10 text-center text-sm font-medium text-slate-500">
             {t("hasAccount")}{" "}
             <Link
               href="/login"
-              className="font-bold text-blue-600 hover:text-blue-700 transition-colors"
+              className="font-bold text-(--brand-primary) hover:opacity-80 transition-colors"
             >
               {t("login")}
             </Link>

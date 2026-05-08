@@ -243,7 +243,7 @@ function MobileAccordionItem({
         <div className="border-l border-slate-200 ml-2">
           {item.children!.map((child) => (
             <MobileAccordionItem
-              key={child.href}
+              key={child.label}
               item={child}
               depth={depth + 1}
               onNavigate={onNavigate}
@@ -269,7 +269,7 @@ function MobileNavMenu({
       {items.map((item) =>
         item.dropdown?.length ? (
           <MobileAccordionItem
-            key={item.href}
+            key={item.label}
             item={{
               label: item.label,
               href: item.href,
@@ -374,8 +374,13 @@ export default function Navbar() {
           })),
         })),
       })) satisfies DropdownItem[],
+
+      others: [
+        { label: tNav("about"), href: "/about" },
+        { label: tNav("contact"), href: "/contact" },
+      ] satisfies DropdownItem[],
     }),
-    [locale, tService, tCars, tRent],
+    [locale, tService, tCars, tRent, tNav],
   );
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -387,8 +392,7 @@ export default function Navbar() {
       { label: tNav("service"), href: "/service", dropdown: dropdowns.service },
       { label: tNav("cars"), href: "/cars", dropdown: dropdowns.cars },
       { label: tNav("rent"), href: "/rent", dropdown: dropdowns.rent },
-      { label: tNav("about"), href: "/about" },
-      { label: tNav("contact"), href: "/contact" },
+      { label: "Others", href: "#", dropdown: dropdowns.others },
     ],
     [tNav, dropdowns],
   );
@@ -447,18 +451,11 @@ export default function Navbar() {
             dropdownItems={dropdowns.rent}
           />
           <NavLink
-            href="/about"
-            label={tNav("about")}
-            hasDropdown={false}
-            activePaths={["/about"]}
-            dropdownItems={undefined}
-          />
-          <NavLink
-            href="/contact"
-            label={tNav("contact")}
-            hasDropdown={false}
-            activePaths={["/contact"]}
-            dropdownItems={undefined}
+            href="#"
+            label="Others"
+            hasDropdown
+            activePaths={["/about", "/contact"]}
+            dropdownItems={dropdowns.others}
           />
         </nav>
 
@@ -473,16 +470,15 @@ export default function Navbar() {
             href={tFooter("socialWhatsapp")}
             target="_blank"
             rel="noopener noreferrer"
-            className="nav-wa-cta hidden items-center gap-2.5 rounded-full bg-(--brand-primary) px-5 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-(--brand-primary-hover) sm:flex"
+            className="group relative hidden h-11 items-center justify-center overflow-hidden rounded-full bg-(--brand-primary) px-1.5 text-white shadow-md transition-all duration-500 hover:px-5 sm:flex"
             aria-label={tNav("bookWhatsappAria")}
           >
-            {tNav("bookWhatsapp")}
-            <span className="nav-wa-cta__icon-ring flex size-8 items-center justify-center rounded-full bg-white transition-colors">
-              <FaWhatsapp
-                className="nav-wa-cta__icon size-4 text-(--brand-primary) transition-colors"
-                aria-hidden
-              />
+            <span className="max-w-0 overflow-hidden whitespace-nowrap text-[15px] font-bold transition-all duration-500 group-hover:mr-3 group-hover:max-w-[200px]">
+              {tNav("bookWhatsapp")}
             </span>
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white text-(--brand-primary) transition-all duration-500 group-hover:rotate-[360deg]">
+              <FaWhatsapp className="size-5" aria-hidden />
+            </div>
           </a>
 
           <button
@@ -515,17 +511,16 @@ export default function Navbar() {
             href={tFooter("socialWhatsapp")}
             target="_blank"
             rel="noopener noreferrer"
-            className="nav-wa-cta mt-4 flex items-center justify-center gap-2 rounded-full bg-(--brand-primary) px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-(--brand-primary-hover)"
+            className="group mt-4 flex h-12 items-center justify-center overflow-hidden rounded-full bg-(--brand-primary) px-4 text-white transition-all duration-500 active:scale-95"
             aria-label={tNav("bookWhatsappAria")}
             onClick={closeMobile}
           >
-            {tNav("bookWhatsapp")}
-            <span className="nav-wa-cta__icon-ring flex size-8 items-center justify-center rounded-full bg-white transition-colors">
-              <FaWhatsapp
-                className="nav-wa-cta__icon size-4 text-(--brand-primary) transition-colors"
-                aria-hidden
-              />
+            <span className="mr-3 text-[15px] font-bold">
+              {tNav("bookWhatsapp")}
             </span>
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white text-(--brand-primary)">
+              <FaWhatsapp className="size-5" aria-hidden />
+            </div>
           </a>
         </div>
       ) : null}

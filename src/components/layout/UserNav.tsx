@@ -37,7 +37,7 @@ export default function UserNav() {
       <div className="flex items-center gap-3">
         <Link
           href="/login"
-          className="rounded-full bg-slate-900 px-6 py-2.5 text-sm font-bold text-white transition-all hover:bg-slate-800 active:scale-95"
+          className="rounded-full bg-(--brand-primary) px-6 py-2.5 text-sm font-bold text-white transition-all hover:opacity-90 active:scale-95 shadow-md shadow-blue-900/10"
         >
           {t("login")}
         </Link>

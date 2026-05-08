@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { signIn } from "@/lib/auth-client";
 import { motion } from "framer-motion";
-import { Mail, Lock, Loader2, ArrowRight } from "lucide-react";
+import { Mail, Lock, Loader2, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 
@@ -14,6 +14,7 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -98,7 +99,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t("emailPlaceholder")}
-                  className="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none"
+                  className="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-slate-900 transition-all placeholder:text-slate-400 focus:border-(--brand-primary) focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none"
                 />
               </div>
             </div>
@@ -110,7 +111,7 @@ export default function LoginPage() {
                 </label>
                 <Link
                   href="/forgot-password"
-                  className="text-xs font-medium text-blue-600 hover:text-blue-700"
+                  className="text-xs font-medium text-(--brand-primary) hover:opacity-80"
                 >
                   {t("forgotPassword")}
                 </Link>
@@ -120,20 +121,27 @@ export default function LoginPage() {
                   <Lock className="size-5 text-slate-400" />
                 </div>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={t("passwordPlaceholder")}
-                  className="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-4 text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none"
+                  className="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3.5 pl-11 pr-12 text-slate-900 transition-all placeholder:text-slate-400 focus:border-(--brand-primary) focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+                </button>
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-900 py-4 px-6 text-sm font-bold text-white transition-all hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-900/10 disabled:opacity-70"
+              className="group relative flex w-full items-center justify-center overflow-hidden rounded-2xl bg-(--brand-primary) py-4 px-6 text-sm font-bold text-white transition-all hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-blue-500/10 disabled:opacity-70 shadow-lg shadow-blue-900/20"
             >
               {loading ? (
                 <Loader2 className="size-5 animate-spin" />
@@ -161,15 +169,18 @@ export default function LoginPage() {
               className="flex items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white py-3.5 px-4 text-sm font-bold text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 active:scale-[0.98]"
             >
               <FcGoogle className="size-6" />
-              <span>{t("googleSignIn")}</span>
+              <span>Continue as Passenger</span>
             </button>
+            <p className="text-[10px] text-center text-red-500 font-semibold -mt-2 italic">
+              * Google login is available for Passenger accounts only.
+            </p>
           </div>
 
           <p className="mt-10 text-center text-sm font-medium text-slate-500">
             {t("noAccount")}{" "}
             <Link
               href="/signup"
-              className="font-bold text-blue-600 hover:text-blue-700 transition-colors"
+              className="font-bold text-(--brand-primary) hover:opacity-80 transition-colors"
             >
               {t("signUp")}
             </Link>
