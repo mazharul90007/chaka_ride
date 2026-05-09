@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useProfile, useUpdateProfile } from "@/hooks/useProfile";
+import { useGetCategories } from "@/hooks/useCarCategory";
 
 const ReadOnlyField = ({ label, value, icon: Icon }: { label: string, value: string | undefined, icon: any }) => (
   <div className="space-y-2">
@@ -33,17 +34,37 @@ const ReadOnlyField = ({ label, value, icon: Icon }: { label: string, value: str
   </div>
 );
 
+const CategorySelect = ({ value, onChange }: { value: string, onChange: (val: string) => void }) => {
+  const { data: categoriesData, isLoading } = useGetCategories();
+  
+  return (
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="w-full h-11 bg-slate-50 border border-slate-200 rounded-lg pl-10 pr-4 text-sm font-medium outline-none focus:border-(--brand-primary) transition-all appearance-none cursor-pointer"
+      disabled={isLoading}
+    >
+      <option value="">Select Category</option>
+      {categoriesData?.data?.map((cat: any) => (
+        <option key={cat.id} value={cat.id}>
+          {cat.categoryName}
+        </option>
+      ))}
+    </select>
+  );
+};
+
 export default function SettingsPage() {
   const { data: session } = useSession();
   const { data: profileData, isLoading } = useProfile();
   const updateProfile = useUpdateProfile();
 
   const [formData, setFormData] = useState<any>({
-    name: "",
+    name: session?.user?.name || "",
     phone: "",
     address: "",
     licenseNumber: "",
-    vehicleType: "",
+    vehicleCategoryId: "",
     vehicleModel: "",
     vehicleNumber: "",
     dob: "",
@@ -54,22 +75,59 @@ export default function SettingsPage() {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if (profileData?.data) {
-      const u = profileData.data;
+    // Correctly extract the user object from the response
+    let u = null;
+    if (profileData) {
+      if ((profileData as any).success && (profileData as any).data) {
+        u = (profileData as any).data;
+      } else if ((profileData as any).id) {
+        u = profileData;
+      }
+    }
+    
+    if (u && typeof u === 'object') {
       const roleData = (u.driver || u.passenger || u.admin || {}) as any;
+      
       setFormData({
-        name: u.name || "",
+        name: u.name || session?.user?.name || "",
         dob: u.dob ? new Date(u.dob).toISOString().split('T')[0] : "",
         gender: u.gender || "",
         phone: roleData.phone || "",
         address: roleData.address || "",
         licenseNumber: roleData.licenseNumber || "",
-        vehicleType: roleData.vehicleType || "",
+        vehicleCategoryId: roleData.vehicleCategoryId || "",
         vehicleModel: roleData.vehicleModel || "",
         vehicleNumber: roleData.vehicleNumber || "",
       });
     }
-  }, [profileData]);
+  }, [profileData, session]);
+
+  const handleEdit = () => {
+    let u = null;
+    if (profileData) {
+      if ((profileData as any).success && (profileData as any).data) {
+        u = (profileData as any).data;
+      } else if ((profileData as any).id) {
+        u = profileData;
+      }
+    }
+
+    if (u && typeof u === 'object') {
+      const roleData = (u.driver || u.passenger || u.admin || {}) as any;
+      setFormData({
+        name: u.name || session?.user?.name || "",
+        dob: u.dob ? new Date(u.dob).toISOString().split('T')[0] : "",
+        gender: u.gender || "",
+        phone: roleData.phone || "",
+        address: roleData.address || "",
+        licenseNumber: roleData.licenseNumber || "",
+        vehicleCategoryId: roleData.vehicleCategoryId || "",
+        vehicleModel: roleData.vehicleModel || "",
+        vehicleNumber: roleData.vehicleNumber || "",
+      });
+    }
+    setIsEditing(true);
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -83,7 +141,7 @@ export default function SettingsPage() {
     e.preventDefault();
     const form = new FormData();
     if (selectedFile) {
-      form.append("file", selectedFile);
+      form.append("image", selectedFile);
     }
     form.append("data", JSON.stringify(formData));
     updateProfile.mutate(form, {
@@ -146,7 +204,7 @@ export default function SettingsPage() {
               ) : (
                 <button
                   type="button"
-                  onClick={() => setIsEditing(true)}
+                  onClick={handleEdit}
                   className="flex items-center gap-2 text-sm font-bold text-white hover:opacity-90 transition-opacity bg-(--brand-primary) px-4 py-2 rounded-lg shadow-md shadow-blue-900/10"
                 >
                   <Edit2 className="size-4" />
@@ -167,7 +225,7 @@ export default function SettingsPage() {
             {!isEditing && (
               <button
                 type="button"
-                onClick={() => setIsEditing(true)}
+                onClick={handleEdit}
                 className="flex items-center gap-1.5 text-sm font-medium text-(--brand-primary) hover:text-blue-700 transition-colors bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg"
               >
                 <Edit2 className="size-4" />
@@ -179,7 +237,7 @@ export default function SettingsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {!isEditing ? (
               <>
-                <ReadOnlyField label="Full Name" value={formData.name} icon={UserIcon} />
+                <ReadOnlyField label="Full Name" value={formData.name || session?.user?.name || ""} icon={UserIcon} />
                 <ReadOnlyField label="Email Address" value={session?.user?.email as string} icon={Mail} />
                 <ReadOnlyField label="Date of Birth" value={formData.dob} icon={Calendar} />
                 <ReadOnlyField label="Gender" value={formData.gender} icon={UserIcon} />
@@ -254,7 +312,7 @@ export default function SettingsPage() {
             {!isEditing && (
               <button
                 type="button"
-                onClick={() => setIsEditing(true)}
+                onClick={handleEdit}
                 className="flex items-center gap-1.5 text-sm font-medium text-(--brand-primary) hover:text-blue-700 transition-colors bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg"
               >
                 <Edit2 className="size-4" />
@@ -275,7 +333,11 @@ export default function SettingsPage() {
                 {role === 'DRIVER' && (
                   <>
                     <ReadOnlyField label="Driving License" value={formData.licenseNumber} icon={CreditCard} />
-                    <ReadOnlyField label="Vehicle Type" value={formData.vehicleType} icon={Truck} />
+                    <ReadOnlyField 
+                      label="Vehicle Type" 
+                      value={profileData?.data?.driver?.vehicleCategory?.categoryName || "Not selected"} 
+                      icon={Truck} 
+                    />
                     <ReadOnlyField label="Vehicle Model" value={formData.vehicleModel} icon={Car} />
                     <ReadOnlyField label="Vehicle Reg. Number" value={formData.vehicleNumber} icon={Navigation} />
                   </>
@@ -332,12 +394,9 @@ export default function SettingsPage() {
                       <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Vehicle Type</label>
                       <div className="relative">
                         <Truck className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
-                        <input
-                          type="text"
-                          value={formData.vehicleType}
-                          onChange={(e) => setFormData({ ...formData, vehicleType: e.target.value })}
-                          placeholder="e.g. SUV, Sedan"
-                          className="w-full h-11 bg-slate-50 border border-slate-200 rounded-lg pl-10 pr-4 text-sm font-medium outline-none focus:border-(--brand-primary) transition-all"
+                        <CategorySelect 
+                          value={formData.vehicleCategoryId} 
+                          onChange={(val) => setFormData({ ...formData, vehicleCategoryId: val })} 
                         />
                       </div>
                     </div>
@@ -392,7 +451,7 @@ export default function SettingsPage() {
                     phone: roleData.phone || "",
                     address: roleData.address || "",
                     licenseNumber: roleData.licenseNumber || "",
-                    vehicleType: roleData.vehicleType || "",
+                    vehicleCategoryId: roleData.vehicleCategoryId || "",
                     vehicleModel: roleData.vehicleModel || "",
                     vehicleNumber: roleData.vehicleNumber || "",
                   });

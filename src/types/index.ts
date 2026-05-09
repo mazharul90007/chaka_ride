@@ -35,7 +35,11 @@ export interface Driver {
   id: string;
   phone?: string | null;
   licenseNumber?: string | null;
-  vehicleType?: string | null;
+  vehicleCategoryId?: string | null;
+  vehicleCategory?: {
+    categoryName: string;
+    categoryNameBn?: string;
+  } | null;
   vehicleModel?: string | null;
   vehicleNumber?: string | null;
   userId: string;
