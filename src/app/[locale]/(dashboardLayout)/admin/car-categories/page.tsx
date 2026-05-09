@@ -227,7 +227,7 @@ export default function CarCategoriesAdmin() {
                     >
                       <td className="px-5 md:px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="size-10 rounded-lg bg-blue-50 flex items-center justify-center font-bold text-blue-600 overflow-hidden border border-blue-100 shrink-0">
+                          <div className="size-15 rounded-lg bg-blue-50 flex items-center justify-center font-bold text-blue-600 overflow-hidden border border-blue-100 shrink-0">
                             {cat.categoryIcon ? (
                               <img src={cat.categoryIcon} alt="" className="size-full object-cover" />
                             ) : (
@@ -262,13 +262,13 @@ export default function CarCategoriesAdmin() {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => handleOpenModal(cat)}
-                            className="size-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition-all border border-slate-200"
+                            className="size-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition-all border border-slate-200 cursor-pointer"
                           >
                             <Edit2 className="size-4" />
                           </button>
                           <button
                             onClick={() => setDeleteId(cat.id)}
-                            className="size-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white transition-all shadow-sm border border-rose-100"
+                            className="size-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white transition-all shadow-sm border border-rose-100 cursor-pointer"
                           >
                             <Trash2 className="size-4" />
                           </button>
