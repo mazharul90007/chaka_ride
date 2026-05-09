@@ -24,7 +24,7 @@ export default function SignupPage() {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
       Swal.fire({
         icon: "error",
@@ -67,7 +67,7 @@ export default function SignupPage() {
       >
         <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/50 sm:p-10">
           <div className="mb-10 text-center">
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -75,7 +75,7 @@ export default function SignupPage() {
             >
               {t("title")}
             </motion.h1>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
@@ -90,15 +90,13 @@ export default function SignupPage() {
               <button
                 type="button"
                 onClick={() => setRole("PASSENGER")}
-                className={`relative flex flex-col items-center justify-center gap-3 rounded-2xl border-2 p-4 transition-all ${
-                  role === "PASSENGER"
-                    ? "border-(--brand-primary) bg-blue-50/50 ring-4 ring-blue-500/10"
-                    : "border-slate-100 bg-slate-50 hover:border-slate-200"
-                }`}
+                className={`relative flex flex-col items-center justify-center gap-3 rounded-2xl border-2 p-4 transition-all cursor-pointer ${role === "PASSENGER"
+                  ? "border-(--brand-primary) bg-blue-50/50 ring-4 ring-blue-500/10"
+                  : "border-slate-100 bg-slate-50 hover:border-slate-200"
+                  }`}
               >
-                <div className={`flex size-12 items-center justify-center rounded-full ${
-                  role === "PASSENGER" ? "bg-(--brand-primary) text-white" : "bg-white text-slate-400"
-                }`}>
+                <div className={`flex size-12 items-center justify-center rounded-full ${role === "PASSENGER" ? "bg-(--brand-primary) text-white" : "bg-white text-slate-400"
+                  }`}>
                   <User className="size-6" />
                 </div>
                 <span className={`text-sm font-bold ${role === "PASSENGER" ? "text-(--brand-primary)" : "text-slate-500"}`}>
@@ -114,15 +112,13 @@ export default function SignupPage() {
               <button
                 type="button"
                 onClick={() => setRole("DRIVER")}
-                className={`relative flex flex-col items-center justify-center gap-3 rounded-2xl border-2 p-4 transition-all ${
-                  role === "DRIVER"
-                    ? "border-orange-600 bg-orange-50/50 ring-4 ring-orange-500/10"
-                    : "border-slate-100 bg-slate-50 hover:border-slate-200"
-                }`}
+                className={`relative flex flex-col items-center justify-center gap-3 rounded-2xl border-2 p-4 transition-all cursor-pointer ${role === "DRIVER"
+                  ? "border-orange-600 bg-orange-50/50 ring-4 ring-orange-500/10"
+                  : "border-slate-100 bg-slate-50 hover:border-slate-200"
+                  }`}
               >
-                <div className={`flex size-12 items-center justify-center rounded-full ${
-                  role === "DRIVER" ? "bg-orange-600 text-white" : "bg-white text-slate-400"
-                }`}>
+                <div className={`flex size-12 items-center justify-center rounded-full ${role === "DRIVER" ? "bg-orange-600 text-white" : "bg-white text-slate-400"
+                  }`}>
                   <Car className="size-6" />
                 </div>
                 <span className={`text-sm font-bold ${role === "DRIVER" ? "text-orange-700" : "text-slate-500"}`}>
@@ -231,11 +227,10 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className={`group relative flex w-full items-center justify-center overflow-hidden rounded-2xl py-4 px-6 text-sm font-bold text-white transition-all focus:outline-none focus:ring-4 disabled:opacity-70 shadow-lg ${
-                role === "PASSENGER" 
-                  ? "bg-(--brand-primary) hover:opacity-90 focus:ring-blue-500/10 shadow-blue-900/20" 
-                  : "bg-orange-600 hover:bg-orange-700 focus:ring-orange-500/10 shadow-orange-900/20"
-              }`}
+              className={`group relative flex w-full items-center justify-center overflow-hidden rounded-2xl py-4 px-6 text-sm font-bold text-white transition-all focus:outline-none focus:ring-4 disabled:opacity-70 shadow-lg cursor-pointer ${role === "PASSENGER"
+                ? "bg-(--brand-primary) hover:opacity-90 focus:ring-blue-500/10 shadow-blue-900/20"
+                : "bg-orange-600 hover:bg-orange-700 focus:ring-orange-500/10 shadow-orange-900/20"
+                }`}
             >
               {loading ? (
                 <Loader2 className="size-5 animate-spin" />
@@ -262,7 +257,7 @@ export default function SignupPage() {
           <div className="grid grid-cols-1 gap-4">
             <button
               onClick={() => handleSocialLogin("google")}
-              className="flex items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white py-3.5 px-4 text-sm font-bold text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 active:scale-[0.98]"
+              className="flex items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white py-3.5 px-4 text-sm font-bold text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 active:scale-[0.98] cursor-pointer"
             >
               <FcGoogle className="size-6" />
               <span>Sign up as Passenger</span>

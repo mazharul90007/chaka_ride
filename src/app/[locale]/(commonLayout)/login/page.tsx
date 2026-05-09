@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { signIn } from "@/lib/auth-client";
 import { motion } from "framer-motion";
-import { Mail, Lock, Loader2, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Loader2, ArrowRight, Eye, EyeOff, User, Car, ShieldCheck } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 
@@ -16,6 +16,16 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const setDemoCredentials = (role: "passenger" | "driver" | "admin") => {
+    const credentials = {
+      passenger: { email: "passenger@gmail.com", password: "pass123456" },
+      driver: { email: "driver@gmail.com", password: "pass123456" },
+      admin: { email: "admin@gmail.com", password: "pass123456" },
+    };
+    setEmail(credentials[role].email);
+    setPassword(credentials[role].password);
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,6 +94,51 @@ export default function LoginPage() {
             </motion.p>
           </div>
 
+          <div className="mb-8 space-y-4">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-100"></div>
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-white px-3 text-slate-400 font-semibold tracking-wider">
+                  Demo Access
+                </span>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <button
+                type="button"
+                onClick={() => setDemoCredentials("passenger")}
+                className="flex flex-col items-center gap-1.5 rounded-2xl border border-slate-100 bg-slate-50/50 p-3 transition-all hover:border-blue-200 hover:bg-blue-50/50 group cursor-pointer"
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-sm transition-transform group-hover:scale-110">
+                  <User className="size-5 text-blue-600" />
+                </div>
+                <span className="text-[11px] font-bold text-slate-600">Passenger</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setDemoCredentials("driver")}
+                className="flex flex-col items-center gap-1.5 rounded-2xl border border-slate-100 bg-slate-50/50 p-3 transition-all hover:border-orange-200 hover:bg-orange-50/50 group cursor-pointer"
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-sm transition-transform group-hover:scale-110">
+                  <Car className="size-5 text-orange-600" />
+                </div>
+                <span className="text-[11px] font-bold text-slate-600">Driver</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setDemoCredentials("admin")}
+                className="flex flex-col items-center gap-1.5 rounded-2xl border border-slate-100 bg-slate-50/50 p-3 transition-all hover:border-purple-200 hover:bg-purple-50/50 group cursor-pointer"
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-sm transition-transform group-hover:scale-110">
+                  <ShieldCheck className="size-5 text-purple-600" />
+                </div>
+                <span className="text-[11px] font-bold text-slate-600">Admin</span>
+              </button>
+            </div>
+          </div>
+
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-1.5">
               <label className="text-sm font-semibold text-slate-700 ml-1">
@@ -141,7 +196,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex w-full items-center justify-center overflow-hidden rounded-2xl bg-(--brand-primary) py-4 px-6 text-sm font-bold text-white transition-all hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-blue-500/10 disabled:opacity-70 shadow-lg shadow-blue-900/20"
+              className="group relative flex w-full items-center justify-center overflow-hidden rounded-2xl bg-(--brand-primary) py-4 px-6 text-sm font-bold text-white transition-all hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-blue-500/10 disabled:opacity-70 shadow-lg shadow-blue-900/20 cursor-pointer"
             >
               {loading ? (
                 <Loader2 className="size-5 animate-spin" />
@@ -153,6 +208,7 @@ export default function LoginPage() {
               )}
             </button>
           </form>
+
 
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
@@ -166,7 +222,7 @@ export default function LoginPage() {
           <div className="grid grid-cols-1 gap-4">
             <button
               onClick={() => handleSocialLogin("google")}
-              className="flex items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white py-3.5 px-4 text-sm font-bold text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 active:scale-[0.98]"
+              className="flex items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white py-3.5 px-4 text-sm font-bold text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 active:scale-[0.98] cursor-pointer"
             >
               <FcGoogle className="size-6" />
               <span>Continue as Passenger</span>
