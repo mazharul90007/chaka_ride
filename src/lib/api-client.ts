@@ -22,13 +22,74 @@ export const carApi = {
   },
 };
 
+export const queryApi = {
+  create: async (data: any) => {
+    const response = await api.post<ApiResponse<any>>("/query/create", data);
+    return response.data;
+  },
+};
+
+export interface CarCategory {
+  id: string;
+  categoryName: string;
+  categoryNameBn?: string;
+  description: string;
+  descriptionBn?: string;
+  seat: string;
+  seatBn?: string;
+  luggage: string;
+  luggageBn?: string;
+  ac: string;
+  acBn?: string;
+  fuel: string;
+  fuelBn?: string;
+  features: Array<{ 
+    featureTitle: string; 
+    featureTitleBn?: string; 
+    featureDescription: string; 
+    featureDescriptionBn?: string; 
+    featureIcon?: string 
+  }>;
+  categoryIcon?: string;
+  photos?: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const carCategoryApi = {
+  getAll: async () => {
+    const response = await api.get<ApiResponse<CarCategory[]>>("/car/categories");
+    return response.data;
+  },
+  getOne: async (id: string) => {
+    const response = await api.get<ApiResponse<CarCategory>>(`/car/category/${id}`);
+    return response.data;
+  },
+  create: async (data: FormData) => {
+    const response = await api.post<ApiResponse<CarCategory>>("/car/category", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+  },
+  update: async (id: string, data: FormData) => {
+    const response = await api.patch<ApiResponse<CarCategory>>(`/car/category/${id}`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+  },
+  delete: async (id: string) => {
+    const response = await api.delete<ApiResponse<null>>(`/car/category/${id}`);
+    return response.data;
+  },
+};
+
 export const userApi = {
   getProfile: async () => {
-    const response = await api.get<ApiResponse<User>>("/profile");
+    const response = await api.get<ApiResponse<User>>("/user/profile");
     return response.data;
   },
   updateProfile: async (payload: FormData) => {
-    const response = await api.patch<ApiResponse<User>>("/profile", payload, {
+    const response = await api.patch<ApiResponse<User>>("/user/profile", payload, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -89,6 +150,12 @@ export const adminApi = {
   },
   updateQueryStatus: async (id: string, status: string) => {
     const response = await api.patch(`/query/${id}/status`, { status });
+    return response.data;
+  },
+  bulkDeleteQueries: async (ids: string[]) => {
+    const response = await api.delete<ApiResponse<null>>("/query/bulk-delete", {
+      data: { ids },
+    });
     return response.data;
   },
 };

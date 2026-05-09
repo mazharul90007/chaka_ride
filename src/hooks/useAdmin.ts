@@ -60,3 +60,17 @@ export const useUpdateQueryStatus = () => {
     },
   });
 };
+
+export const useBulkDeleteQueries = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (ids: string[]) => adminApi.bulkDeleteQueries(ids),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin", "queries"] });
+      toast.success("Queries deleted successfully");
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message || "Failed to delete queries");
+    },
+  });
+};

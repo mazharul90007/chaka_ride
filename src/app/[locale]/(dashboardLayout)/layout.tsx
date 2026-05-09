@@ -2,7 +2,6 @@
 
 import DashboardSidebar from "@/components/layout/DashboardSidebar";
 import UserNav from "@/components/layout/UserNav";
-import LocaleSwitcher from "@/components/layout/LocaleSwitcher";
 import { useSession } from "@/lib/auth-client";
 import { useRouter } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
@@ -87,8 +86,6 @@ export default function DashboardLayout({
           </button>
 
           <div className="flex items-center gap-2 md:gap-4">
-            <LocaleSwitcher />
-            <div className="h-6 w-px bg-slate-200 mx-1 md:mx-2" />
             <UserNav />
           </div>
         </header>

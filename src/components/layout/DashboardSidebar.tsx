@@ -51,7 +51,8 @@ export default function DashboardSidebar({ isMobile, onClose }: DashboardSidebar
       { label: "Overview", href: "/admin", icon: LayoutDashboard },
       { label: "Drivers", href: "/admin/drivers", icon: ShieldCheck },
       { label: "Users", href: "/admin/users", icon: Users },
-      { label: "Queries", href: "/admin/rides", icon: Navigation },
+      { label: "Queries", href: "/admin/queries", icon: Navigation },
+      { label: "Car Categories", href: "/admin/car-categories", icon: Car },
       { label: "Settings", href: "/profile", icon: Settings },
     ],
   }[role] || [];

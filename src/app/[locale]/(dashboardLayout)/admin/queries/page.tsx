@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { 
   MapPin, 
   Search, 
@@ -11,15 +12,61 @@ import {
   CheckCircle2,
   MessageSquare,
   Navigation,
-  Smartphone
+  Smartphone,
+  Trash2,
+  Loader2,
+  Mail
 } from "lucide-react";
-import { useAdminQueries, useUpdateQueryStatus } from "@/hooks/useAdmin";
+import { useAdminQueries, useUpdateQueryStatus, useBulkDeleteQueries } from "@/hooks/useAdmin";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export default function AdminRidesPage() {
   const { data: queriesData, isLoading } = useAdminQueries();
   const updateStatus = useUpdateQueryStatus();
+  const bulkDelete = useBulkDeleteQueries();
+
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const queries = queriesData?.data || [];
+
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setSelectedIds(queries.map((q: any) => q.id));
+    } else {
+      setSelectedIds([]);
+    }
+  };
+
+  const handleSelectOne = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
+    if (e.target.checked) {
+      setSelectedIds(prev => [...prev, id]);
+    } else {
+      setSelectedIds(prev => prev.filter(selectedId => selectedId !== id));
+    }
+  };
+
+  const handleBulkDelete = () => {
+    if (selectedIds.length > 0) {
+      MySwal.fire({
+        title: "Are you sure?",
+        text: `You are about to delete ${selectedIds.length} queries permanently!`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#64748b",
+        confirmButtonText: "Yes, delete them!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          bulkDelete.mutate(selectedIds, {
+            onSuccess: () => setSelectedIds([])
+          });
+        }
+      });
+    }
+  };
 
   return (
     <div className="p-4 md:p-8 space-y-6 md:space-y-8">
@@ -33,6 +80,17 @@ export default function AdminRidesPage() {
         </div>
         
         <div className="flex items-center gap-2">
+          {selectedIds.length > 0 && (
+            <button 
+              onClick={handleBulkDelete}
+              disabled={bulkDelete.isPending}
+              className="h-10 px-4 rounded-lg bg-rose-50 text-rose-600 text-xs font-bold transition-all hover:bg-rose-600 hover:text-white flex items-center gap-2 shadow-sm border border-rose-100"
+            >
+              {bulkDelete.isPending ? <Loader2 className="size-4 animate-spin" /> : <Trash2 className="size-4" />}
+              <span className="hidden sm:inline">Delete Selected ({selectedIds.length})</span>
+            </button>
+          )}
+
           <div className="relative flex-1 sm:flex-initial">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
             <input 
@@ -53,6 +111,14 @@ export default function AdminRidesPage() {
           <table className="w-full text-left border-collapse min-w-[800px]">
             <thead>
               <tr className="bg-slate-50/50">
+                <th className="px-6 py-4 w-10">
+                  <input 
+                    type="checkbox" 
+                    className="size-4 rounded border-slate-300 text-(--brand-primary) focus:ring-(--brand-primary) accent-(--brand-primary)" 
+                    onChange={handleSelectAll}
+                    checked={queries.length > 0 && selectedIds.length === queries.length}
+                  />
+                </th>
                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400">Customer Info</th>
                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400">Route</th>
                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-400">Trip Details</th>
@@ -64,12 +130,12 @@ export default function AdminRidesPage() {
               {isLoading ? (
                 [1, 2, 3, 4, 5].map((i) => (
                   <tr key={i} className="animate-pulse">
-                    <td colSpan={5} className="px-6 py-8 text-center text-slate-300">Loading...</td>
+                    <td colSpan={6} className="px-6 py-8 text-center text-slate-300">Loading...</td>
                   </tr>
                 ))
               ) : queries.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-20 text-center">
+                  <td colSpan={6} className="px-6 py-20 text-center">
                     <div className="flex flex-col items-center gap-3 opacity-30">
                       <Navigation className="size-12" />
                       <p className="font-bold">No ride requests found.</p>
@@ -82,8 +148,16 @@ export default function AdminRidesPage() {
                     key={query.id}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="hover:bg-slate-50/50 transition-colors"
+                    className={`hover:bg-slate-50/50 transition-colors ${selectedIds.includes(query.id) ? 'bg-blue-50/50' : ''}`}
                   >
+                    <td className="px-6 py-4">
+                      <input 
+                        type="checkbox" 
+                        className="size-4 rounded border-slate-300 text-(--brand-primary) focus:ring-(--brand-primary) accent-(--brand-primary)"
+                        checked={selectedIds.includes(query.id)}
+                        onChange={(e) => handleSelectOne(e, query.id)}
+                      />
+                    </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="size-10 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center font-bold border border-blue-100">
@@ -93,6 +167,9 @@ export default function AdminRidesPage() {
                           <p className="text-sm font-bold text-slate-900">{query.fullName}</p>
                           <p className="text-[11px] font-medium text-slate-400 flex items-center gap-1">
                             <Smartphone className="size-3" /> {query.whatsAppNumber}
+                          </p>
+                          <p className="text-[11px] font-medium text-slate-400 flex items-center gap-1">
+                            <Mail className="size-3" /> {query.email}
                           </p>
                         </div>
                       </div>
@@ -129,26 +206,29 @@ export default function AdminRidesPage() {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        {query.status === "PENDING" && (
-                          <button 
-                            onClick={() => updateStatus.mutate({ id: query.id, status: "CONTACTED" })}
-                            className="size-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all shadow-sm"
-                            title="Mark Contacted"
-                          >
-                            <MessageSquare className="size-4" />
-                          </button>
-                        )}
-                        {query.status !== "COMPLETED" && (
-                          <button 
-                            onClick={() => updateStatus.mutate({ id: query.id, status: "COMPLETED" })}
-                            className="size-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all shadow-sm"
-                            title="Complete"
-                          >
-                            <CheckCircle2 className="size-4" />
-                          </button>
-                        )}
-                        <button className="size-8 rounded-lg bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-slate-900 hover:text-white transition-all">
-                          <MoreVertical className="size-4" />
+                        <button 
+                          onClick={() => updateStatus.mutate({ id: query.id, status: "CONTACTED" })}
+                          disabled={query.status !== "PENDING" || updateStatus.isPending}
+                          className={`size-8 rounded-lg flex items-center justify-center transition-all shadow-sm ${
+                            query.status === "PENDING" 
+                              ? "bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white" 
+                              : "bg-slate-50 text-slate-300 cursor-not-allowed"
+                          }`}
+                          title="Mark Contacted"
+                        >
+                          <MessageSquare className="size-4" />
+                        </button>
+                        <button 
+                          onClick={() => updateStatus.mutate({ id: query.id, status: "COMPLETED" })}
+                          disabled={query.status === "COMPLETED" || updateStatus.isPending}
+                          className={`size-8 rounded-lg flex items-center justify-center transition-all shadow-sm ${
+                            query.status !== "COMPLETED" 
+                              ? "bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white" 
+                              : "bg-slate-50 text-slate-300 cursor-not-allowed"
+                          }`}
+                          title="Complete"
+                        >
+                          <CheckCircle2 className="size-4" />
                         </button>
                       </div>
                     </td>

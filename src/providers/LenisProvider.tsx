@@ -40,14 +40,23 @@ export default function LenisProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname() || "";
+  
   const reduceMotion = useSyncExternalStore(
     subscribeReducedMotion,
     getReducedMotion,
     () => false,
   );
 
-  if (reduceMotion) {
-    return children;
+  // Disable Lenis for dashboard routes
+  const isDashboardRoute = 
+    pathname.includes("/admin") || 
+    pathname.includes("/driver") || 
+    pathname.includes("/passenger") || 
+    pathname.includes("/profile");
+
+  if (reduceMotion || isDashboardRoute) {
+    return <>{children}</>;
   }
 
   return (

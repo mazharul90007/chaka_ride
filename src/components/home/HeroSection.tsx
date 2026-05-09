@@ -10,7 +10,9 @@ import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import type { SubmitEvent } from "react";
+import { useState } from "react";
+import { queryApi } from "@/lib/api-client";
+import { Loader2 } from "lucide-react";
 
 const HERO_IMAGE =
   "https://res.cloudinary.com/dycrowzen/image/upload/v1774623407/car_iaunmo.png";
@@ -102,21 +104,47 @@ function RequiredMark() {
 
 export default function HeroSection() {
   const t = useTranslations("Hero");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const name = (formData.get("fullName") as string)?.trim() || "";
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-    Swal.fire({
-      icon: "success",
-      title: t("alertTitle", { name }),
-      text: t("alertText"),
-      confirmButtonText: t("alertButton"),
-      confirmButtonColor: "var(--brand-primary)",
-    });
+    // Format payload
+    const payload = {
+      fullName: formData.get("fullName") as string,
+      email: formData.get("email") as string,
+      whatsAppNumber: formData.get("whatsAppNumber") as string,
+      pickupLocation: formData.get("pickupLocation") as string,
+      destination: formData.get("destination") as string,
+      carCategoryId: formData.get("carCategoryId") as string,
+      tripType: (formData.get("tripType") as string).toUpperCase().replace("-", "_"),
+      pickupDate: formData.get("pickupDate") as string,
+      pickupTime: formData.get("pickupTime") as string,
+    };
 
-    e.currentTarget.reset();
+    setIsSubmitting(true);
+    try {
+      await queryApi.create(payload);
+
+      Swal.fire({
+        icon: "success",
+        title: t("alertTitle", { name: payload.fullName }),
+        text: t("alertText"),
+        confirmButtonText: t("alertButton"),
+        confirmButtonColor: "var(--brand-primary)",
+      });
+      form.reset();
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error?.response?.data?.message || "Something went wrong! Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -168,10 +196,10 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         >
           <form
-            className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-12"
+            className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12"
             onSubmit={handleSubmit}
           >
-            <div className="space-y-2 lg:col-span-3">
+            <div className="space-y-2 lg:col-span-4">
               <Label htmlFor="hero-full-name" className={labelClass}>
                 {t("fullName")}
                 <RequiredMark />
@@ -185,14 +213,29 @@ export default function HeroSection() {
                 className={fieldClass}
               />
             </div>
-            <div className="space-y-2 lg:col-span-3">
+            <div className="space-y-2 lg:col-span-4">
+              <Label htmlFor="hero-email" className={labelClass}>
+                Email
+                <RequiredMark />
+              </Label>
+              <Input
+                id="hero-email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                placeholder="john@example.com"
+                className={fieldClass}
+              />
+            </div>
+            <div className="space-y-2 lg:col-span-4">
               <Label htmlFor="hero-mobile" className={labelClass}>
                 {t("mobileNumber")}
                 <RequiredMark />
               </Label>
               <Input
                 id="hero-mobile"
-                name="mobile"
+                name="whatsAppNumber"
                 type="tel"
                 inputMode="tel"
                 autoComplete="tel"
@@ -201,7 +244,7 @@ export default function HeroSection() {
                 className={fieldClass}
               />
             </div>
-            <div className="space-y-2 lg:col-span-3">
+            <div className="space-y-2 lg:col-span-4">
               <Label htmlFor="hero-pickup" className={labelClass}>
                 {t("pickupLocation")}
                 <RequiredMark />
@@ -214,20 +257,20 @@ export default function HeroSection() {
                 className={fieldClass}
               />
             </div>
-            <div className="space-y-2 lg:col-span-3">
+            <div className="space-y-2 lg:col-span-4">
               <Label htmlFor="hero-dropoff" className={labelClass}>
                 {t("dropoffLocation")}
                 <RequiredMark />
               </Label>
               <Input
                 id="hero-dropoff"
-                name="dropoffLocation"
+                name="destination"
                 required
                 placeholder={t("dropoffPlaceholder")}
                 className={fieldClass}
               />
             </div>
-            <div className="space-y-2 lg:col-span-3">
+            <div className="space-y-2 lg:col-span-4">
               <Label htmlFor="hero-car-trigger" className={labelClass}>
                 {t("chooseCar")}
                 <RequiredMark />
@@ -237,7 +280,7 @@ export default function HeroSection() {
             <div
               role="group"
               aria-labelledby="hero-trip-type-label"
-              className="flex min-w-0 flex-col gap-2 lg:col-span-3"
+              className="flex min-w-0 flex-col gap-2 lg:col-span-4"
             >
               <span
                 id="hero-trip-type-label"
@@ -286,12 +329,14 @@ export default function HeroSection() {
                 timeLabel={t("timeLabel")}
               />
             </div>
-            <div className="flex items-end md:col-span-2 lg:col-span-2 lg:justify-end">
+            <div className="flex items-end lg:col-span-4">
               <Button
                 type="submit"
                 size="lg"
-                className="h-11 w-full max-w-xs shrink-0 rounded-xl border-0 bg-(--brand-primary) text-base font-semibold text-white shadow-sm hover:bg-(--brand-primary-hover) md:h-12"
+                disabled={isSubmitting}
+                className="h-11 w-full rounded-xl border-0 bg-(--brand-primary) text-base font-semibold text-white shadow-sm hover:bg-(--brand-primary-hover) md:h-12"
               >
+                {isSubmitting ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : null}
                 {t("send")}
               </Button>
             </div>
