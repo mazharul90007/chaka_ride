@@ -60,15 +60,15 @@ export function CarCard({ car, onEdit, onDelete, onViewDetails }: CarCardProps) 
 
         {photos.length > 1 && (
           <>
-            <button 
+            <button
               onClick={prevPhoto}
-              className="absolute left-2 top-1/2 -translate-y-1/2 size-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 opacity-0 group-hover/slider:opacity-100 transition-opacity hover:bg-white"
+              className="absolute left-2 top-1/2 -translate-y-1/2 size-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow-sm hover:bg-white transition-all active:scale-95 cursor-pointer"
             >
               <ChevronLeft className="size-4" />
             </button>
-            <button 
+            <button
               onClick={nextPhoto}
-              className="absolute right-2 top-1/2 -translate-y-1/2 size-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 opacity-0 group-hover/slider:opacity-100 transition-opacity hover:bg-white"
+              className="absolute right-2 top-1/2 -translate-y-1/2 size-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow-sm hover:bg-white transition-all active:scale-95 cursor-pointer"
             >
               <ChevronRight className="size-4" />
             </button>
@@ -80,11 +80,10 @@ export function CarCard({ car, onEdit, onDelete, onViewDetails }: CarCardProps) 
           </>
         )}
 
-        <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md shadow-sm ${
-          car.status === "APPROVED" ? "bg-emerald-500/90 text-white" :
+        <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md shadow-sm ${car.status === "APPROVED" ? "bg-emerald-500/90 text-white" :
           car.status === "PENDING" ? "bg-amber-500/90 text-white" :
-          "bg-rose-500/90 text-white"
-        }`}>
+            "bg-rose-500/90 text-white"
+          }`}>
           {car.status}
         </div>
       </div>
@@ -115,27 +114,28 @@ export function CarCard({ car, onEdit, onDelete, onViewDetails }: CarCardProps) 
           </div>
         </div>
 
-        <div className="mt-auto space-y-3">
+        <div className="mt-auto flex items-center gap-2 pt-4 border-t border-slate-100">
           <button
             onClick={onViewDetails}
-            className="w-full h-10 rounded-lg bg-slate-50 text-slate-600 text-sm font-bold hover:bg-blue-50 hover:text-blue-600 transition-colors flex items-center justify-center gap-2 border border-slate-100"
+            title="View Details"
+            className="flex-1 h-10 rounded-lg bg-slate-50 text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-all flex items-center justify-center border border-slate-200 cursor-pointer active:scale-95"
           >
-            <Eye className="size-4" /> View Details
+            <Eye className="size-4" />
           </button>
-          <div className="flex gap-3">
-            <button
-              onClick={onEdit}
-              className="flex-1 h-10 rounded-lg border border-slate-200 text-sm font-bold text-slate-600 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
-            >
-              <Edit2 className="size-4" /> Edit
-            </button>
-            <button
-              onClick={onDelete}
-              className="size-10 rounded-lg border border-rose-100 text-rose-600 hover:bg-rose-600 hover:text-white transition-all flex items-center justify-center"
-            >
-              <Trash2 className="size-4" />
-            </button>
-          </div>
+          <button
+            onClick={onEdit}
+            title="Edit Vehicle"
+            className="flex-1 h-10 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all flex items-center justify-center active:scale-95 cursor-pointer"
+          >
+            <Edit2 className="size-4" />
+          </button>
+          <button
+            onClick={onDelete}
+            title="Delete Vehicle"
+            className="h-10 px-4 rounded-lg border border-rose-100 text-rose-600 hover:bg-rose-600 hover:text-white transition-all flex items-center justify-center active:scale-95 cursor-pointer"
+          >
+            <Trash2 className="size-4" />
+          </button>
         </div>
       </div>
     </motion.div>

@@ -36,7 +36,7 @@ export function CarDetailsModal({ car, isOpen, onClose }: CarDetailsModalProps) 
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed left-1/2 top-1/2 w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl shadow-2xl z-[210] overflow-hidden max-h-[90vh] flex flex-col"
+            className="fixed left-1/2 top-1/2 w-full max-w-5xl -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl shadow-2xl z-[210] overflow-hidden max-h-[90vh] flex flex-col"
           >
             {/* Header */}
             <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
@@ -49,7 +49,7 @@ export function CarDetailsModal({ car, isOpen, onClose }: CarDetailsModalProps) 
                   <p className="text-sm font-medium text-slate-500 uppercase tracking-widest">{car.registrationNumber}</p>
                 </div>
               </div>
-              <button onClick={onClose} className="p-2 text-slate-400 hover:bg-slate-200 rounded-xl transition-colors">
+              <button onClick={onClose} className="p-2 text-slate-400 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer">
                 <XCircle className="size-6" />
               </button>
             </div>
@@ -64,7 +64,7 @@ export function CarDetailsModal({ car, isOpen, onClose }: CarDetailsModalProps) 
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
                     {car.photos?.map((url, i) => (
-                      <motion.div 
+                      <motion.div
                         key={i}
                         whileHover={{ scale: 1.05 }}
                         className="aspect-square rounded-2xl overflow-hidden border border-slate-200 shadow-sm"
@@ -100,10 +100,9 @@ export function CarDetailsModal({ car, isOpen, onClose }: CarDetailsModalProps) 
                       <p className="text-[10px] font-bold text-slate-400 uppercase mb-1 flex items-center gap-1.5">
                         <Activity className="size-3" /> Status
                       </p>
-                      <span className={`text-xs font-bold uppercase ${
-                        car.status === "APPROVED" ? "text-emerald-600" :
+                      <span className={`text-xs font-bold uppercase ${car.status === "APPROVED" ? "text-emerald-600" :
                         car.status === "PENDING" ? "text-amber-600" : "text-rose-600"
-                      }`}>
+                        }`}>
                         {car.status}
                       </span>
                     </div>
@@ -128,9 +127,9 @@ export function CarDetailsModal({ car, isOpen, onClose }: CarDetailsModalProps) 
             </div>
 
             <div className="p-6 bg-slate-50 border-t border-slate-100 flex justify-end">
-              <button 
+              <button
                 onClick={onClose}
-                className="px-8 py-3 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-slate-800 transition-all active:scale-95 shadow-lg shadow-slate-900/10"
+                className="px-6 py-3 rounded-xl bg-(--brand-primary) text-sm font-bold text-white transition-all hover:opacity-90 active:scale-95 shadow-lg shadow-blue-600/20 cursor-pointer"
               >
                 Close Details
               </button>
