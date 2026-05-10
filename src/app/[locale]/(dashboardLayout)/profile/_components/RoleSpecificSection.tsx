@@ -29,7 +29,7 @@ export const RoleSpecificSection = ({
   const isPassenger = role === "PASSENGER";
 
   return (
-    <div className="p-8 space-y-6 bg-slate-50/30">
+    <div className="p-6 space-y-6">
       <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest flex items-center gap-2">
         {isDriver ? <Truck className="size-4 text-(--brand-primary)" /> : <Car className="size-4 text-(--brand-primary)" />}
         {isDriver ? "Driver & Vehicle Details" : "Contact Information"}

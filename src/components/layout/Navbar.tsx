@@ -378,6 +378,7 @@ export default function Navbar() {
       others: [
         { label: tNav("about"), href: "/about" },
         { label: tNav("contact"), href: "/contact" },
+        { label: tNav("terms"), href: "/terms-and-conditions" },
       ] satisfies DropdownItem[],
     }),
     [locale, tService, tCars, tRent, tNav],
@@ -454,7 +455,7 @@ export default function Navbar() {
             href="#"
             label="Others"
             hasDropdown
-            activePaths={["/about", "/contact"]}
+            activePaths={["/about", "/contact", "/terms-and-conditions"]}
             dropdownItems={dropdowns.others}
           />
         </nav>

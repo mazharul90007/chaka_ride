@@ -17,7 +17,7 @@ export const BasicInfoSection = ({
   userEmail
 }: BasicInfoSectionProps) => {
   return (
-    <div className="p-8 space-y-6">
+    <div className="p-6 space-y-6">
       <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest flex items-center gap-2">
         <UserIcon className="size-4 text-(--brand-primary)" />
         Basic Information

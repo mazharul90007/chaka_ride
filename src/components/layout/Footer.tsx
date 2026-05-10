@@ -34,6 +34,7 @@ export default function Footer() {
     { href: "/cars", label: t("linkCars") },
     { href: "/service", label: t("linkCarTypes") },
     { href: "/contact", label: t("linkContact") },
+    { href: "/terms-and-conditions", label: tNav("terms") },
   ] as const;
 
   return (

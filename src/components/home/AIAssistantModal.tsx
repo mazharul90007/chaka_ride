@@ -70,8 +70,8 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
             className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white rounded-3xl shadow-2xl z-[210] overflow-hidden"
           >
             {/* Header */}
-            <div className="p-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-between relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-8 opacity-10">
+            <div className="p-6 bg-linear-to-br from-[#0f2744] via-[#1e4a8c] to-[#2d7dd2] text-white flex items-center justify-between relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
                 <Sparkles className="size-24" />
               </div>
               <div className="relative z-10 flex items-center gap-3">
@@ -80,12 +80,12 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
                 </div>
                 <div>
                   <h2 className="text-xl font-bold">Smart Trip Assistant</h2>
-                  <p className="text-xs text-blue-100 font-medium italic">Powered by Chaka AI</p>
+                  <p className="text-xs text-white/70 font-medium italic">Powered by Chaka AI</p>
                 </div>
               </div>
               <button 
                 onClick={onClose}
-                className="size-8 rounded-lg bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center"
+                className="relative z-20 size-8 rounded-lg bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center cursor-pointer"
               >
                 <X className="size-5" />
               </button>
@@ -114,7 +114,7 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
                                 placeholder="Pickup Location"
                                 value={formData.pickup}
                                 onChange={e => setFormData({ ...formData, pickup: e.target.value })}
-                                className="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 text-sm font-medium outline-none focus:border-blue-500 transition-all"
+                                className="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 text-sm font-medium outline-none focus:border-(--brand-primary) transition-all"
                               />
                             </div>
                             <div className="relative">
@@ -125,7 +125,7 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
                                 placeholder="Destination"
                                 value={formData.destination}
                                 onChange={e => setFormData({ ...formData, destination: e.target.value })}
-                                className="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 text-sm font-medium outline-none focus:border-blue-500 transition-all"
+                                className="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 text-sm font-medium outline-none focus:border-(--brand-primary) transition-all"
                               />
                             </div>
                           </div>
@@ -133,7 +133,7 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
 
                         <div className="space-y-4 pt-4 border-t border-slate-100">
                           <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                            <Users className="size-5 text-blue-500" />
+                            <Users className="size-5 text-(--brand-primary)" />
                             How many passengers?
                           </h3>
                           <div className="flex items-center gap-4">
@@ -142,9 +142,9 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
                                 key={num}
                                 type="button"
                                 onClick={() => setFormData({ ...formData, passengers: num })}
-                                className={`flex-1 h-12 rounded-xl text-sm font-bold transition-all ${
+                                className={`flex-1 h-12 rounded-xl text-sm font-bold transition-all cursor-pointer ${
                                   formData.passengers === num 
-                                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" 
+                                    ? "bg-(--brand-primary) text-white shadow-lg shadow-(--brand-primary)/20" 
                                     : "bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100"
                                 }`}
                               >
@@ -156,7 +156,7 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
 
                         <button
                           type="submit"
-                          className="w-full h-14 bg-slate-900 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-slate-800 transition-all active:scale-95 group"
+                          className="w-full h-14 bg-(--brand-primary) text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-(--brand-primary-hover) transition-all active:scale-95 group shadow-lg shadow-(--brand-primary)/20 cursor-pointer"
                         >
                           Next Details
                           <ChevronRight className="size-4 group-hover:translate-x-1 transition-transform" />
@@ -179,7 +179,7 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
                             value={formData.purpose}
                             onChange={e => setFormData({ ...formData, purpose: e.target.value })}
                             placeholder="Tell me about your trip..."
-                            className="w-full h-32 bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-medium outline-none focus:border-blue-500 transition-all resize-none"
+                            className="w-full h-32 bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-medium outline-none focus:border-(--brand-primary) transition-all resize-none"
                           />
                         </div>
 
@@ -187,13 +187,13 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
                           <button
                             type="button"
                             onClick={prevStep}
-                            className="flex-1 h-14 bg-slate-100 text-slate-600 rounded-2xl font-bold hover:bg-slate-200 transition-all"
+                            className="flex-1 h-14 bg-slate-100 text-slate-600 rounded-2xl font-bold hover:bg-slate-200 transition-all cursor-pointer"
                           >
                             Back
                           </button>
                           <button
                             type="submit"
-                            className="flex-[2] h-14 bg-blue-600 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-blue-700 transition-all active:scale-95 shadow-lg shadow-blue-600/30"
+                            className="flex-[2] h-14 bg-(--brand-primary) text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-(--brand-primary-hover) transition-all active:scale-95 shadow-lg shadow-(--brand-primary)/30 cursor-pointer"
                           >
                             <Sparkles className="size-5" />
                             Get AI Recommendation
@@ -209,8 +209,8 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
                 <div className="space-y-6 text-center py-4">
                   {isPending ? (
                     <div className="space-y-4 py-8">
-                      <div className="size-16 rounded-3xl bg-blue-50 flex items-center justify-center mx-auto mb-4 relative">
-                        <Loader2 className="size-8 text-blue-600 animate-spin" />
+                      <div className="size-16 rounded-3xl bg-(--hero-bg) flex items-center justify-center mx-auto mb-4 relative">
+                        <Loader2 className="size-8 text-(--brand-primary) animate-spin" />
                         <Sparkles className="size-4 text-amber-500 absolute -top-1 -right-1 animate-pulse" />
                       </div>
                       <h3 className="text-xl font-bold text-slate-900">Finding your perfect ride...</h3>
@@ -224,16 +224,16 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
                       animate={{ opacity: 1, scale: 1 }}
                       className="space-y-6"
                     >
-                      <div className="p-6 rounded-3xl bg-blue-50 border-2 border-blue-100 text-left relative overflow-hidden group">
+                      <div className="p-6 rounded-3xl bg-(--hero-bg) border-2 border-(--brand-primary)/10 text-left relative overflow-hidden group">
                         <div className="absolute -top-6 -right-6 p-12 bg-white/50 rounded-full blur-2xl group-hover:bg-white/80 transition-all" />
                         <div className="relative z-10">
                           <div className="flex items-center gap-2 mb-4">
-                            <div className="px-3 py-1 rounded-full bg-blue-600 text-white text-[10px] font-bold uppercase tracking-wider">
+                            <div className="px-3 py-1 rounded-full bg-(--brand-primary) text-white text-[10px] font-bold uppercase tracking-wider">
                               AI Suggested
                             </div>
                           </div>
                           <h4 className="text-2xl font-black text-slate-900 mb-2 flex items-center gap-2">
-                            <Car className="size-6 text-blue-600" />
+                            <Car className="size-6 text-(--brand-primary)" />
                             {(recommendation.data || recommendation).suggestedCategoryName}
                           </h4>
                           <p className="text-sm text-slate-700 font-medium leading-relaxed">
@@ -255,13 +255,13 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
                       <div className="flex gap-3">
                         <button
                           onClick={() => setStep(1)}
-                          className="flex-1 h-14 bg-slate-100 text-slate-600 rounded-2xl font-bold hover:bg-slate-200 transition-all"
+                          className="flex-1 h-14 bg-slate-100 text-slate-600 rounded-2xl font-bold hover:bg-slate-200 transition-all cursor-pointer"
                         >
                           Try Again
                         </button>
                         <button
                           onClick={handleSelect}
-                          className="flex-[2] h-14 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all active:scale-95 shadow-xl"
+                          className="flex-[2] h-14 bg-(--brand-primary) text-white rounded-2xl font-bold hover:bg-(--brand-primary-hover) transition-all active:scale-95 shadow-xl shadow-(--brand-primary)/20 cursor-pointer"
                         >
                           Select this Category
                         </button>
@@ -270,7 +270,7 @@ export default function AIAssistantModal({ isOpen, onClose, onSelectCategory }: 
                   ) : (
                     <div className="py-8">
                       <p className="text-rose-600 font-bold">Oops! Something went wrong.</p>
-                      <button onClick={() => setStep(1)} className="mt-4 text-blue-600 font-bold underline">Try Again</button>
+                      <button onClick={() => setStep(1)} className="mt-4 text-(--brand-primary) font-bold underline cursor-pointer">Try Again</button>
                     </div>
                   )}
                 </div>

@@ -45,6 +45,10 @@ export const queryApi = {
     const response = await api.post<ApiResponse<any>>("/query/create", data);
     return response.data;
   },
+  getMyQueries: async () => {
+    const response = await api.get<ApiResponse<RideQuery[]>>("/query/my-queries");
+    return response.data;
+  },
 };
 
 
@@ -160,7 +164,20 @@ export const aiApi = {
     purpose?: string;
     specialRequirements?: string;
   }) => {
-    const response = await api.post("/ai/recommend", data);
+    const response = await api.post("/ai/recommend", data, {
+      timeout: 60000, // AI requests can take longer than 10s
+    });
+    return response.data;
+  },
+  estimatePrice: async (data: {
+    pickup: string;
+    destination: string;
+    carCategoryName: string;
+    tripType: string;
+  }) => {
+    const response = await api.post("/ai/estimate-price", data, {
+      timeout: 60000, // AI requests can take longer than 10s
+    });
     return response.data;
   },
 };

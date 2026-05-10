@@ -15,9 +15,12 @@ import {
   Smartphone,
   Trash2,
   Loader2,
-  Mail
+  Mail,
+  User,
+  Plus
 } from "lucide-react";
 import { useAdminQueries, useUpdateQueryStatus, useBulkDeleteQueries } from "@/hooks/useAdmin";
+import CreateTripModal from "@/components/admin/CreateTripModal";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -29,6 +32,8 @@ export default function AdminRidesPage() {
   const bulkDelete = useBulkDeleteQueries();
 
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [selectedQueryForTrip, setSelectedQueryForTrip] = useState<any>(null);
 
   const queries = queriesData?.data || [];
 
@@ -160,8 +165,17 @@ export default function AdminRidesPage() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="size-10 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center font-bold border border-blue-100">
-                          {query.fullName?.[0]}
+                        <div className="relative size-10 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center font-bold border border-blue-100">
+                          {query.user?.image ? (
+                            <img src={query.user.image} alt="" className="size-full rounded-lg object-cover" />
+                          ) : (
+                            <User className="size-5 text-blue-400" />
+                          )}
+                          {query.userId && (
+                            <div className="absolute -bottom-1.5 -right-1.5 size-4.5 rounded-full bg-(--brand-primary) border-2 border-white flex items-center justify-center" title="Registered User">
+                              <CheckCircle2 className="size-2.5 text-white" />
+                            </div>
+                          )}
                         </div>
                         <div>
                           <p className="text-sm font-bold text-slate-900">{query.fullName}</p>
@@ -207,6 +221,17 @@ export default function AdminRidesPage() {
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <button 
+                          onClick={() => {
+                            setSelectedQueryForTrip(query);
+                            setIsCreateModalOpen(true);
+                          }}
+                          className="h-8 px-2.5 rounded-lg flex items-center gap-1.5 text-[10px] font-bold bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all shadow-sm"
+                          title="Create Trip from Query"
+                        >
+                          <Plus className="size-3.5" />
+                          <span className="hidden xl:inline">Create Trip</span>
+                        </button>
+                        <button 
                           onClick={() => updateStatus.mutate({ id: query.id, status: "CONTACTED" })}
                           disabled={query.status !== "PENDING" || updateStatus.isPending}
                           className={`size-8 rounded-lg flex items-center justify-center transition-all shadow-sm ${
@@ -239,6 +264,15 @@ export default function AdminRidesPage() {
           </table>
         </div>
       </div>
+
+      <CreateTripModal 
+        isOpen={isCreateModalOpen} 
+        onClose={() => {
+          setIsCreateModalOpen(false);
+          setSelectedQueryForTrip(null);
+        }}
+        initialData={selectedQueryForTrip}
+      />
     </div>
   );
 }

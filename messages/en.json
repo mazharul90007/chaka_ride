@@ -20,7 +20,8 @@
     "login": "Login",
     "signup": "Sign Up",
     "dashboard": "Dashboard",
-    "logout": "Logout"
+    "logout": "Logout",
+    "terms": "Terms & Conditions"
   },
   "NavDropdown": {
     "home": {
@@ -722,5 +723,23 @@
       "hasAccount": "Already have an account?",
       "login": "Sign in"
     }
+  },
+  "TermsPage": {
+    "eyebrow": "Legal",
+    "title": "Terms & Conditions",
+    "lastUpdated": "Last Updated: May 2024",
+    "intro": "Welcome to Chaka Ride. By using our website and services, you agree to comply with and be bound by the following terms and conditions.",
+    "section1Title": "1. Acceptance of Terms",
+    "section1Body": "By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement. In addition, when using these particular services, you shall be subject to any posted guidelines or rules applicable to such services.",
+    "section2Title": "2. Service Description",
+    "section2Body": "Chaka Ride provides a platform for car rental services in Bangladesh. We connect passengers with vetted car providers and drivers. We reserve the right to modify or discontinue the service with or without notice.",
+    "section3Title": "3. Booking and Cancellation",
+    "section3Body": "All bookings are subject to availability. Cancellations made within 24 hours of the scheduled pickup time may be subject to a cancellation fee. Specific terms for each booking will be confirmed during the coordination phase.",
+    "section4Title": "4. User Responsibilities",
+    "section4Body": "Users are responsible for providing accurate information during booking. Any misuse of the service or provision of false information may lead to suspension of the user's account.",
+    "section5Title": "5. Limitation of Liability",
+    "section5Body": "Chaka Ride acts as a coordinator between passengers and providers. While we vet all partners, we are not liable for any direct or indirect damages arising from the use of the service, except as required by law.",
+    "section6Title": "6. Contact Us",
+    "section6Body": "If you have any questions about these Terms, please contact us at hello@chakaride.com."
   }
 }

@@ -148,6 +148,9 @@ body {
     /* Lenis drives smooth scroll; native smooth would fight it */
     scroll-behavior: auto;
   }
+  button {
+    @apply cursor-pointer;
+  }
 }
 
 /* Lenis root: avoid height lock + let scroll-padding work for sticky header */

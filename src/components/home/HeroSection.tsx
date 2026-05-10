@@ -14,6 +14,7 @@ import { useState } from "react";
 import { queryApi } from "@/lib/api-client";
 import { Loader2, Sparkles } from "lucide-react";
 import AIAssistantModal from "@/components/home/AIAssistantModal";
+import { useSession } from "@/lib/auth-client";
 
 const HERO_IMAGE =
   "https://res.cloudinary.com/dycrowzen/image/upload/v1774623407/car_iaunmo.png";
@@ -105,6 +106,7 @@ function RequiredMark() {
 
 export default function HeroSection() {
   const t = useTranslations("Hero"); 
+  const { data: session } = useSession();
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -124,6 +126,7 @@ export default function HeroSection() {
       tripType: (formData.get("tripType") as string).toUpperCase().replace("-", "_"),
       pickupDate: formData.get("pickupDate") as string,
       pickupTime: formData.get("pickupTime") as string,
+      userId: session?.user?.id || undefined,
     };
 
     setIsSubmitting(true);
@@ -199,13 +202,13 @@ export default function HeroSection() {
         >
           <button
             onClick={() => setIsAIModalOpen(true)}
-            className="group relative flex items-center gap-3 px-8 py-3.5 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-slate-800 transition-all active:scale-95 shadow-2xl overflow-hidden border border-white/10"
+            className="group relative flex items-center gap-3 px-8 py-3.5 rounded-full bg-(--brand-primary) text-white text-sm font-bold hover:bg-(--brand-primary-hover) transition-all active:scale-95 shadow-2xl overflow-hidden border border-white/10 cursor-pointer"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-indigo-600/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="absolute -inset-x-20 inset-y-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-30deg] translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
             <Sparkles className="size-4 text-amber-400 animate-pulse" />
             Smart Trip Assistant ✨
-            <div className="flex items-center gap-1 ml-1 px-2 py-0.5 rounded-md bg-blue-500/20 text-[10px] uppercase tracking-tighter">
+            <div className="flex items-center gap-1 ml-1 px-2 py-0.5 rounded-md bg-white/20 text-[10px] uppercase tracking-tighter">
               AI
             </div>
           </button>

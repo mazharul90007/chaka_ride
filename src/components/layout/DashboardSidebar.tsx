@@ -37,7 +37,7 @@ export default function DashboardSidebar({ isMobile, onClose }: DashboardSidebar
     passenger: [
       { label: "Overview", href: "/passenger", icon: LayoutDashboard },
       { label: "My Rides", href: "/passenger/rides", icon: Car },
-      { label: "Payments", href: "/passenger/payments", icon: Wallet },
+      { label: "My Queries", href: "/passenger/queries", icon: Navigation },
       { label: "Profile", href: "/profile", icon: Settings },
     ],
     driver: [
@@ -49,6 +49,7 @@ export default function DashboardSidebar({ isMobile, onClose }: DashboardSidebar
     ],
     admin: [
       { label: "Overview", href: "/admin", icon: LayoutDashboard },
+      { label: "Trips", href: "/admin/trips", icon: MapPin },
       { label: "Drivers", href: "/admin/drivers", icon: ShieldCheck },
       { label: "Users", href: "/admin/users", icon: Users },
       { label: "Queries", href: "/admin/queries", icon: Navigation },
