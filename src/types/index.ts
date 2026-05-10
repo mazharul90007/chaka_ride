@@ -54,18 +54,50 @@ export interface Admin {
 
 export interface Car {
   id: string;
-  name: string;
-  brand: string;
   model: string;
-  year: number;
-  plateNumber: string;
+  modelBn?: string | null;
+  year: string;
+  yearBn?: string | null;
+  description?: string | null;
+  descriptionBn?: string | null;
+  registrationNumber: string;
+  engineNumber?: string | null;
+  chassisNumber?: string | null;
   color: string;
-  seats: number;
-  category: string;
-  pricePerDay: number;
-  status: "AVAILABLE" | "RENTED" | "MAINTENANCE";
-  images: string[];
-  features: string[];
+  colorBn?: string | null;
+  photos: string[];
+  status: "PENDING" | "APPROVED" | "REJECTED";
+  driverId: string;
+  categoryId: string;
+  category?: CarCategory;
+  driver?: Driver & { user: User };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CarCategory {
+  id: string;
+  categoryName: string;
+  categoryNameBn?: string | null;
+  description: string;
+  descriptionBn?: string | null;
+  seat: string;
+  seatBn?: string | null;
+  luggage: string;
+  luggageBn?: string | null;
+  ac: string;
+  acBn?: string | null;
+  fuel: string;
+  fuelBn?: string | null;
+  features: Array<{ 
+    featureTitle: string; 
+    featureTitleBn?: string; 
+    featureDescription: string; 
+    featureDescriptionBn?: string; 
+    featureIcon?: string 
+  }>;
+  categoryIcon?: string | null;
+  photos: string[];
   createdAt: string;
   updatedAt: string;
 }

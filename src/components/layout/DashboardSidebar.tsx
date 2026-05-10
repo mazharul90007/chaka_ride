@@ -53,6 +53,7 @@ export default function DashboardSidebar({ isMobile, onClose }: DashboardSidebar
       { label: "Users", href: "/admin/users", icon: Users },
       { label: "Queries", href: "/admin/queries", icon: Navigation },
       { label: "Car Categories", href: "/admin/car-categories", icon: Car },
+      { label: "Cars", href: "/admin/cars", icon: Car },
       { label: "Settings", href: "/profile", icon: Settings },
     ],
   }[role] || [];

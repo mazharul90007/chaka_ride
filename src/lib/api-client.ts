@@ -1,4 +1,4 @@
-import { ApiResponse, Car, User, PaginatedData, Driver, Passenger, Admin } from "@/types";
+import { ApiResponse, Car, User, PaginatedData, Driver, Passenger, Admin, CarCategory } from "@/types";
 import { api } from "./axiosInstance";
 
 export const authApi = {
@@ -11,13 +11,31 @@ export const authApi = {
 
 export const carApi = {
   getAll: async (params?: Record<string, any>) => {
-    const response = await api.get<ApiResponse<PaginatedData<Car>>>("/cars", {
-      params,
-    });
+    const response = await api.get<ApiResponse<Car[]>>("/car/all", { params });
+    return response.data;
+  },
+  getMyCars: async () => {
+    const response = await api.get<ApiResponse<Car[]>>("/car/my-cars");
     return response.data;
   },
   getOne: async (id: string) => {
-    const response = await api.get<ApiResponse<Car>>(`/cars/${id}`);
+    const response = await api.get<ApiResponse<Car>>(`/car/${id}`);
+    return response.data;
+  },
+  create: async (data: FormData) => {
+    const response = await api.post<ApiResponse<Car>>("/car", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+  },
+  update: async (id: string, data: FormData) => {
+    const response = await api.patch<ApiResponse<Car>>(`/car/${id}`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+  },
+  delete: async (id: string) => {
+    const response = await api.delete<ApiResponse<null>>(`/car/${id}`);
     return response.data;
   },
 };
@@ -29,32 +47,6 @@ export const queryApi = {
   },
 };
 
-export interface CarCategory {
-  id: string;
-  categoryName: string;
-  categoryNameBn?: string;
-  description: string;
-  descriptionBn?: string;
-  seat: string;
-  seatBn?: string;
-  luggage: string;
-  luggageBn?: string;
-  ac: string;
-  acBn?: string;
-  fuel: string;
-  fuelBn?: string;
-  features: Array<{ 
-    featureTitle: string; 
-    featureTitleBn?: string; 
-    featureDescription: string; 
-    featureDescriptionBn?: string; 
-    featureIcon?: string 
-  }>;
-  categoryIcon?: string;
-  photos?: string[];
-  createdAt: string;
-  updatedAt: string;
-}
 
 export const carCategoryApi = {
   getAll: async () => {

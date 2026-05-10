@@ -20,7 +20,7 @@ import {
   useUpdateCategory,
   useDeleteCategory
 } from "@/hooks/useCarCategory";
-import { CarCategory } from "@/lib/api-client";
+import { CarCategory } from "@/types";
 import { toast } from "sonner";
 
 export default function CarCategoriesAdmin() {
@@ -47,7 +47,9 @@ export default function CarCategoriesAdmin() {
     acBn: "",
     fuel: "",
     fuelBn: "",
-    features: [] as Array<{ featureTitle: string; featureTitleBn?: string; featureDescription: string; featureDescriptionBn?: string; featureIcon?: string }>
+    features: [] as Array<{ featureTitle: string; featureTitleBn?: string; featureDescription: string; featureDescriptionBn?: string; featureIcon?: string }>,
+    categoryIcon: null as string | null,
+    photos: [] as string[]
   });
 
   const [iconFile, setIconFile] = useState<File | null>(null);
@@ -76,6 +78,8 @@ export default function CarCategoriesAdmin() {
         fuel: category.fuel || "",
         fuelBn: category.fuelBn || "",
         features: category.features || [],
+        categoryIcon: category.categoryIcon || null,
+        photos: category.photos || [],
       });
     } else {
       setEditingCategory(null);
@@ -93,6 +97,8 @@ export default function CarCategoriesAdmin() {
         fuel: "",
         fuelBn: "",
         features: [],
+        categoryIcon: null,
+        photos: [],
       });
     }
     setIconFile(null);
@@ -403,15 +409,53 @@ export default function CarCategoriesAdmin() {
                   {/* Media */}
                   <div className="space-y-4 md:col-span-2">
                     <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Media</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1.5">Category Icon</label>
-                        <input type="file" accept="image/*" onChange={e => setIconFile(e.target.files?.[0] || null)} className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-(--brand-primary) hover:file:bg-blue-100" />
+                    
+                    {/* Category Icon */}
+                    <div className="space-y-3">
+                      <label className="block text-xs font-bold text-slate-700">Category Icon</label>
+                      <div className="flex items-center gap-4">
+                        {formData.categoryIcon && (
+                          <div className="relative size-20 rounded-lg border border-slate-200 overflow-hidden bg-slate-50 group">
+                            <img src={formData.categoryIcon} alt="Icon" className="size-full object-cover" />
+                            <button 
+                              type="button"
+                              onClick={() => setFormData({ ...formData, categoryIcon: null })}
+                              className="absolute inset-0 bg-rose-600/80 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+                            >
+                              <Trash2 className="size-5" />
+                            </button>
+                          </div>
+                        )}
+                        <input type="file" accept="image/*" onChange={e => setIconFile(e.target.files?.[0] || null)} className="flex-1 text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-(--brand-primary) hover:file:bg-blue-100" />
                       </div>
-                      <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1.5">Gallery Photos (Max 10)</label>
-                        <input type="file" accept="image/*" multiple onChange={e => setPhotoFiles(Array.from(e.target.files || []))} className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-(--brand-primary) hover:file:bg-blue-100" />
-                      </div>
+                    </div>
+
+                    {/* Gallery Photos */}
+                    <div className="space-y-3">
+                      <label className="block text-xs font-bold text-slate-700">Gallery Photos (Max 10)</label>
+                      
+                      {/* Existing Photos */}
+                      {formData.photos.length > 0 && (
+                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3 mb-4">
+                          {formData.photos.map((url, idx) => (
+                            <div key={idx} className="relative aspect-square rounded-lg border border-slate-200 overflow-hidden bg-slate-50 group">
+                              <img src={url} alt={`Photo ${idx + 1}`} className="size-full object-cover" />
+                              <button 
+                                type="button"
+                                onClick={() => {
+                                  const newPhotos = formData.photos.filter((_, i) => i !== idx);
+                                  setFormData({ ...formData, photos: newPhotos });
+                                }}
+                                className="absolute inset-0 bg-rose-600/80 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+                              >
+                                <Trash2 className="size-5" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <input type="file" accept="image/*" multiple onChange={e => setPhotoFiles(Array.from(e.target.files || []))} className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-(--brand-primary) hover:file:bg-blue-100" />
                     </div>
                   </div>
                 </div>
