@@ -8,6 +8,11 @@
 
 **CHAKA RIDE CLIENT** is the Next.js frontend for Chaka Ride. Passengers can browse car categories, request trips, and manage their rides. Drivers can view incoming trip requests, place bids with the help of an AI price estimator, and manage their earnings. Staff use the admin dashboard for moderation, trip oversight, and user administration.
 
+🌐 **Frontend Live URL:** [https://chaka-ride-client.vercel.app](https://chaka-ride-client.vercel.app)  
+🌐 **Backend Live URL:** [https://chaka-ride-server.onrender.com](https://chaka-ride-server.onrender.com)  
+🌐 **Frontend GitHub:** [https://github.com/mazharul90007/chaka_ride](https://github.com/mazharul90007/chaka_ride)  
+🌐 **Backend GitHub:** [https://github.com/mazharul90007/chaka_ride_server](https://github.com/mazharul90007/chaka_ride_server)  
+
 ---
 
 ## ✨ Features
@@ -107,6 +112,12 @@ Open [http://localhost:3000](http://localhost:3000).
 - `src/hooks` — React Query hooks (e.g., `useTrip.ts`, `useAIEstimate.ts`)
 - `src/lib` — Axios client, Better Auth client
 - `src/assets` — Static images and media
+
+---
+
+## 🗂️ Backend reference
+
+Data model and REST surface are documented in the **server** repo (including ERD image and endpoint list). See the [Backend GitHub](https://github.com/mazharul90007/chaka_ride_server) for request/response details.
 
 ---
 
