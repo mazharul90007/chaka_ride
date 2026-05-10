@@ -12,7 +12,8 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
 import { queryApi } from "@/lib/api-client";
-import { Loader2 } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
+import AIAssistantModal from "@/components/home/AIAssistantModal";
 
 const HERO_IMAGE =
   "https://res.cloudinary.com/dycrowzen/image/upload/v1774623407/car_iaunmo.png";
@@ -103,7 +104,8 @@ function RequiredMark() {
 }
 
 export default function HeroSection() {
-  const t = useTranslations("Hero");
+  const t = useTranslations("Hero"); 
+  const [isAIModalOpen, setIsAIModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -189,6 +191,26 @@ export default function HeroSection() {
         </div>
 
         {/* Hero form */}
+        <motion.div 
+          className="w-full flex justify-center mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <button
+            onClick={() => setIsAIModalOpen(true)}
+            className="group relative flex items-center gap-3 px-8 py-3.5 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-slate-800 transition-all active:scale-95 shadow-2xl overflow-hidden border border-white/10"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-indigo-600/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute -inset-x-20 inset-y-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-30deg] translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
+            <Sparkles className="size-4 text-amber-400 animate-pulse" />
+            Smart Trip Assistant ✨
+            <div className="flex items-center gap-1 ml-1 px-2 py-0.5 rounded-md bg-blue-500/20 text-[10px] uppercase tracking-tighter">
+              AI
+            </div>
+          </button>
+        </motion.div>
+
         <motion.div
           className="mt-8 w-full rounded-2xl bg-(--hero-form-bg) p-5 shadow-sm ring-1 ring-(--hero-form-ring) sm:mt-10 sm:p-7 lg:p-8"
           initial={{ opacity: 0, y: 28 }}
@@ -344,7 +366,7 @@ export default function HeroSection() {
         </motion.div>
 
         {/* View all cars button */}
-        <motion.div
+        {/* <motion.div
           className="my-4 flex w-full justify-center sm:mt-10"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -359,12 +381,12 @@ export default function HeroSection() {
           >
             {t("viewAllCars")}
           </Link>
-        </motion.div>
+        </motion.div> */}
       </div>
 
       {/* Hero image */}
       <motion.div
-        className="relative mt-2 w-full sm:-mt-2"
+        className="relative mt-2 w-full sm:-mt-2 py-8"
         initial={{ opacity: 0, y: 36 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
@@ -379,6 +401,14 @@ export default function HeroSection() {
           priority
         />
       </motion.div>
+      <AIAssistantModal 
+        isOpen={isAIModalOpen} 
+        onClose={() => setIsAIModalOpen(false)}
+        onSelectCategory={(categoryId) => {
+          const event = new CustomEvent('selectCarCategory', { detail: categoryId });
+          window.dispatchEvent(event);
+        }}
+      />
     </section>
   );
 }

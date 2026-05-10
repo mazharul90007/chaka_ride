@@ -26,8 +26,17 @@ export function HeroCarPicker({ fieldClass }: Props) {
     function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") setOpen(false);
     }
+    function handleAISelection(e: any) {
+      if (e.detail) {
+        setSelected(e.detail);
+      }
+    }
     document.addEventListener("keydown", handleKey);
-    return () => document.removeEventListener("keydown", handleKey);
+    window.addEventListener('selectCarCategory', handleAISelection);
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      window.removeEventListener('selectCarCategory', handleAISelection);
+    };
   }, []);
 
   return (

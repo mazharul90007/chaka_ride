@@ -151,3 +151,16 @@ export const adminApi = {
     return response.data;
   },
 };
+
+export const aiApi = {
+  recommend: async (data: {
+    pickup: string;
+    destination: string;
+    passengers: number;
+    purpose?: string;
+    specialRequirements?: string;
+  }) => {
+    const response = await api.post("/ai/recommend", data);
+    return response.data;
+  },
+};
