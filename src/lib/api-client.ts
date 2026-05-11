@@ -180,4 +180,21 @@ export const aiApi = {
     });
     return response.data;
   },
+  suggestDrivers: async (data: {
+    pickup: string;
+    destination: string;
+    carCategoryId: string;
+    tripType: string;
+  }) => {
+    const response = await api.post("/ai/suggest-drivers", data, {
+      timeout: 60000,
+    });
+    return response.data;
+  },
+  getBriefing: async () => {
+    const response = await api.get("/ai/morning-briefing", {
+      timeout: 60000,
+    });
+    return response.data;
+  },
 };

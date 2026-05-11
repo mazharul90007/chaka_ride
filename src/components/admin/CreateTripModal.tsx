@@ -7,6 +7,8 @@ import { useCreateTrip } from "@/hooks/useTrip";
 import { useAdminDrivers } from "@/hooks/useAdmin";
 import { useGetCategories } from "@/hooks/useCarCategory";
 import { toast } from "sonner";
+import { aiApi } from "@/lib/api-client";
+import { Sparkles } from "lucide-react";
 
 interface CreateTripModalProps {
   isOpen: boolean;
@@ -36,6 +38,31 @@ export default function CreateTripModal({ isOpen, onClose, initialData }: Create
   });
   
   const [selectedDrivers, setSelectedDrivers] = useState<string[]>([]);
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const [recommendations, setRecommendations] = useState<any[]>([]);
+
+  const handleAiSuggest = async () => {
+    if (!formData.pickupLocation || !formData.destination || !formData.carCategoryId) {
+      toast.error("Fill pickup, destination and car category first");
+      return;
+    }
+
+    setIsAiLoading(true);
+    try {
+      const res = await aiApi.suggestDrivers({
+        pickup: formData.pickupLocation,
+        destination: formData.destination,
+        carCategoryId: formData.carCategoryId,
+        tripType: formData.tripType,
+      });
+      setRecommendations(res.recommendations || []);
+      toast.success("AI suggested best matches!");
+    } catch (err: any) {
+      toast.error("AI recommendation failed");
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (initialData) {
@@ -66,6 +93,7 @@ export default function CreateTripModal({ isOpen, onClose, initialData }: Create
       });
     }
     setSelectedDrivers([]);
+    setRecommendations([]);
   }, [initialData, isOpen]);
 
   const handleCreateTrip = async (e: React.FormEvent) => {
@@ -161,33 +189,66 @@ export default function CreateTripModal({ isOpen, onClose, initialData }: Create
               </div>
 
               <div className="space-y-3 pt-4 border-t border-slate-100">
-                <label className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <User className="size-4 text-(--brand-primary)" />
-                  Assign Drivers (Select multiple) *
-                </label>
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <User className="size-4 text-(--brand-primary)" />
+                    Assign Drivers (Select multiple) *
+                  </label>
+                  <button 
+                    type="button" 
+                    onClick={handleAiSuggest}
+                    disabled={isAiLoading}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-600 text-xs font-bold hover:bg-emerald-100 transition-all border border-emerald-100 shadow-sm disabled:opacity-50"
+                  >
+                    <Sparkles className={`size-3.5 ${isAiLoading ? 'animate-pulse' : ''}`} />
+                    {isAiLoading ? 'Analyzing...' : 'AI Suggest Best'}
+                  </button>
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-48 overflow-y-auto p-1">
                   {drivers.map((driver: any) => (
-                    <label key={driver.id} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${selectedDrivers.includes(driver.id) ? 'border-(--brand-primary) bg-(--brand-primary)/5' : 'border-slate-200 hover:border-slate-300'}`}>
-                      <input 
-                        type="checkbox" 
-                        checked={selectedDrivers.includes(driver.id)}
-                        onChange={(e) => {
-                          if (e.target.checked) setSelectedDrivers([...selectedDrivers, driver.id]);
-                          else setSelectedDrivers(selectedDrivers.filter(id => id !== driver.id));
-                        }}
-                        className="size-4 rounded border-slate-300 text-(--brand-primary) focus:ring-(--brand-primary)"
-                      />
-                      <div className="size-8 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-200 shrink-0">
-                        {driver.user.image ? (
-                          <img src={driver.user.image} alt="" className="size-full object-cover" />
-                        ) : (
-                          <User className="size-4 text-slate-400" />
-                        )}
+                    <label 
+                      key={driver.id} 
+                      className={`relative flex flex-col gap-2 p-3 rounded-xl border cursor-pointer transition-all ${
+                        selectedDrivers.includes(driver.id) 
+                          ? 'border-(--brand-primary) bg-(--brand-primary)/5 shadow-sm ring-1 ring-(--brand-primary)' 
+                          : 'border-slate-200 hover:border-slate-300'
+                      } ${recommendations.find(r => r.driverId === driver.id) ? 'border-emerald-200 bg-emerald-50/30' : ''}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <input 
+                          type="checkbox" 
+                          checked={selectedDrivers.includes(driver.id)}
+                          onChange={(e) => {
+                            if (e.target.checked) setSelectedDrivers([...selectedDrivers, driver.id]);
+                            else setSelectedDrivers(selectedDrivers.filter(id => id !== driver.id));
+                          }}
+                          className="size-4 rounded border-slate-300 text-(--brand-primary) focus:ring-(--brand-primary)"
+                        />
+                        <div className="size-8 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-200 shrink-0">
+                          {driver.user.image ? (
+                            <img src={driver.user.image} alt="" className="size-full object-cover" />
+                          ) : (
+                            <User className="size-4 text-slate-400" />
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <p className="text-xs font-bold text-slate-900 truncate">{driver.user.name}</p>
+                            {recommendations.find(r => r.driverId === driver.id) && (
+                              <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[9px] font-bold uppercase animate-in fade-in zoom-in">
+                                <Sparkles className="size-2" /> Match
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[10px] text-slate-500 truncate">{driver.vehicleModel || 'No vehicle info'}</p>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <p className="text-xs font-bold text-slate-900">{driver.user.name}</p>
-                        <p className="text-[10px] text-slate-500">{driver.vehicleModel || 'No vehicle info'}</p>
-                      </div>
+                      
+                      {recommendations.find(r => r.driverId === driver.id) && (
+                        <div className="pl-7 pr-2 py-1.5 rounded-lg bg-emerald-100/50 text-[10px] font-medium text-emerald-800 leading-tight border border-emerald-100">
+                          <span className="font-bold">AI Reason:</span> {recommendations.find(r => r.driverId === driver.id).reasoning}
+                        </div>
+                      )}
                     </label>
                   ))}
                 </div>

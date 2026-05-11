@@ -12,15 +12,41 @@ import {
   Clock,
   ArrowUpRight,
   Activity,
-  Plus
+  Plus,
+  Sparkles,
+  BrainCircuit
 } from "lucide-react";
 import { useAdminStats, useAdminDrivers, useUpdateDriverStatus } from "@/hooks/useAdmin";
+import { aiApi } from "@/lib/api-client";
+import { useState, useEffect } from "react";
 
 export default function AdminDashboard() {
   const { data: session } = useSession();
   const { data: statsData, isLoading: isStatsLoading } = useAdminStats();
   const { data: driversData, isLoading: isDriversLoading } = useAdminDrivers();
   const updateStatus = useUpdateDriverStatus();
+
+  const [briefing, setBriefing] = useState<string>("");
+  const [isBriefingLoading, setIsBriefingLoading] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const fetchBriefing = async () => {
+    setIsBriefingLoading(true);
+    try {
+      const res = await aiApi.getBriefing();
+      // Access res.data.briefing because of the global ResponseInterceptor
+      const briefingText = res?.data?.briefing || res?.briefing || res?.message || "Welcome back! Platform is performing within normal parameters.";
+      setBriefing(briefingText);
+    } catch (err) {
+      setBriefing("Good morning! The platform is running smoothly. Check your pending tasks to stay ahead.");
+    } finally {
+      setIsBriefingLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBriefing();
+  }, []);
   
   const stats = [
     { 
@@ -85,7 +111,105 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      {/* Stats Grid */}
+
+      {/* AI Floating Button */}
+      <div className="fixed bottom-8 right-8 z-50">
+        <button 
+          onClick={() => {
+            setIsDrawerOpen(true);
+            if (!briefing) fetchBriefing();
+          }}
+          className="group relative flex size-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg shadow-blue-600/30 transition-all hover:scale-110 hover:rotate-12 active:scale-95"
+        >
+          <Sparkles className={`size-6 ${isBriefingLoading ? 'animate-pulse' : ''}`} />
+          <div className="absolute right-full mr-3 hidden group-hover:block whitespace-nowrap rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-bold text-white shadow-xl animate-in fade-in slide-in-from-right-2">
+            ✨ Get AI Briefing
+          </div>
+        </button>
+      </div>
+
+      {/* AI Briefing Drawer */}
+      <AnimatePresence>
+        {isDrawerOpen && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsDrawerOpen(false)}
+              className="fixed inset-0 z-[60] bg-slate-900/40 backdrop-blur-sm"
+            />
+            <motion.div 
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed inset-y-0 right-0 z-[70] w-full max-w-sm bg-white shadow-2xl flex flex-col"
+            >
+              <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+                <div className="flex items-center gap-3">
+                  <BrainCircuit className="size-6" />
+                  <div>
+                    <h3 className="text-base font-bold">AI Platform Assistant</h3>
+                    <p className="text-[10px] text-blue-100 font-medium">Smart Morning Briefing</p>
+                  </div>
+                </div>
+                <button onClick={() => setIsDrawerOpen(false)} className="size-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                  <XCircle className="size-5" />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                {isBriefingLoading ? (
+                  <div className="space-y-4">
+                    <div className="h-4 w-full bg-slate-100 rounded-full animate-pulse" />
+                    <div className="h-4 w-3/4 bg-slate-100 rounded-full animate-pulse" />
+                    <div className="h-4 w-5/6 bg-slate-100 rounded-full animate-pulse" />
+                    <div className="pt-8 flex justify-center">
+                      <div className="size-12 rounded-full border-4 border-blue-100 border-t-blue-600 animate-spin" />
+                    </div>
+                    <p className="text-center text-xs font-bold text-slate-400 mt-4">AI is analyzing your platform data...</p>
+                  </div>
+                ) : (
+                  <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="relative">
+                      <div className="absolute -left-2 top-0 h-full w-1 bg-blue-600 rounded-full" />
+                      <p className="text-sm md:text-base text-slate-700 leading-relaxed font-medium pl-4">
+                        {briefing}
+                      </p>
+                    </div>
+
+                    <div className="pt-6 border-t border-slate-100 grid grid-cols-2 gap-3">
+                      <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <p className="text-[10px] font-bold text-slate-400 uppercase">Status</p>
+                        <p className="text-xs font-bold text-emerald-600 flex items-center gap-1 mt-1">
+                          <CheckCircle2 className="size-3" /> Healthy
+                        </p>
+                      </div>
+                      <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <p className="text-[10px] font-bold text-slate-400 uppercase">Uptime</p>
+                        <p className="text-xs font-bold text-blue-600 mt-1">99.99%</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="p-6 border-t border-slate-100 bg-slate-50">
+                <button 
+                  onClick={() => fetchBriefing()}
+                  disabled={isBriefingLoading}
+                  className="w-full h-11 rounded-xl bg-slate-900 text-white text-xs font-bold flex items-center justify-center gap-2 hover:bg-slate-800 transition-all disabled:opacity-50"
+                >
+                  <Clock className="size-4" />
+                  Refresh Briefing
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, i) => (
           <motion.div

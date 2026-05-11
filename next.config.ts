@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     // Hardcode the fallback to the exact backend server to prevent infinite proxy loops
     // in case the environment variable is accidentally set to the frontend URL.
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL.includes('chaka-ride-server')
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL && (process.env.NEXT_PUBLIC_API_URL.includes('chaka-ride-server') || process.env.NEXT_PUBLIC_API_URL.includes('localhost'))
       ? process.env.NEXT_PUBLIC_API_URL
       : "https://chaka-ride-server.vercel.app/api/v1";
 

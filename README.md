@@ -41,6 +41,8 @@
 - **Operational Overview**: Track platform revenue, active trips, and driver/passenger statistics.
 - **Trips Moderation**: Manage all trips with server-side pagination, status filtering, and search functionalities.
 - **Driver Approval**: Review driver bids and assign them to passenger trips.
+- **AI Dispatcher**: ✨ **Smart Driver Matching** in the "Create Trip" modal. The AI analyzes trip details and suggests the top 5 most compatible drivers.
+- **AI Platform Briefing**: 🤖 **Floating AI Assistant** that provides automated platform health reports and morning briefings via a side-drawer.
 - **Users**: Manage applicants, drivers, and staff lists.
 
 ### 🌐 Public
