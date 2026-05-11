@@ -1,6 +1,7 @@
 import LenisProvider from "@/providers/LenisProvider";
 import MotionProvider from "@/providers/MotionProvider";
 import QueryProviders from "@/providers/QueryProvider";
+import ThemeProvider from "@/providers/ThemeProvider";
 import { routing } from "@/i18n/routing";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
@@ -59,6 +60,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} ${notoBengali.variable} h-full scroll-pt-[72px] antialiased`}
+      suppressHydrationWarning
     >
       <body
         className={`flex min-h-full flex-col font-sans ${locale === "bn" ? "font-bengali" : ""}`}
@@ -67,7 +69,11 @@ export default async function LocaleLayout({ children, params }: Props) {
           <Toaster richColors position="top-right" />
           <NextIntlClientProvider locale={locale} messages={messages}>
             <LenisProvider>
-              <MotionProvider>{children}</MotionProvider>
+              <MotionProvider>
+                <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+                  {children}
+                </ThemeProvider>
+              </MotionProvider>
             </LenisProvider>
           </NextIntlClientProvider>
         </QueryProviders>

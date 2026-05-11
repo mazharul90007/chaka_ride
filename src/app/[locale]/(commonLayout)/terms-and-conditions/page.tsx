@@ -34,7 +34,7 @@ export default function TermsAndConditionsPage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-slate-50 py-16 sm:py-20 lg:py-24">
+    <div className="relative min-h-screen bg-slate-50 dark:bg-slate-950 py-16 sm:py-20 lg:py-24">
       {/* Background Decor */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <div className="absolute -top-[10%] -left-[10%] h-[40%] w-[40%] rounded-full bg-(--brand-primary)/5 blur-3xl" />
@@ -53,11 +53,11 @@ export default function TermsAndConditionsPage() {
             <p className="text-sm font-bold tracking-wider text-(--brand-primary) uppercase">
               {t("eyebrow")}
             </p>
-            <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+            <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl lg:text-5xl">
               {t("title")}
             </h1>
             <div className="mx-auto mt-4 h-1 w-20 rounded-full bg-(--brand-primary)" />
-            <p className="mt-6 text-sm font-medium text-slate-500 italic">
+            <p className="mt-6 text-sm font-medium text-slate-500 dark:text-slate-400 italic">
               {t("lastUpdated")}
             </p>
           </motion.div>
@@ -65,9 +65,9 @@ export default function TermsAndConditionsPage() {
           {/* Intro Card */}
           <motion.div
             variants={itemVariants}
-            className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+            className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm sm:p-8"
           >
-            <p className="text-lg leading-relaxed text-slate-700">
+            <p className="text-lg leading-relaxed text-slate-700 dark:text-slate-300">
               {t("intro")}
             </p>
           </motion.div>
@@ -78,16 +78,16 @@ export default function TermsAndConditionsPage() {
               <motion.section
                 key={idx}
                 variants={itemVariants}
-                className="group relative flex gap-6 rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:border-(--brand-primary)/30 hover:shadow-md sm:p-8"
+                className="group relative flex gap-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 transition-all duration-300 hover:border-(--brand-primary)/30 hover:shadow-md sm:p-8"
               >
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-(--brand-primary) transition-colors group-hover:bg-(--brand-primary) group-hover:text-white">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800 text-(--brand-primary) transition-colors group-hover:bg-(--brand-primary) group-hover:text-white">
                   <section.icon className="size-6" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-900 group-hover:text-(--brand-primary) transition-colors">
+                  <h2 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-(--brand-primary) transition-colors">
                     {section.title}
                   </h2>
-                  <p className="mt-3 text-base leading-relaxed text-slate-600">
+                  <p className="mt-3 text-base leading-relaxed text-slate-600 dark:text-slate-400">
                     {section.body}
                   </p>
                 </div>
@@ -98,7 +98,7 @@ export default function TermsAndConditionsPage() {
           {/* Footer Note */}
           <motion.div
             variants={itemVariants}
-            className="text-center text-slate-500 text-sm"
+            className="text-center text-slate-500 dark:text-slate-400 text-sm"
           >
             <p>
               By continuing to use our site, you acknowledge that you have read and understood these terms.

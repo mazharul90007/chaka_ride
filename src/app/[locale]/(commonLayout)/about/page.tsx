@@ -76,13 +76,13 @@ function StatCard({ value, label }: { value: string; label: string }) {
         scale: 1.03,
         transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
       }}
-      className="group relative flex flex-col items-center gap-2 overflow-hidden rounded-2xl border border-(--brand-primary)/10 bg-white/80 px-6 py-7 shadow-sm backdrop-blur-sm transition-shadow duration-300 hover:shadow-md"
+      className="group relative flex flex-col items-center gap-2 overflow-hidden rounded-2xl border border-(--brand-primary)/10 bg-white/80 dark:bg-slate-800/80 px-6 py-7 shadow-sm backdrop-blur-sm transition-shadow duration-300 hover:shadow-md"
     >
       <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-(--brand-primary)/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       <span className="relative text-3xl font-extrabold tracking-tight text-(--brand-primary) sm:text-4xl">
         {value}
       </span>
-      <span className="relative text-sm font-medium text-slate-600">
+      <span className="relative text-sm font-medium text-slate-600 dark:text-slate-400">
         {label}
       </span>
     </motion.div>
@@ -109,7 +109,7 @@ function ValueCard({
         y: -6,
         transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
       }}
-      className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-xl sm:p-7"
+      className="group relative overflow-hidden rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-800 p-6 shadow-sm transition-shadow duration-300 hover:shadow-xl sm:p-7"
     >
       <div
         className={`absolute top-0 left-0 h-1 w-full bg-linear-to-r ${accent} opacity-60 transition-opacity duration-300 group-hover:opacity-100`}
@@ -129,8 +129,8 @@ function ValueCard({
         />
       </motion.div>
 
-      <h3 className="text-lg font-bold text-slate-900 sm:text-xl">{title}</h3>
-      <p className="mt-2.5 text-sm leading-relaxed text-slate-500 sm:text-[15px]">
+      <h3 className="text-lg font-bold text-slate-900 dark:text-white sm:text-xl">{title}</h3>
+      <p className="mt-2.5 text-sm leading-relaxed text-slate-500 dark:text-slate-400 sm:text-[15px]">
         {body}
       </p>
     </motion.div>
@@ -171,7 +171,7 @@ export default function AboutPage() {
           >
             <motion.p
               variants={headlineLine}
-              className="flex items-center justify-center gap-2 text-base font-medium tracking-tight text-slate-600 sm:text-lg"
+              className="flex items-center justify-center gap-2 text-base font-medium tracking-tight text-slate-600 dark:text-slate-400 sm:text-lg"
             >
               <span className="font-semibold text-(--brand-primary)">
                 {t("eyebrow")}
@@ -186,14 +186,14 @@ export default function AboutPage() {
               variants={headlineLine}
               className="text-balance text-3xl leading-[1.12] font-extrabold tracking-tight sm:text-4xl sm:leading-[1.1] lg:text-5xl lg:leading-[1.08]"
             >
-              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
                 {t("title")}
               </span>
             </motion.h1>
 
             <motion.p
               variants={headlineLine}
-              className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 sm:text-lg"
+              className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg"
             >
               {t("intro")}
             </motion.p>
@@ -215,7 +215,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission section */}
-      <section className="relative w-full overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full overflow-hidden bg-white dark:bg-slate-900 py-16 sm:py-20 lg:py-24">
         {/* Decorative background accents */}
         <div
           className="pointer-events-none absolute -top-20 -left-20 z-0 h-80 w-80 rounded-full opacity-[0.06] blur-3xl"
@@ -273,7 +273,7 @@ export default function AboutPage() {
 
                 {/* Floating badge */}
                 <motion.div
-                  className="absolute -right-3 top-6 z-20 flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 shadow-lg ring-1 ring-slate-100 sm:-right-5 sm:top-8"
+                  className="absolute -right-3 top-6 z-20 flex items-center gap-2 rounded-xl bg-white dark:bg-slate-800 px-4 py-2.5 shadow-lg ring-1 ring-slate-100 dark:ring-slate-700 sm:-right-5 sm:top-8"
                   initial={{ opacity: 0, scale: 0.8, x: 20 }}
                   whileInView={{
                     opacity: 1,
@@ -294,10 +294,10 @@ export default function AboutPage() {
                     />
                   </div>
                   <div>
-                    <p className="text-lg font-bold leading-none text-slate-900">
+                    <p className="text-lg font-bold leading-none text-slate-900 dark:text-white">
                       {t("stat2Value")}
                     </p>
-                    <p className="mt-0.5 text-xs text-slate-500">
+                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                       {t("stat2Label")}
                     </p>
                   </div>
@@ -305,7 +305,7 @@ export default function AboutPage() {
 
                 {/* Floating badge bottom-left */}
                 <motion.div
-                  className="absolute -left-3 bottom-12 z-20 flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 shadow-lg ring-1 ring-slate-100 sm:-left-5 sm:bottom-14"
+                  className="absolute -left-3 bottom-12 z-20 flex items-center gap-2 rounded-xl bg-white dark:bg-slate-800 px-4 py-2.5 shadow-lg ring-1 ring-slate-100 dark:ring-slate-700 sm:-left-5 sm:bottom-14"
                   initial={{ opacity: 0, scale: 0.8, x: -20 }}
                   whileInView={{
                     opacity: 1,
@@ -326,10 +326,10 @@ export default function AboutPage() {
                     />
                   </div>
                   <div>
-                    <p className="text-lg font-bold leading-none text-slate-900">
+                    <p className="text-lg font-bold leading-none text-slate-900 dark:text-white">
                       {t("stat1Value")}
                     </p>
-                    <p className="mt-0.5 text-xs text-slate-500">
+                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                       {t("stat1Label")}
                     </p>
                   </div>
@@ -359,13 +359,13 @@ export default function AboutPage() {
                 variants={headlineLine}
                 className="text-balance text-2xl leading-[1.15] font-extrabold tracking-tight sm:text-3xl lg:text-4xl"
               >
-                <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+                <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
                   {t("missionTitle")}
                 </span>
               </motion.h2>
               <motion.p
                 variants={headlineLine}
-                className="mt-5 max-w-lg text-pretty text-[15px] leading-relaxed text-slate-600 sm:text-base"
+                className="mt-5 max-w-lg text-pretty text-[15px] leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base"
               >
                 {t("missionBody")}
               </motion.p>
@@ -380,7 +380,7 @@ export default function AboutPage() {
                         strokeWidth={2}
                       />
                     </span>
-                    <span className="text-[15px] leading-relaxed text-slate-700 sm:text-base">
+                    <span className="text-[15px] leading-relaxed text-slate-700 dark:text-slate-300 sm:text-base">
                       {t(`missionHighlight${n}`)}
                     </span>
                   </li>
@@ -392,7 +392,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values section */}
-      <section className="relative w-full overflow-hidden bg-slate-50 py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950 py-16 sm:py-20 lg:py-24">
         <div
           className="pointer-events-none absolute top-0 right-0 z-0 h-96 w-96 translate-x-1/3 -translate-y-1/4 rounded-full opacity-30 blur-3xl"
           style={{
@@ -433,7 +433,7 @@ export default function AboutPage() {
               variants={headlineLine}
               className="text-balance text-2xl leading-[1.15] font-extrabold tracking-tight sm:text-3xl lg:text-4xl"
             >
-              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
                 {t("valuesTitle")}
               </span>
             </motion.h2>
@@ -461,7 +461,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA section */}
-      <section className="relative w-full overflow-hidden bg-white py-16 sm:py-20">
+      <section className="relative w-full overflow-hidden bg-white dark:bg-slate-900 py-16 sm:py-20">
         <div className="mx-auto px-4 text-center sm:px-6">
           <motion.div
             initial="hidden"
@@ -471,13 +471,13 @@ export default function AboutPage() {
           >
             <motion.h2
               variants={headlineLine}
-              className="text-balance text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl"
+              className="text-balance text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-3xl lg:text-4xl"
             >
               {t("ctaTitle")}
             </motion.h2>
             <motion.p
               variants={headlineLine}
-              className="mx-auto mt-4 max-w-lg text-pretty text-[15px] leading-relaxed text-slate-600 sm:text-base"
+              className="mx-auto mt-4 max-w-lg text-pretty text-[15px] leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base"
             >
               {t("ctaBody")}
             </motion.p>

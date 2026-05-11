@@ -124,10 +124,10 @@ function StepCard({ meta }: { meta: StepMeta }) {
         </div>
       </div>
 
-      <h3 className="relative text-lg font-bold leading-snug text-slate-900 sm:text-xl">
+      <h3 className="relative text-lg font-bold leading-snug text-slate-900 dark:text-white sm:text-xl">
         {title}
       </h3>
-      <p className="relative mt-2.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+      <p className="relative mt-2.5 text-sm leading-relaxed text-slate-700 dark:text-slate-400 sm:text-[15px]">
         {description}
       </p>
       <ul className="relative mt-5 space-y-3">
@@ -135,7 +135,7 @@ function StepCard({ meta }: { meta: StepMeta }) {
           <li
             key={line}
             className={cn(
-              "flex gap-3 rounded-xl border py-2 pr-3 pl-2 text-sm text-slate-800 shadow-sm",
+              "flex gap-3 rounded-xl border py-2 pr-3 pl-2 text-sm text-slate-800 dark:text-slate-300 shadow-sm",
               bulletRowClass,
             )}
           >
@@ -171,12 +171,12 @@ export default function HowItWorksSection() {
       description: t("step1Description"),
       bullets: [t("step1Bullet1"), t("step1Bullet2"), t("step1Bullet3")],
       icon: ClipboardList,
-      surface: "border-sky-100/90 bg-sky-50",
-      stepNumberClass: "text-sky-800",
-      iconTileClass: "border-sky-100/80 bg-white",
-      bulletRowClass: "border-sky-100/70 bg-white/90",
-      checkWrapClass: "border-sky-100/80 bg-sky-50/80",
-      checkClass: "text-sky-700",
+      surface: "border-sky-100/90 bg-sky-50 dark:border-sky-900/50 dark:bg-sky-950/20",
+      stepNumberClass: "text-sky-800 dark:text-sky-400",
+      iconTileClass: "border-sky-100/80 bg-white dark:bg-slate-800 dark:border-sky-900",
+      bulletRowClass: "border-sky-100/70 bg-white/90 dark:bg-slate-900/50 dark:border-sky-900/30",
+      checkWrapClass: "border-sky-100/80 bg-sky-50/80 dark:bg-sky-900/50",
+      checkClass: "text-sky-700 dark:text-sky-400",
     },
     {
       step: "02",
@@ -184,12 +184,12 @@ export default function HowItWorksSection() {
       description: t("step2Description"),
       bullets: [t("step2Bullet1"), t("step2Bullet2"), t("step2Bullet3")],
       icon: Users,
-      surface: "border-amber-100/90 bg-amber-50",
-      stepNumberClass: "text-amber-900",
-      iconTileClass: "border-amber-100/80 bg-white",
-      bulletRowClass: "border-amber-100/70 bg-white/90",
-      checkWrapClass: "border-amber-100/80 bg-amber-50/80",
-      checkClass: "text-amber-800",
+      surface: "border-amber-100/90 bg-amber-50 dark:border-amber-900/50 dark:bg-amber-950/20",
+      stepNumberClass: "text-amber-900 dark:text-amber-400",
+      iconTileClass: "border-amber-100/80 bg-white dark:bg-slate-800 dark:border-amber-900",
+      bulletRowClass: "border-amber-100/70 bg-white/90 dark:bg-slate-900/50 dark:border-amber-900/30",
+      checkWrapClass: "border-amber-100/80 bg-amber-50/80 dark:bg-amber-900/50",
+      checkClass: "text-amber-800 dark:text-amber-400",
     },
     {
       step: "03",
@@ -197,12 +197,12 @@ export default function HowItWorksSection() {
       description: t("step3Description"),
       bullets: [t("step3Bullet1"), t("step3Bullet2"), t("step3Bullet3")],
       icon: PhoneCall,
-      surface: "border-emerald-100/90 bg-emerald-50",
-      stepNumberClass: "text-emerald-900",
-      iconTileClass: "border-emerald-100/80 bg-white",
-      bulletRowClass: "border-emerald-100/70 bg-white/90",
-      checkWrapClass: "border-emerald-100/80 bg-emerald-50/80",
-      checkClass: "text-emerald-700",
+      surface: "border-emerald-100/90 bg-emerald-50 dark:border-emerald-900/50 dark:bg-emerald-950/20",
+      stepNumberClass: "text-emerald-900 dark:text-emerald-400",
+      iconTileClass: "border-emerald-100/80 bg-white dark:bg-slate-800 dark:border-emerald-900",
+      bulletRowClass: "border-emerald-100/70 bg-white/90 dark:bg-slate-900/50 dark:border-emerald-900/30",
+      checkWrapClass: "border-emerald-100/80 bg-emerald-50/80 dark:bg-emerald-900/50",
+      checkClass: "text-emerald-700 dark:text-emerald-400",
     },
   ];
 
@@ -231,7 +231,7 @@ export default function HowItWorksSection() {
         >
           <motion.p
             variants={headlineLine}
-            className="text-base font-medium tracking-tight text-slate-600 sm:text-lg"
+            className="text-base font-medium tracking-tight text-slate-600 dark:text-slate-400 sm:text-lg"
           >
             {t("eyebrow")}
           </motion.p>
@@ -245,13 +245,13 @@ export default function HowItWorksSection() {
             variants={headlineLine}
             className="text-balance text-3xl leading-[1.12] font-extrabold tracking-tight sm:text-4xl sm:leading-[1.1] lg:text-5xl lg:leading-[1.08]"
           >
-            <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+            <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
               {t("title")}
             </span>
           </motion.h2>
           <motion.p
             variants={headlineLine}
-            className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 sm:text-lg"
+            className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg"
           >
             {t("subtitle")}
           </motion.p>

@@ -2,6 +2,7 @@
 
 import { Link, usePathname } from "@/i18n/navigation";
 import LocaleSwitcher from "@/components/layout/LocaleSwitcher";
+import ThemeToggle from "@/components/common/ThemeToggle";
 import UserNav from "@/components/layout/UserNav";
 import { useSession } from "@/lib/auth-client";
 import { BD_DIVISIONS } from "@/data/bd-divisions";
@@ -24,7 +25,7 @@ function NavSubItem({ item }: { item: DropdownItem }) {
     return (
       <Link
         href={item.href}
-        className="block px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-(--brand-primary)"
+        className="block px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-(--brand-primary)"
         role="menuitem"
       >
         {item.label}
@@ -36,7 +37,7 @@ function NavSubItem({ item }: { item: DropdownItem }) {
     <div className="group/sub">
       <Link
         href={item.href}
-        className="flex items-center justify-between gap-2 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-(--brand-primary)"
+        className="flex items-center justify-between gap-2 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-(--brand-primary)"
         role="menuitem"
       >
         {item.label}
@@ -51,14 +52,14 @@ function NavSubItem({ item }: { item: DropdownItem }) {
         role="presentation"
       >
         <div
-          className="max-h-80 overflow-y-auto rounded-lg border border-slate-200/80 bg-white py-1.5 shadow-lg"
+          className="max-h-80 overflow-y-auto rounded-lg border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 py-1.5 shadow-lg"
           role="menu"
         >
           {item.children.map((child) => (
             <Link
               key={child.href}
               href={child.href}
-              className="block px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-(--brand-primary)"
+              className="block px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-(--brand-primary)"
               role="menuitem"
             >
               {child.label}
@@ -77,7 +78,7 @@ function NavDropdownItem({ item }: { item: DropdownItem }) {
     return (
       <Link
         href={item.href}
-        className="block px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-(--brand-primary)"
+        className="block px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-(--brand-primary)"
         role="menuitem"
       >
         {item.label}
@@ -89,7 +90,7 @@ function NavDropdownItem({ item }: { item: DropdownItem }) {
     <div className="group/nested">
       <Link
         href={item.href}
-        className="flex items-center justify-between gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-(--brand-primary)"
+        className="flex items-center justify-between gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-(--brand-primary)"
         role="menuitem"
       >
         {item.label}
@@ -104,7 +105,7 @@ function NavDropdownItem({ item }: { item: DropdownItem }) {
         role="presentation"
       >
         <div
-          className="relative rounded-lg border border-slate-200/80 bg-white py-1.5 shadow-lg"
+          className="relative rounded-lg border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 py-1.5 shadow-lg"
           role="menu"
         >
           {item.children.map((child) => (
@@ -134,7 +135,7 @@ function NavDropdown({
       role="presentation"
     >
       <div
-        className="relative rounded-lg border border-slate-200/80 bg-white py-2 shadow-lg"
+        className="relative rounded-lg border border-slate-200/80 bg-white dark:bg-slate-900 dark:border-slate-800 py-2 shadow-lg"
         role="menu"
       >
         {items.map((item) => (
@@ -169,7 +170,7 @@ function NavLink({
 
   const classes = `inline-flex items-center gap-1 text-[15px] font-medium tracking-tight transition-colors ${active
     ? "text-(--brand-primary)"
-    : "text-slate-900 hover:text-(--brand-primary)"
+    : "text-slate-900 dark:text-slate-200 hover:text-(--brand-primary)"
     }`;
 
   return (
@@ -228,7 +229,7 @@ function MobileAccordionItem({
     <div>
       <button
         type="button"
-        className={`flex w-full items-center justify-between py-2 text-[15px] font-medium text-slate-900 ${pl}`}
+        className={`flex w-full items-center justify-between py-2 text-[15px] font-medium text-slate-900 dark:text-slate-100 ${pl}`}
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
       >
@@ -282,7 +283,7 @@ function MobileNavMenu({
           <Link
             key={item.href}
             href={item.href}
-            className="py-2 text-[15px] font-medium text-slate-900"
+            className="py-2 text-[15px] font-medium text-slate-900 dark:text-slate-100"
             onClick={onNavigate}
           >
             {item.label}
@@ -415,7 +416,7 @@ export default function Navbar() {
           />
           <span className="text-xl font-bold tracking-tight sm:text-[22px]">
             <span className="text-(--brand-primary)">CHAKA</span>
-            <span className="text-slate-900">RIDE</span>
+            <span className="text-slate-900 dark:text-slate-100">RIDE</span>
           </span>
         </Link>
 
@@ -467,6 +468,9 @@ export default function Navbar() {
           <div className="hidden sm:block">
             <LocaleSwitcher />
           </div>
+          <div className="hidden sm:block">
+            <ThemeToggle />
+          </div>
           <a
             href={tFooter("socialWhatsapp")}
             target="_blank"
@@ -484,7 +488,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="flex size-10 items-center justify-center rounded-lg text-slate-900 lg:hidden"
+            className="flex size-10 items-center justify-center rounded-lg text-slate-900 dark:text-slate-100 lg:hidden"
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav"
             aria-label={mobileOpen ? tNav("closeMenu") : tNav("openMenu")}
@@ -504,8 +508,9 @@ export default function Navbar() {
           id="mobile-nav"
           className="max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-slate-200/50 bg-(--hero-bg) px-5 py-4 lg:hidden"
         >
-          <div className="mb-4">
+          <div className="mb-4 flex items-center justify-between gap-4">
             <LocaleSwitcher />
+            <ThemeToggle />
           </div>
           <MobileNavMenu items={mobileNavItems} onNavigate={closeMobile} />
           <a

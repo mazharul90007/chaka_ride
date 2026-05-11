@@ -7,12 +7,20 @@ import { useRouter } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
 import { Loader2, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { setTheme } = useTheme();
+
+  // Force light mode in dashboard
+  useEffect(() => {
+    setTheme("light");
+  }, [setTheme]);
+
   const { data: session, isPending } = useSession();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

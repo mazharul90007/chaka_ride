@@ -93,7 +93,7 @@ export default function SedanEconomyPage() {
           >
             <motion.p
               variants={headlineLine}
-              className="flex items-center justify-center gap-2 text-base font-medium tracking-tight text-slate-600 sm:text-lg"
+              className="flex items-center justify-center gap-2 text-base font-medium tracking-tight text-slate-600 dark:text-slate-400 sm:text-lg"
             >
               <span className="font-semibold text-(--brand-primary)">
                 {t("eyebrow")}
@@ -108,13 +108,13 @@ export default function SedanEconomyPage() {
               variants={headlineLine}
               className="text-balance text-3xl leading-[1.12] font-extrabold tracking-tight sm:text-4xl sm:leading-[1.1] lg:text-5xl lg:leading-[1.08]"
             >
-              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
                 {t("title")}
               </span>
             </motion.h1>
             <motion.p
               variants={headlineLine}
-              className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 sm:text-lg"
+              className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg"
             >
               {t("subtitle")}
             </motion.p>
@@ -202,7 +202,7 @@ export default function SedanEconomyPage() {
                   return (
                     <div
                       key={n}
-                      className="flex items-center gap-3 rounded-xl border border-slate-200/60 bg-white p-4 shadow-sm"
+                      className="flex items-center gap-3 rounded-xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm"
                     >
                       <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-(--brand-primary)/10">
                         <Icon
@@ -211,10 +211,10 @@ export default function SedanEconomyPage() {
                         />
                       </div>
                       <div>
-                        <p className="text-xs font-medium text-slate-500">
+                        <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
                           {t(`spec${n}Label`)}
                         </p>
-                        <p className="text-sm font-bold text-slate-900">
+                        <p className="text-sm font-bold text-slate-900 dark:text-white">
                           {t(`spec${n}Value`)}
                         </p>
                       </div>
@@ -240,10 +240,10 @@ export default function SedanEconomyPage() {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="text-[15px] font-bold text-slate-900 sm:text-base">
+                        <h3 className="text-[15px] font-bold text-slate-900 dark:text-white sm:text-base">
                           {t(`feature${n}Title`)}
                         </h3>
-                        <p className="mt-0.5 text-sm leading-relaxed text-slate-500">
+                        <p className="mt-0.5 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
                           {t(`feature${n}Body`)}
                         </p>
                       </div>
@@ -275,13 +275,13 @@ export default function SedanEconomyPage() {
           >
             <motion.h2
               variants={headlineLine}
-              className="text-balance text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl"
+              className="text-balance text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-3xl lg:text-4xl"
             >
               {t("ctaTitle")}
             </motion.h2>
             <motion.p
               variants={headlineLine}
-              className="mx-auto mt-4 max-w-lg text-pretty text-[15px] leading-relaxed text-slate-600 sm:text-base"
+              className="mx-auto mt-4 max-w-lg text-pretty text-[15px] leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base"
             >
               {t("ctaBody")}
             </motion.p>

@@ -20,7 +20,7 @@ const HERO_IMAGE =
   "https://res.cloudinary.com/dycrowzen/image/upload/v1774623407/car_iaunmo.png";
 
 const fieldClass =
-  "h-10 border-slate-200/90 bg-white text-slate-900 shadow-sm md:h-11";
+  "h-10 border-slate-200/90 bg-white text-slate-900 shadow-sm md:h-11 dark:bg-slate-800 dark:border-slate-700 dark:text-white";
 
 function openPicker(el: HTMLInputElement) {
   if (typeof el.showPicker !== "function") return;
@@ -173,7 +173,7 @@ export default function HeroSection() {
           >
             <motion.span
               variants={headlineLine}
-              className="mb-2 block text-base font-medium tracking-tight text-slate-600 sm:mb-3 sm:text-lg lg:text-xl"
+              className="mb-2 block text-base font-medium tracking-tight text-slate-600 dark:text-slate-400 sm:mb-3 sm:text-lg lg:text-xl"
             >
               {t("headlineLine1")}
             </motion.span>
@@ -186,7 +186,7 @@ export default function HeroSection() {
               variants={headlineLine}
               className="block text-4xl leading-[1.08] font-extrabold tracking-tight sm:text-5xl sm:leading-[1.06] lg:text-6xl lg:leading-[1.04] xl:text-7xl"
             >
-              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
                 {t("headlineLine2")}
               </span>
             </motion.span>
@@ -324,7 +324,7 @@ export default function HeroSection() {
                     defaultChecked
                     required
                   />
-                  <span className="flex h-10 items-center justify-center rounded-lg border border-slate-200/90 bg-white px-2 text-center text-sm font-medium text-slate-800 shadow-sm peer-checked:border-(--brand-primary) peer-checked:text-(--brand-primary) peer-checked:ring-2 peer-checked:ring-(--brand-primary)/25 md:h-11">
+                  <span className="flex h-10 items-center justify-center rounded-lg border border-slate-200/90 bg-white dark:bg-slate-800 dark:border-slate-700 px-2 text-center text-sm font-medium text-slate-800 dark:text-slate-200 shadow-sm peer-checked:border-(--brand-primary) peer-checked:text-(--brand-primary) peer-checked:ring-2 peer-checked:ring-(--brand-primary)/25 md:h-11">
                     {t("oneWay")}
                   </span>
                 </label>
@@ -335,7 +335,7 @@ export default function HeroSection() {
                     value="round-trip"
                     className="peer sr-only"
                   />
-                  <span className="flex h-10 items-center justify-center rounded-lg border border-slate-200/90 bg-white px-2 text-center text-sm font-medium text-slate-800 shadow-sm peer-checked:border-(--brand-primary) peer-checked:text-(--brand-primary) peer-checked:ring-2 peer-checked:ring-(--brand-primary)/25 md:h-11">
+                  <span className="flex h-10 items-center justify-center rounded-lg border border-slate-200/90 bg-white dark:bg-slate-800 dark:border-slate-700 px-2 text-center text-sm font-medium text-slate-800 dark:text-slate-200 shadow-sm peer-checked:border-(--brand-primary) peer-checked:text-(--brand-primary) peer-checked:ring-2 peer-checked:ring-(--brand-primary)/25 md:h-11">
                     {t("roundTrip")}
                   </span>
                 </label>

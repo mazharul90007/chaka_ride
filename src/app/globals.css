@@ -134,6 +134,14 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Brand Overrides for Dark Mode */
+  --brand-primary: #3b82f6; /* Lighter blue for dark mode visibility */
+  --brand-primary-hover: #60a5fa;
+  --hero-bg: #0f172a;
+  --footer-bg: #020617;
+  --hero-form-bg: #1e293b;
+  --hero-form-ring: rgba(59, 130, 246, 0.2);
 }
 
 @layer base {

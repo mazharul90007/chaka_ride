@@ -99,20 +99,20 @@ function FaqRow({
           onClick={onToggle}
           className={cn(
             "flex w-full items-start gap-3 rounded-xl px-3 py-5 text-left transition-[background-color,color] duration-200 sm:gap-4 sm:py-6",
-            "hover:bg-slate-100/90",
+            "hover:bg-slate-100/90 dark:hover:bg-slate-800/90",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--brand-primary)/35 focus-visible:ring-offset-2",
-            isOpen && "bg-slate-50/90",
+            isOpen && "bg-slate-50/90 dark:bg-slate-800/50",
           )}
         >
           <span
             className={cn(
               "w-8 shrink-0 pt-1 text-left text-lg tabular-nums sm:w-9 sm:text-xl",
-              isOpen ? "text-(--brand-primary)" : "text-slate-900",
+              isOpen ? "text-(--brand-primary)" : "text-slate-900 dark:text-slate-300",
             )}
           >
             {num}.
           </span>
-          <span className="min-w-0 flex-1 pr-2 leading-snug text-slate-900 sm:pr-3">
+          <span className="min-w-0 flex-1 pr-2 leading-snug text-slate-900 dark:text-slate-100 sm:pr-3">
             {question}
           </span>
           <span
@@ -120,7 +120,7 @@ function FaqRow({
               "flex size-10 shrink-0 items-center justify-center rounded-xl border transition-all duration-200 sm:size-11",
               isOpen
                 ? "border-(--brand-primary)/30 bg-(--brand-primary)/10 text-(--brand-primary) shadow-sm"
-                : "border-slate-200/90 bg-white text-slate-800 shadow-sm group-hover/row:border-slate-300 group-hover/row:shadow",
+                : "border-slate-200/90 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-sm group-hover/row:border-slate-300 group-hover/row:shadow",
             )}
             aria-hidden
           >
@@ -145,7 +145,7 @@ function FaqRow({
           >
             <div className="flex gap-3 px-3 pb-6 sm:gap-4 sm:pb-7">
               <span className="w-8 shrink-0 sm:w-9" aria-hidden />
-              <p className="max-w-2xl min-w-0 flex-1 text-base leading-relaxed text-slate-600 sm:text-lg">
+              <p className="max-w-2xl min-w-0 flex-1 text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
                 {answer}
               </p>
             </div>
@@ -188,7 +188,7 @@ function FaqSection({ t }: { t: any }) {
         >
           <motion.span
             variants={headlineLine}
-            className="relative mb-2 block text-base font-medium tracking-tight text-slate-600 sm:mb-3 sm:text-lg"
+            className="relative mb-2 block text-base font-medium tracking-tight text-slate-600 dark:text-slate-400 sm:mb-3 sm:text-lg"
           >
             {t("faqEyebrow")}
           </motion.span>
@@ -201,7 +201,7 @@ function FaqSection({ t }: { t: any }) {
             variants={headlineLine}
             className="relative max-w-3xl text-balance text-2xl leading-[1.1] font-extrabold tracking-tight sm:text-3xl lg:text-4xl"
           >
-            <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+            <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
               {t("faqTitle")}
             </span>
           </motion.h2>
@@ -262,7 +262,7 @@ export default function ServicePageContent({
           >
             <motion.p
               variants={headlineLine}
-              className="flex items-center justify-center gap-2 text-base font-medium tracking-tight text-slate-600 sm:text-lg"
+              className="flex items-center justify-center gap-2 text-base font-medium tracking-tight text-slate-600 dark:text-slate-400 sm:text-lg"
             >
               <span className="font-semibold text-(--brand-primary)">
                 {t("eyebrow")}
@@ -277,13 +277,13 @@ export default function ServicePageContent({
               variants={headlineLine}
               className="text-balance text-3xl leading-[1.12] font-extrabold tracking-tight sm:text-4xl sm:leading-[1.1] lg:text-5xl lg:leading-[1.08]"
             >
-              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
                 {t("title")}
               </span>
             </motion.h1>
             <motion.p
               variants={headlineLine}
-              className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 sm:text-lg"
+              className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg"
             >
               {t("subtitle")}
             </motion.p>
@@ -292,7 +292,7 @@ export default function ServicePageContent({
       </section>
 
       {/* Features */}
-      <section className="relative w-full overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full overflow-hidden bg-white dark:bg-slate-900 py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <motion.div
             className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
@@ -315,7 +315,7 @@ export default function ServicePageContent({
                       ease: [0.22, 1, 0.36, 1],
                     },
                   }}
-                  className="group relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-xl sm:p-7"
+                  className="group relative overflow-hidden rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-800 p-6 shadow-sm transition-shadow duration-300 hover:shadow-xl sm:p-7"
                 >
                   <div
                     className={`absolute top-0 left-0 h-1 w-full bg-linear-to-r ${accent} opacity-60 transition-opacity duration-300 group-hover:opacity-100`}
@@ -334,10 +334,10 @@ export default function ServicePageContent({
                     />
                   </motion.div>
 
-                  <h3 className="text-lg font-bold text-slate-900 sm:text-xl">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white sm:text-xl">
                     {t(`feature${n}Title`)}
                   </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-slate-500 sm:text-[15px]">
+                  <p className="mt-2.5 text-sm leading-relaxed text-slate-500 dark:text-slate-400 sm:text-[15px]">
                     {t(`feature${n}Body`)}
                   </p>
                 </motion.div>
@@ -382,7 +382,7 @@ export default function ServicePageContent({
               variants={headlineLine}
               className="text-balance text-2xl leading-[1.15] font-extrabold tracking-tight sm:text-3xl lg:text-4xl"
             >
-              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
                 {t("whyTitle")}
               </span>
             </motion.h2>
@@ -443,10 +443,10 @@ export default function ServicePageContent({
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-base font-bold text-slate-900 sm:text-lg">
+                      <h3 className="text-base font-bold text-slate-900 dark:text-white sm:text-lg">
                         {t(`why${n}Title`)}
                       </h3>
-                      <p className="mt-1 text-sm leading-relaxed text-slate-500 sm:text-[15px]">
+                      <p className="mt-1 text-sm leading-relaxed text-slate-500 dark:text-slate-400 sm:text-[15px]">
                         {t(`why${n}Body`)}
                       </p>
                     </div>
@@ -462,7 +462,7 @@ export default function ServicePageContent({
       <FaqSection t={t} />
 
       {/* CTA section */}
-      <section className="relative w-full overflow-hidden bg-white py-16 sm:py-20">
+      <section className="relative w-full overflow-hidden bg-white dark:bg-slate-900 py-16 sm:py-20">
         <div className="mx-auto px-4 text-center sm:px-6">
           <motion.div
             initial="hidden"
@@ -472,13 +472,13 @@ export default function ServicePageContent({
           >
             <motion.h2
               variants={headlineLine}
-              className="text-balance text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl"
+              className="text-balance text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-3xl lg:text-4xl"
             >
               {t("ctaTitle")}
             </motion.h2>
             <motion.p
               variants={headlineLine}
-              className="mx-auto mt-4 max-w-lg text-pretty text-[15px] leading-relaxed text-slate-600 sm:text-base"
+              className="mx-auto mt-4 max-w-lg text-pretty text-[15px] leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base"
             >
               {t("ctaBody")}
             </motion.p>

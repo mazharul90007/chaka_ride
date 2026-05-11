@@ -40,7 +40,7 @@ const staggerContainer = {
   visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
 } as const;
 
-const fieldClass = "h-11 border-slate-200/90 bg-white text-slate-900 shadow-sm";
+const fieldClass = "h-11 border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm";
 
 export default function ContactPage() {
   const t = useTranslations("ContactPage");
@@ -98,7 +98,7 @@ export default function ContactPage() {
           >
             <motion.p
               variants={headlineLine}
-              className="flex items-center justify-center gap-2 text-base font-medium tracking-tight text-slate-600 sm:text-lg"
+              className="flex items-center justify-center gap-2 text-base font-medium tracking-tight text-slate-600 dark:text-slate-400 sm:text-lg"
             >
               <span className="font-semibold text-(--brand-primary)">
                 {t("eyebrow")}
@@ -113,13 +113,13 @@ export default function ContactPage() {
               variants={headlineLine}
               className="text-balance text-3xl leading-[1.12] font-extrabold tracking-tight sm:text-4xl sm:leading-[1.1] lg:text-5xl lg:leading-[1.08]"
             >
-              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
                 {t("title")}
               </span>
             </motion.h1>
             <motion.p
               variants={headlineLine}
-              className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 sm:text-lg"
+              className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg"
             >
               {t("subtitle")}
             </motion.p>
@@ -142,8 +142,8 @@ export default function ContactPage() {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
-                <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">
+              <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm sm:p-8 lg:p-10">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white sm:text-2xl">
                   {t("formTitle")}
                 </h2>
                 <form
@@ -275,7 +275,7 @@ export default function ContactPage() {
               <div className="space-y-5">
                 <motion.h2
                   variants={cardReveal}
-                  className="text-xl font-bold text-slate-900 sm:text-2xl"
+                  className="text-xl font-bold text-slate-900 dark:text-white sm:text-2xl"
                 >
                   {t("infoTitle")}
                 </motion.h2>
@@ -284,9 +284,9 @@ export default function ContactPage() {
                   <motion.div
                     key={title}
                     variants={cardReveal}
-                    className="flex gap-4 rounded-2xl border border-(--brand-primary)/10 bg-white/80 p-5 shadow-sm backdrop-blur-sm"
+                    className="flex gap-4 rounded-2xl border border-(--brand-primary)/10 bg-white/80 dark:bg-slate-800/80 p-5 shadow-sm backdrop-blur-sm"
                   >
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-(--brand-primary)/12 bg-white shadow-sm ring-1 ring-(--brand-primary)/6">
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-(--brand-primary)/12 bg-white dark:bg-slate-800 shadow-sm ring-1 ring-(--brand-primary)/6">
                       <Icon
                         className="size-5 text-(--brand-primary)"
                         strokeWidth={1.75}
@@ -294,18 +294,18 @@ export default function ContactPage() {
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-xs font-medium tracking-wide text-slate-500 uppercase">
+                      <p className="text-xs font-medium tracking-wide text-slate-500 dark:text-slate-400 uppercase">
                         {title}
                       </p>
                       {href ? (
                         <a
                           href={href}
-                          className="mt-1 block text-[15px] font-semibold text-slate-900 transition-colors hover:text-(--brand-primary)"
+                          className="mt-1 block text-[15px] font-semibold text-slate-900 dark:text-white transition-colors hover:text-(--brand-primary)"
                         >
                           {value}
                         </a>
                       ) : (
-                        <p className="mt-1 text-[15px] font-semibold text-slate-900">
+                        <p className="mt-1 text-[15px] font-semibold text-slate-900 dark:text-white">
                           {value}
                         </p>
                       )}
@@ -377,13 +377,13 @@ export default function ContactPage() {
               variants={headlineLine}
               className="text-balance text-2xl leading-[1.15] font-extrabold tracking-tight sm:text-3xl lg:text-4xl"
             >
-              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+              <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
                 {t("mapTitle")}
               </span>
             </motion.h2>
             <motion.p
               variants={headlineLine}
-              className="mx-auto mt-4 max-w-lg text-pretty text-[15px] leading-relaxed text-slate-600 sm:text-base"
+              className="mx-auto mt-4 max-w-lg text-pretty text-[15px] leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base"
             >
               {t("mapSubtitle")}
             </motion.p>
@@ -407,7 +407,7 @@ export default function ContactPage() {
               aria-hidden
             />
 
-            <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-lg">
+            <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg">
               <iframe
                 title={t("addressTitle")}
                 src="https://maps.google.com/maps?q=P9VF%2BM6H+Dhaka&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -421,7 +421,7 @@ export default function ContactPage() {
               />
 
               {/* Floating info card */}
-              <div className="absolute bottom-5 left-5 z-10 max-w-xs rounded-xl border border-white/40 bg-white/95 p-4 shadow-xl ring-1 ring-slate-900/5 backdrop-blur-sm sm:bottom-6 sm:left-6 sm:p-5">
+              <div className="absolute bottom-5 left-5 z-10 max-w-xs rounded-xl border border-white/40 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 p-4 shadow-xl ring-1 ring-slate-900/5 backdrop-blur-sm sm:bottom-6 sm:left-6 sm:p-5">
                 <div className="flex items-start gap-3">
                   <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-(--brand-primary) shadow-sm">
                     <MapPin
@@ -431,10 +431,10 @@ export default function ContactPage() {
                     />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-bold text-slate-900">
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">
                       Chaka Ride
                     </p>
-                    <p className="mt-0.5 text-xs leading-relaxed text-slate-600">
+                    <p className="mt-0.5 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
                       {t("addressValue")}
                     </p>
                   </div>

@@ -18,7 +18,7 @@ export default function LocaleSwitcher() {
 
   return (
     <div
-      className="inline-flex rounded-lg border border-slate-200 bg-slate-100/90 p-0.5 shadow-sm"
+      className="inline-flex rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900 p-0.5 shadow-sm"
       role="group"
       aria-label={t("label")}
     >
@@ -35,8 +35,8 @@ export default function LocaleSwitcher() {
             }}
             className={`min-w-11 cursor-pointer rounded-md px-2.5 py-1.5 text-xs font-semibold transition-colors ${
               active
-                ? "bg-white text-(--brand-primary) shadow-sm"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-white dark:bg-slate-800 text-(--brand-primary) shadow-sm"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
             }`}
             aria-pressed={active}
           >

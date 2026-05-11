@@ -78,10 +78,10 @@ export default function Footer() {
               />
               <span className="text-xl font-bold tracking-tight sm:text-[22px]">
                 <span className="text-(--brand-primary)">CHAKA</span>
-                <span className="text-slate-900">RIDE</span>
+                <span className="text-slate-900 dark:text-white">RIDE</span>
               </span>
             </Link>
-            <p className="mt-4 max-w-sm text-pretty text-sm leading-relaxed text-slate-600 sm:text-[15px]">
+            <p className="mt-4 max-w-sm text-pretty text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-[15px]">
               {t("brandBlurb")}
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -117,7 +117,7 @@ export default function Footer() {
 
           {/* Quick links */}
           <div className="lg:col-span-4 lg:col-start-5">
-            <h3 className="text-lg font-bold text-slate-900 sm:text-xl">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white sm:text-xl">
               {t("quickLinksTitle")}
             </h3>
             <ul className="mt-5 space-y-3">
@@ -140,14 +140,14 @@ export default function Footer() {
 
           {/* Subscribe */}
           <div className="lg:col-span-4 lg:col-start-9">
-            <h3 className="text-lg font-bold text-slate-900 sm:text-xl">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white sm:text-xl">
               {t("subscribeTitle")}
             </h3>
-            <p className="mt-3 max-w-sm text-pretty text-sm leading-relaxed text-slate-600 sm:text-[15px]">
+            <p className="mt-3 max-w-sm text-pretty text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-[15px]">
               {t("subscribeBlurb")}
             </p>
             <form
-              className="mt-5 flex max-w-md items-center gap-1 rounded-full border-2 border-(--brand-primary)/35 bg-white py-1 pr-1 pl-4 shadow-sm ring-1 ring-slate-200/60 focus-within:border-(--brand-primary)/55 focus-within:ring-(--brand-primary)/20"
+              className="mt-5 flex max-w-md items-center gap-1 rounded-full border-2 border-(--brand-primary)/35 bg-white dark:bg-slate-900 py-1 pr-1 pl-4 shadow-sm ring-1 ring-slate-200/60 dark:ring-slate-800 focus-within:border-(--brand-primary)/55 focus-within:ring-(--brand-primary)/20"
               onSubmit={handleSubscribe}
             >
               <label htmlFor="footer-email" className="sr-only">
@@ -159,7 +159,7 @@ export default function Footer() {
                 type="email"
                 autoComplete="email"
                 placeholder={t("emailPlaceholder")}
-                className="min-w-0 flex-1 border-0 bg-transparent py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-0 focus:outline-none"
+                className="min-w-0 flex-1 border-0 bg-transparent py-2.5 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-0 focus:outline-none"
               />
               <button
                 type="submit"
@@ -208,7 +208,7 @@ export default function Footer() {
                         className={`relative flex size-11 cursor-pointer items-center justify-center rounded-full transition-[color,background-color,transform] duration-200 ease-out focus-visible:ring-2 focus-visible:ring-(--brand-primary) focus-visible:ring-offset-2 focus-visible:ring-offset-(--footer-bg) focus-visible:outline-none sm:size-12 ${
                           isOpen
                             ? "bg-(--brand-primary) text-white shadow-sm"
-                            : "text-slate-500 hover:bg-white/80 hover:text-(--brand-primary)"
+                            : "text-slate-500 hover:bg-white/80 dark:hover:bg-slate-800 hover:text-(--brand-primary)"
                         }`}
                       >
                         <Icon
@@ -225,19 +225,19 @@ export default function Footer() {
 
               <div
                 id={contactPanelId}
-                className="min-h-14 min-w-0 flex-1 border-l border-slate-200/70 pl-3 sm:min-h-15 sm:pl-4"
+                className="min-h-14 min-w-0 flex-1 border-l border-slate-200/70 dark:border-slate-800 pl-3 sm:min-h-15 sm:pl-4"
                 aria-live="polite"
               >
                 {openContact ? (
                   <div>
                     {openContact === "call" && (
                       <div>
-                        <p className="text-[11px] font-medium text-slate-500">
+                        <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                           {t("callTitle")}
                         </p>
                         <a
                           href={`tel:${t("callTel")}`}
-                          className="mt-0.5 block text-lg font-semibold tracking-tight text-slate-900 transition-colors hover:text-(--brand-primary) sm:text-xl"
+                          className="mt-0.5 block text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-400 transition-colors hover:text-(--brand-primary) sm:text-xl"
                         >
                           {t("callValue")}
                         </a>
@@ -245,12 +245,12 @@ export default function Footer() {
                     )}
                     {openContact === "email" && (
                       <div>
-                        <p className="text-[11px] font-medium text-slate-500">
+                        <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                           {t("writeTitle")}
                         </p>
                         <a
                           href={`mailto:${t("writeEmail")}`}
-                          className="mt-0.5 block break-all text-sm font-medium leading-snug text-slate-900 transition-colors hover:text-(--brand-primary) sm:text-[15px]"
+                          className="mt-0.5 block break-all text-sm font-medium leading-snug text-slate-900 dark:text-slate-400 transition-colors hover:text-(--brand-primary) sm:text-[15px]"
                         >
                           {t("writeValue")}
                         </a>
@@ -258,10 +258,10 @@ export default function Footer() {
                     )}
                     {openContact === "address" && (
                       <div>
-                        <p className="text-[11px] font-medium text-slate-500">
+                        <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                           {t("addressTitle")}
                         </p>
-                        <p className="mt-0.5 text-sm leading-relaxed text-slate-800 sm:text-[15px]">
+                        <p className="mt-0.5 text-sm leading-relaxed text-slate-800 dark:text-slate-400 sm:text-[15px]">
                           {t("addressValue")}
                         </p>
                       </div>

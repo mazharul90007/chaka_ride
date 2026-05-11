@@ -89,7 +89,7 @@ function FeatureBlock({
         transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
       }}
       className={cn(
-        "flex gap-4 rounded-2xl border border-(--brand-primary)/10 bg-white/80 p-5 shadow-sm",
+        "flex gap-4 rounded-2xl border border-(--brand-primary)/10 bg-white/80 dark:bg-slate-800/80 p-5 shadow-sm",
         "backdrop-blur-sm transition-[box-shadow,border-color] duration-300 hover:border-(--brand-primary)/18 hover:shadow-md sm:p-6",
         row,
         side === "left" ? "lg:justify-end lg:text-right" : "lg:text-left",
@@ -97,7 +97,7 @@ function FeatureBlock({
     >
       <div
         className={cn(
-          "flex size-12 shrink-0 items-center justify-center rounded-xl border border-(--brand-primary)/12 bg-white shadow-sm ring-1 ring-(--brand-primary)/6 sm:size-14",
+          "flex size-12 shrink-0 items-center justify-center rounded-xl border border-(--brand-primary)/12 bg-white dark:bg-slate-700 shadow-sm ring-1 ring-(--brand-primary)/6 sm:size-14",
         )}
       >
         <Icon
@@ -107,8 +107,8 @@ function FeatureBlock({
         />
       </div>
       <div className="min-w-0 flex-1">
-        <h3 className="text-lg font-bold text-slate-900 sm:text-xl">{title}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-[15px]">
+        <h3 className="text-lg font-bold text-slate-900 dark:text-white sm:text-xl">{title}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-[15px]">
           {body}
         </p>
       </div>
@@ -144,7 +144,7 @@ export default function WhyChooseUsSection() {
         >
           <motion.p
             variants={headlineLine}
-            className="flex items-center justify-center gap-2 text-base font-medium tracking-tight text-slate-600 sm:text-lg"
+            className="flex items-center justify-center gap-2 text-base font-medium tracking-tight text-slate-600 dark:text-slate-400 sm:text-lg"
           >
             <span className="font-semibold text-orange-600">
               {t("eyebrow")}
@@ -160,7 +160,7 @@ export default function WhyChooseUsSection() {
             variants={headlineLine}
             className="text-balance text-3xl leading-[1.12] font-extrabold tracking-tight sm:text-4xl sm:leading-[1.1] lg:text-5xl lg:leading-[1.08]"
           >
-            <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] bg-clip-text text-transparent">
+            <span className="bg-linear-to-br from-[#0f2744] from-25% via-[#1e4a8c] via-55% to-[#2d7dd2] dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
               {t("title")}
             </span>
           </motion.h2>
