@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
-import { useSession } from "@/lib/auth-client";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { useSession, signOut } from "@/lib/auth-client";
 import {
   LayoutDashboard,
   Car,
@@ -28,6 +28,7 @@ interface DashboardSidebarProps {
 export default function DashboardSidebar({ isMobile, onClose }: DashboardSidebarProps) {
   const { data: session } = useSession();
   const pathname = usePathname();
+  const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const user = session?.user as any;
@@ -59,27 +60,38 @@ export default function DashboardSidebar({ isMobile, onClose }: DashboardSidebar
     ],
   }[role] || [];
 
+  const handleLogout = async () => {
+    await signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+          if (onClose) onClose();
+        },
+      },
+    });
+  };
+
   return (
     <motion.div
       animate={{ width: isMobile ? "100%" : (isCollapsed ? 80 : 280) }}
-      className={`relative flex h-full flex-col border-r border-slate-200 bg-white transition-all z-50 ${isMobile ? "w-full" : ""}`}
+      className={`relative flex h-full flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all z-50 ${isMobile ? "w-full" : ""}`}
     >
-      <div className="flex h-[72px] items-center justify-between px-6 border-b border-slate-100">
+      <div className="flex h-[72px] items-center justify-between px-6 border-b border-slate-100 dark:border-slate-800">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-xl font-bold tracking-tight">
             <span className="text-(--brand-primary)">CHAKA</span>
-            <span className="text-slate-900 font-extrabold ml-1">RIDE</span>
+            <span className="text-slate-900 dark:text-slate-100 font-extrabold ml-1">RIDE</span>
           </span>
         </Link>
-        
+
         {isMobile ? (
-          <button onClick={onClose} className="p-2 rounded-lg bg-slate-50 text-slate-400">
+          <button onClick={onClose} className="p-2 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400">
             <X size={20} />
           </button>
         ) : (
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="flex size-8 items-center justify-center rounded-lg bg-slate-50 text-slate-400 hover:text-slate-900 transition-colors ml-auto"
+            className="flex size-8 items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors ml-auto"
           >
             {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
           </button>
@@ -96,18 +108,21 @@ export default function DashboardSidebar({ isMobile, onClose }: DashboardSidebar
               onClick={isMobile ? onClose : undefined}
               className={`group flex items-center gap-3 rounded-xl px-4 py-3 transition-all ${isActive
                 ? "bg-(--brand-primary) text-white shadow-md shadow-blue-900/10"
-                : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                : "text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100"
                 }`}
             >
-              <item.icon className={`size-5 shrink-0 ${isActive ? "text-white" : "group-hover:text-slate-900"}`} />
+              <item.icon className={`size-5 shrink-0 ${isActive ? "text-white" : "group-hover:text-slate-900 dark:group-hover:text-slate-100"}`} />
               {(!isCollapsed || isMobile) && <span className="font-semibold text-sm">{item.label}</span>}
             </Link>
           );
         })}
       </nav>
 
-      <div className="p-4 border-t border-slate-50">
-        <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-slate-500 transition-all hover:bg-red-50 hover:text-red-600">
+      <div className="p-4 border-t border-slate-50 dark:border-slate-800">
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-slate-500 dark:text-slate-400 transition-all hover:bg-red-50 dark:hover:bg-red-900/10 hover:text-red-600 dark:hover:text-red-500"
+        >
           <LogOut className="size-5 shrink-0" />
           {(!isCollapsed || isMobile) && <span className="font-semibold text-sm">Logout</span>}
         </button>
