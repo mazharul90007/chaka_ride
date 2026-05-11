@@ -1,7 +1,10 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api/v1",
+  // Use relative URL in production browser so Next.js proxy rewrite handles it
+  baseURL: typeof window !== "undefined"
+    ? "/api/v1"
+    : (process.env.NEXT_PUBLIC_API_URL || "https://chaka-ride-server.vercel.app/api/v1"),
   timeout: 10000,
   withCredentials: true,
   headers: {

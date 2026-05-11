@@ -17,7 +17,7 @@ import Image from "next/image";
 
 export default function UserNav() {
   const t = useTranslations("Nav");
-  const { data: session } = useSession();
+  const { data: session, isPending } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -31,6 +31,10 @@ export default function UserNav() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  if (isPending) {
+    return <div className="h-10 w-24 animate-pulse rounded-full bg-slate-200"></div>;
+  }
 
   if (!session) {
     return (

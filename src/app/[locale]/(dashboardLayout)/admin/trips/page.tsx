@@ -60,8 +60,8 @@ export default function AdminTripsPage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const trips = tripsData?.data || [];
-  const meta = tripsData?.meta || { total: 0, page: 1, limit: 10, totalPages: 1 };
+  const trips = tripsData?.data?.data || [];
+  const meta = tripsData?.data?.meta || { total: 0, page: 1, limit: 10, totalPages: 1 };
 
   const handleApproveDriver = async (tripId: string, requestId: string) => {
     try {
@@ -184,7 +184,7 @@ export default function AdminTripsPage() {
                 </h3>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {trip.driverRequests.map((req: any) => (
+                  {trip.driverRequests?.map((req: any) => (
                     <div key={req.id} className={`p-4 rounded-xl border ${req.status === 'APPROVED' ? 'bg-emerald-50 border-emerald-200' : req.status === 'ACCEPTED' ? 'bg-white border-blue-200 shadow-sm' : 'bg-white border-slate-200'} transition-all`}>
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
