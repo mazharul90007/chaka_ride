@@ -5,11 +5,13 @@ import ThemeProvider from "@/providers/ThemeProvider";
 import { routing } from "@/i18n/routing";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
-import { Geist, Geist_Mono, Noto_Sans_Bengali } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans_Bengali, Roboto } from "next/font/google";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
 import "../globals.css";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +27,13 @@ const notoBengali = Noto_Sans_Bengali({
   variable: "--font-noto-bengali",
   subsets: ["bengali"],
   weight: ["400", "500", "600", "700"],
+});
+
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto",
 });
 
 type Props = {
@@ -59,24 +68,26 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} ${notoBengali.variable} h-full scroll-pt-[72px] antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${notoBengali.variable} ${roboto.variable} h-full scroll-pt-[72px] antialiased`}
       suppressHydrationWarning
     >
       <body
-        className={`flex min-h-full flex-col font-sans ${locale === "bn" ? "font-bengali" : ""}`}
+        className={`flex min-h-full flex-col font-sans ${locale === "bn" ? "font-bengali" : "font-roboto"}`}
       >
-        <QueryProviders>
-          <Toaster richColors position="top-right" />
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            <LenisProvider>
-              <MotionProvider>
-                <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-                  {children}
-                </ThemeProvider>
-              </MotionProvider>
-            </LenisProvider>
-          </NextIntlClientProvider>
-        </QueryProviders>
+        <AppRouterCacheProvider>
+          <QueryProviders>
+            <Toaster richColors position="top-right" />
+            <NextIntlClientProvider locale={locale} messages={messages}>
+              <LenisProvider>
+                <MotionProvider>
+                  <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+                    {children}
+                  </ThemeProvider>
+                </MotionProvider>
+              </LenisProvider>
+            </NextIntlClientProvider>
+          </QueryProviders>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
