@@ -172,7 +172,7 @@ function GalleryCard({
       href={item.href}
       data-gallery-card
       className={cn(
-        "group/card relative aspect-3/5 min-w-[min(82vw,280px)] shrink-0 snap-center overflow-hidden rounded-[1.75rem] shadow-lg ring-1 ring-slate-200/80",
+        "group/card relative aspect-3/5 min-w-[min(82vw,280px)] shrink-0 snap-center overflow-hidden rounded-lg shadow-lg ring-1 ring-slate-200/80",
         "transition-shadow duration-300 hover:shadow-xl hover:ring-slate-300/90",
         "lg:min-w-0",
         "touch-manipulation",
@@ -210,7 +210,7 @@ function GalleryCard({
       </motion.div>
 
       <div
-        className="pointer-events-none absolute inset-0 rounded-[1.75rem] bg-linear-to-b from-slate-950/55 via-slate-950/10 to-slate-950/40"
+        className="pointer-events-none absolute inset-0 rounded-lg bg-linear-to-b from-slate-950/55 via-slate-950/10 to-slate-950/40"
         aria-hidden
       />
 
@@ -222,7 +222,7 @@ function GalleryCard({
         className={cn(
           "pointer-events-none absolute right-4 bottom-4 z-10 flex size-11 items-center justify-center rounded-full bg-(--brand-primary) text-white shadow-md ring-2 ring-white/30 transition-all duration-200 sm:right-5 sm:bottom-5 sm:size-12",
           isActive &&
-            "scale-105 bg-(--brand-primary-hover) shadow-lg ring-white/40",
+          "scale-105 bg-(--brand-primary-hover) shadow-lg ring-white/40",
         )}
         aria-hidden
       >
