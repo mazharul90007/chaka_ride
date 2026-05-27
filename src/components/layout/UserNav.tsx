@@ -3,17 +3,18 @@
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { signOut, useSession } from "@/lib/auth-client";
-import { 
-  User, 
-  LayoutDashboard, 
-  LogOut, 
-  Settings, 
+import {
+  User,
+  LayoutDashboard,
+  LogOut,
+  Settings,
   ChevronDown,
   UserCircle
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import Button from "@mui/material/Button";
 
 export default function UserNav() {
   const t = useTranslations("Nav");
@@ -39,12 +40,14 @@ export default function UserNav() {
   if (!session) {
     return (
       <div className="flex items-center gap-3">
-        <Link
+        <Button
+          component={Link}
           href="/login"
-          className="rounded-full bg-(--brand-primary) px-6 py-2.5 text-sm font-bold text-white transition-all hover:opacity-90 active:scale-95 shadow-md shadow-blue-900/10"
+          variant="contained"
+          className="rounded-full !bg-(--brand-primary) hover:!bg-(--brand-primary-hover) px-6 py-2.5 text-sm font-bold text-white transition-all shadow-md shadow-blue-900/10 normal-case"
         >
           {t("login")}
-        </Link>
+        </Button>
       </div>
     );
   }
@@ -84,7 +87,7 @@ export default function UserNav() {
               <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{t("dashboard")}</p>
               <p className="text-sm font-bold text-slate-900 truncate">{user.email}</p>
             </div>
-            
+
             <Link
               href={dashboardHref}
               onClick={() => setIsOpen(false)}

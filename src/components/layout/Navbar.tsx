@@ -11,6 +11,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa6";
 import { useCallback, useMemo, useState } from "react";
+import Button from "@mui/material/Button";
 
 type DropdownItem = {
   label: string;
@@ -291,15 +292,15 @@ function MobileNavMenu({
         ),
       )}
       {!session && (
-        <div className="flex flex-col gap-2 mt-4 border-t border-slate-100 pt-4">
-          <Link
-            href="/login"
-            className="flex items-center justify-center rounded-xl border border-slate-200 py-3 text-sm font-bold text-slate-700"
-            onClick={onNavigate}
-          >
-            {tNav("login")}
-          </Link>
-        </div>
+        <Button
+          component={Link}
+          href="/login"
+          variant="contained"
+          className="mt-4 w-full rounded-xl !bg-(--brand-primary) hover:!bg-(--brand-primary-hover) py-3 text-sm font-bold text-white normal-case shadow-md shadow-blue-900/10"
+          onClick={onNavigate}
+        >
+          {tNav("login")}
+        </Button>
       )}
     </div>
   );
