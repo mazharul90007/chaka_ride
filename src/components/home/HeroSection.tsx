@@ -1,10 +1,8 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HeroCarPicker } from "@/components/home/HeroCarPicker";
-import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
@@ -15,12 +13,15 @@ import { queryApi } from "@/lib/api-client";
 import { Loader2, Sparkles } from "lucide-react";
 import AIAssistantModal from "@/components/home/AIAssistantModal";
 import { useSession } from "@/lib/auth-client";
+import Button from '@mui/material/Button';
 
 const HERO_IMAGE =
   "https://res.cloudinary.com/dycrowzen/image/upload/v1774623407/car_iaunmo.png";
 
 const fieldClass =
-  "h-10 border-slate-200/90 bg-white text-slate-900 shadow-sm md:h-11 dark:bg-slate-800 dark:border-slate-700 dark:text-white";
+  "h-11 w-full rounded border border-slate-200/90 bg-white px-3.5 text-sm font-medium text-slate-900 shadow-sm transition-all focus:border-(--brand-primary) focus:ring-2 focus:ring-(--brand-primary)/20 dark:bg-slate-800 dark:border-slate-700 dark:text-white";
+
+const labelClass = "text-[13px] font-semibold text-(--brand-primary) tracking-wide block";
 
 function openPicker(el: HTMLInputElement) {
   if (typeof el.showPicker !== "function") return;
@@ -45,7 +46,7 @@ function DateTimeFields({
   timeName: string;
 }) {
   return (
-    <div className="flex flex-col gap-2 sm:flex-row sm:items-stretch sm:gap-2">
+    <div className="flex gap-2 w-full">
       <div className="min-w-0 flex-1">
         <Label htmlFor={`${idPrefix}-date`} className="sr-only">
           {dateLabel}
@@ -56,7 +57,7 @@ function DateTimeFields({
           name={dateName}
           type="date"
           required
-          className={cn(fieldClass, "min-w-0")}
+          className={cn(fieldClass, "min-w-0 w-full")}
         />
       </div>
       <div className="min-w-0 flex-1">
@@ -69,15 +70,13 @@ function DateTimeFields({
           name={timeName}
           type="time"
           required
-          className={cn(fieldClass, "min-w-0 cursor-pointer")}
+          className={cn(fieldClass, "min-w-0 w-full cursor-pointer")}
           onClick={(e) => openPicker(e.currentTarget)}
         />
       </div>
     </div>
   );
 }
-
-const labelClass = "text-sm font-semibold text-(--brand-primary)";
 
 const headlineContainer = {
   hidden: {},
@@ -105,7 +104,7 @@ function RequiredMark() {
 }
 
 export default function HeroSection() {
-  const t = useTranslations("Hero"); 
+  const t = useTranslations("Hero");
   const { data: session } = useSession();
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -154,9 +153,9 @@ export default function HeroSection() {
 
   return (
     <section className="relative w-full overflow-x-hidden bg-(--hero-bg) pb-8 lg:pb-12">
-      <div className="w-full px-4 pt-6 pb-2 sm:px-6 sm:pt-16 lg:px-10 lg:pt-8 xl:px-14">
+      <div className="w-full px-4 pt-6 pb-2 sm:px-6 sm:pt-16 lg:px-10 lg:pt-8 xl:px-14 mb-4">
         {/* Hero headline */}
-        <div className="relative mx-auto max-w-5xl px-2">
+        <div className="relative mx-auto max-w-5xl px-2 mb-2">
           <div
             className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-56 w-[min(92vw,42rem)] -translate-x-1/2 -translate-y-[45%] rounded-full opacity-[0.45] blur-3xl"
             style={{
@@ -194,15 +193,16 @@ export default function HeroSection() {
         </div>
 
         {/* Hero form */}
-        <motion.div 
+        <motion.div
           className="w-full flex justify-center mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <button
+          <Button
+            variant="contained"
             onClick={() => setIsAIModalOpen(true)}
-            className="group relative flex items-center gap-3 px-8 py-3.5 rounded-full bg-(--brand-primary) text-white text-sm font-bold hover:bg-(--brand-primary-hover) transition-all active:scale-95 shadow-2xl overflow-hidden border border-white/10 cursor-pointer"
+            className="group relative flex items-center gap-3 px-8 py-3.5 rounded-full !bg-(--brand-primary) text-white text-sm font-bold hover:bg-(--brand-primary-hover) transition-all active:scale-95 shadow-2xl overflow-hidden border border-white/10 cursor-pointer"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="absolute -inset-x-20 inset-y-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-30deg] translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
@@ -211,20 +211,20 @@ export default function HeroSection() {
             <div className="flex items-center gap-1 ml-1 px-2 py-0.5 rounded-md bg-white/20 text-[10px] uppercase tracking-tighter">
               AI
             </div>
-          </button>
+          </Button>
         </motion.div>
 
         <motion.div
-          className="mt-8 w-full rounded-2xl bg-(--hero-form-bg) p-5 shadow-sm ring-1 ring-(--hero-form-ring) sm:mt-10 sm:p-7 lg:p-8"
+          className="mt-8 w-full rounded-xl bg-(--hero-form-bg) p-3 shadow-sm ring-1 ring-(--hero-form-ring) sm:mt-10 sm:p-5 lg:p-6"
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         >
           <form
-            className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12"
+            className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-12"
             onSubmit={handleSubmit}
           >
-            <div className="space-y-2 lg:col-span-4">
+            <div className="space-y-1.5 lg:col-span-4">
               <Label htmlFor="hero-full-name" className={labelClass}>
                 {t("fullName")}
                 <RequiredMark />
@@ -238,7 +238,7 @@ export default function HeroSection() {
                 className={fieldClass}
               />
             </div>
-            <div className="space-y-2 lg:col-span-4">
+            <div className="space-y-1.5 lg:col-span-4">
               <Label htmlFor="hero-email" className={labelClass}>
                 Email
                 <RequiredMark />
@@ -253,7 +253,7 @@ export default function HeroSection() {
                 className={fieldClass}
               />
             </div>
-            <div className="space-y-2 lg:col-span-4">
+            <div className="space-y-1.5 lg:col-span-4">
               <Label htmlFor="hero-mobile" className={labelClass}>
                 {t("mobileNumber")}
                 <RequiredMark />
@@ -269,7 +269,7 @@ export default function HeroSection() {
                 className={fieldClass}
               />
             </div>
-            <div className="space-y-2 lg:col-span-4">
+            <div className="space-y-1.5 lg:col-span-4">
               <Label htmlFor="hero-pickup" className={labelClass}>
                 {t("pickupLocation")}
                 <RequiredMark />
@@ -282,7 +282,7 @@ export default function HeroSection() {
                 className={fieldClass}
               />
             </div>
-            <div className="space-y-2 lg:col-span-4">
+            <div className="space-y-1.5 lg:col-span-4">
               <Label htmlFor="hero-dropoff" className={labelClass}>
                 {t("dropoffLocation")}
                 <RequiredMark />
@@ -295,7 +295,7 @@ export default function HeroSection() {
                 className={fieldClass}
               />
             </div>
-            <div className="space-y-2 lg:col-span-4">
+            <div className="space-y-1.5 lg:col-span-4">
               <Label htmlFor="hero-car-trigger" className={labelClass}>
                 {t("chooseCar")}
                 <RequiredMark />
@@ -305,7 +305,7 @@ export default function HeroSection() {
             <div
               role="group"
               aria-labelledby="hero-trip-type-label"
-              className="flex min-w-0 flex-col gap-2 lg:col-span-4"
+              className="flex min-w-0 flex-col gap-1.5 lg:col-span-4"
             >
               <span
                 id="hero-trip-type-label"
@@ -324,7 +324,7 @@ export default function HeroSection() {
                     defaultChecked
                     required
                   />
-                  <span className="flex h-10 items-center justify-center rounded-lg border border-slate-200/90 bg-white dark:bg-slate-800 dark:border-slate-700 px-2 text-center text-sm font-medium text-slate-800 dark:text-slate-200 shadow-sm peer-checked:border-(--brand-primary) peer-checked:text-(--brand-primary) peer-checked:ring-2 peer-checked:ring-(--brand-primary)/25 md:h-11">
+                  <span className="flex h-11 items-center justify-center rounded border border-slate-200 bg-white dark:bg-slate-800 dark:border-slate-700 px-2 text-center text-sm font-medium text-slate-800 dark:text-slate-200 shadow-sm peer-checked:border-(--brand-primary) peer-checked:text-(--brand-primary) peer-checked:ring-2 peer-checked:ring-(--brand-primary)/25">
                     {t("oneWay")}
                   </span>
                 </label>
@@ -335,13 +335,13 @@ export default function HeroSection() {
                     value="round-trip"
                     className="peer sr-only"
                   />
-                  <span className="flex h-10 items-center justify-center rounded-lg border border-slate-200/90 bg-white dark:bg-slate-800 dark:border-slate-700 px-2 text-center text-sm font-medium text-slate-800 dark:text-slate-200 shadow-sm peer-checked:border-(--brand-primary) peer-checked:text-(--brand-primary) peer-checked:ring-2 peer-checked:ring-(--brand-primary)/25 md:h-11">
+                  <span className="flex h-11 items-center justify-center rounded border border-slate-200 bg-white dark:bg-slate-800 dark:border-slate-700 px-2 text-center text-sm font-medium text-slate-800 dark:text-slate-200 shadow-sm peer-checked:border-(--brand-primary) peer-checked:text-(--brand-primary) peer-checked:ring-2 peer-checked:ring-(--brand-primary)/25">
                     {t("roundTrip")}
                   </span>
                 </label>
               </div>
             </div>
-            <div className="space-y-2 md:col-span-2 lg:col-span-4">
+            <div className="space-y-1.5 md:col-span-2 lg:col-span-4">
               <span className={cn("block", labelClass)}>
                 {t("pickupDateTime")}
                 <RequiredMark />
@@ -355,36 +355,17 @@ export default function HeroSection() {
               />
             </div>
             <div className="flex items-end lg:col-span-4">
-              <Button
+              <button
                 type="submit"
-                size="lg"
                 disabled={isSubmitting}
-                className="h-11 w-full rounded-xl border-0 bg-(--brand-primary) text-base font-semibold text-white shadow-sm hover:bg-(--brand-primary-hover) md:h-12"
+                className="h-10.5 w-full rounded bg-(--brand-primary) hover:bg-(--brand-primary-hover) text-sm font-semibold text-white shadow-sm transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
               >
                 {isSubmitting ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : null}
                 {t("send")}
-              </Button>
+              </button>
             </div>
           </form>
         </motion.div>
-
-        {/* View all cars button */}
-        {/* <motion.div
-          className="my-4 flex w-full justify-center sm:mt-10"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <Link
-            href="/cars"
-            className={cn(
-              buttonVariants({ size: "lg" }),
-              "h-12 gap-3 rounded-xl border-0 bg-(--brand-primary) px-8 text-base font-semibold text-white shadow-md transition-colors hover:bg-(--brand-primary-hover) sm:h-12 sm:px-10",
-            )}
-          >
-            {t("viewAllCars")}
-          </Link>
-        </motion.div> */}
       </div>
 
       {/* Hero image */}
@@ -404,8 +385,8 @@ export default function HeroSection() {
           priority
         />
       </motion.div>
-      <AIAssistantModal 
-        isOpen={isAIModalOpen} 
+      <AIAssistantModal
+        isOpen={isAIModalOpen}
         onClose={() => setIsAIModalOpen(false)}
         onSelectCategory={(categoryId) => {
           const event = new CustomEvent('selectCarCategory', { detail: categoryId });
