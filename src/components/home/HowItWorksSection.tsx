@@ -96,7 +96,7 @@ function StepCard({ meta }: { meta: StepMeta }) {
         transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
       }}
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-2xl border p-5 shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-7",
+        "group relative flex flex-col overflow-hidden rounded-lg border p-5 shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-7",
         surface,
       )}
     >
@@ -135,7 +135,7 @@ function StepCard({ meta }: { meta: StepMeta }) {
           <li
             key={line}
             className={cn(
-              "flex gap-3 rounded-xl border py-2 pr-3 pl-2 text-sm text-slate-800 dark:text-slate-300 shadow-sm",
+              "flex gap-3 rounded-lg border py-2 pr-3 pl-2 text-sm text-slate-800 dark:text-slate-300 shadow-sm",
               bulletRowClass,
             )}
           >
@@ -174,7 +174,7 @@ export default function HowItWorksSection() {
       surface: "border-sky-100/90 bg-sky-50 dark:border-sky-900/50 dark:bg-sky-950/20",
       stepNumberClass: "text-sky-800 dark:text-sky-400",
       iconTileClass: "border-sky-100/80 bg-white dark:bg-slate-800 dark:border-sky-900",
-      bulletRowClass: "border-sky-100/70 bg-white/90 dark:bg-slate-900/50 dark:border-sky-900/30",
+      bulletRowClass: "border-sky-100/70 bg-white/90 dark:bg-slate-800/40 dark:border-sky-700/30",
       checkWrapClass: "border-sky-100/80 bg-sky-50/80 dark:bg-sky-900/50",
       checkClass: "text-sky-700 dark:text-sky-400",
     },
@@ -187,7 +187,7 @@ export default function HowItWorksSection() {
       surface: "border-amber-100/90 bg-amber-50 dark:border-amber-900/50 dark:bg-amber-950/20",
       stepNumberClass: "text-amber-900 dark:text-amber-400",
       iconTileClass: "border-amber-100/80 bg-white dark:bg-slate-800 dark:border-amber-900",
-      bulletRowClass: "border-amber-100/70 bg-white/90 dark:bg-slate-900/50 dark:border-amber-900/30",
+      bulletRowClass: "border-amber-100/70 bg-white/90 dark:bg-slate-800/40 dark:border-amber-700/30",
       checkWrapClass: "border-amber-100/80 bg-amber-50/80 dark:bg-amber-900/50",
       checkClass: "text-amber-800 dark:text-amber-400",
     },
@@ -200,7 +200,7 @@ export default function HowItWorksSection() {
       surface: "border-emerald-100/90 bg-emerald-50 dark:border-emerald-900/50 dark:bg-emerald-950/20",
       stepNumberClass: "text-emerald-900 dark:text-emerald-400",
       iconTileClass: "border-emerald-100/80 bg-white dark:bg-slate-800 dark:border-emerald-900",
-      bulletRowClass: "border-emerald-100/70 bg-white/90 dark:bg-slate-900/50 dark:border-emerald-900/30",
+      bulletRowClass: "border-emerald-100/70 bg-white/90 dark:bg-slate-800/40 dark:border-emerald-700/30",
       checkWrapClass: "border-emerald-100/80 bg-emerald-50/80 dark:bg-emerald-900/50",
       checkClass: "text-emerald-700 dark:text-emerald-400",
     },

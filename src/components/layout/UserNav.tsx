@@ -60,9 +60,9 @@ export default function UserNav() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-full border border-slate-200 bg-white p-1 pr-3 transition-all hover:border-slate-300 hover:shadow-sm"
+        className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white p-1 pr-3 transition-all hover:border-slate-300 hover:shadow-sm"
       >
-        <div className="flex size-8 items-center justify-center rounded-full bg-slate-100 text-slate-600 overflow-hidden">
+        <div className="flex size-8 items-center justify-center rounded-lg bg-slate-100 text-slate-600 overflow-hidden">
           {user.image ? (
             <Image src={user.image} alt={user.name} width={32} height={32} />
           ) : (
@@ -81,7 +81,7 @@ export default function UserNav() {
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className="absolute right-0 mt-2 w-56 origin-top-right rounded-2xl border border-slate-200 bg-white p-2 shadow-xl"
+            className="absolute right-0 mt-2 w-56 origin-top-right rounded-lg border border-slate-200 bg-white p-2 shadow-xl"
           >
             <div className="px-3 py-2 border-b border-slate-100 mb-1">
               <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{t("dashboard")}</p>
@@ -91,7 +91,7 @@ export default function UserNav() {
             <Link
               href={dashboardHref}
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-(--brand-primary)"
+              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-(--brand-primary)"
             >
               <LayoutDashboard className="size-4" />
               {t("dashboard")}
@@ -100,7 +100,7 @@ export default function UserNav() {
             <Link
               href="/profile"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-(--brand-primary)"
+              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-(--brand-primary)"
             >
               <UserCircle className="size-4" />
               Profile Settings
@@ -114,7 +114,7 @@ export default function UserNav() {
                 setIsOpen(false);
                 router.push("/");
               }}
-              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
             >
               <LogOut className="size-4" />
               {t("logout")}

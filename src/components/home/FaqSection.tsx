@@ -83,7 +83,7 @@ function FaqRow({
           aria-controls={panelId}
           onClick={onToggle}
           className={cn(
-            "flex w-full items-start gap-3 rounded-xl px-3 py-5 text-left transition-[background-color,color] duration-200 sm:gap-4 sm:py-6",
+            "flex w-full items-start gap-3 rounded-lg px-3 py-5 text-left transition-[background-color,color] duration-200 sm:gap-4 sm:py-6",
             "hover:bg-slate-100/90 dark:hover:bg-slate-800/90",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--brand-primary)/35 focus-visible:ring-offset-2 focus-visible:ring-offset-(--hero-bg)",
             isOpen && "bg-slate-50/90 dark:bg-slate-800/50",
@@ -166,7 +166,6 @@ export default function FaqSection() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-16">
-          {/* Visual — same pill frame as WhyChooseUs (rounded-full + aspect-12/20) */}
           <motion.div
             className="relative order-2 flex justify-center overflow-visible lg:order-1 lg:col-span-5 lg:justify-start"
             initial="hidden"
@@ -183,7 +182,6 @@ export default function FaqSection() {
                 }}
                 aria-hidden
               />
-              {/* Rear pill — image + overlay are siblings so stacking is predictable (overlay above img) */}
               <div className="relative isolate aspect-12/20 w-[90%] max-w-full overflow-hidden rounded-full border border-slate-200/90 bg-slate-100 shadow-lg ring-1 ring-(--hero-form-ring)">
                 <div className="absolute inset-0 z-0">
                   <Image
@@ -204,7 +202,6 @@ export default function FaqSection() {
                   aria-hidden
                 />
               </div>
-              {/* Front pill — smaller overlap so more of the rear image stays visible */}
               <div className="absolute right-0 bottom-0 z-10 aspect-12/20 w-[68%] translate-x-0 translate-y-4 overflow-hidden rounded-full border-2 border-white bg-slate-100 shadow-[0_22px_50px_-12px_rgb(15_23_42/0.28)] ring-1 ring-slate-200/80 sm:w-[66%] sm:translate-x-1 sm:translate-y-6 lg:w-[64%] lg:translate-x-2 lg:translate-y-8">
                 <Image
                   src={FAQ_IMAGE_FRONT}

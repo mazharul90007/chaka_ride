@@ -90,7 +90,7 @@ function TestimonialCard({ item }: { item: (typeof TESTIMONIALS)[number] }) {
   return (
     <motion.article
       variants={cardReveal}
-      className="relative flex min-h-[280px] flex-col rounded-[1.35rem] border border-slate-200/90 bg-white/85 p-6 pb-24 shadow-sm ring-1 ring-(--brand-primary)/8 backdrop-blur-sm transition-shadow duration-300 hover:shadow-md sm:min-h-[300px] sm:rounded-3xl sm:p-7 sm:pb-28"
+      className="relative flex min-h-[280px] flex-col rounded-lg border border-slate-200/90 bg-white/85 p-6 pb-24 shadow-sm ring-1 ring-(--brand-primary)/8 backdrop-blur-sm transition-shadow duration-300 hover:shadow-md sm:min-h-[300px] sm:rounded-xl sm:p-7 sm:pb-28"
     >
       <div className="absolute -top-1 -right-1 z-10 flex min-h-13 min-w-27 items-center justify-center rounded-bl-2xl bg-(--hero-bg) px-3 py-2 sm:min-h-14 sm:min-w-30">
         <StarRating

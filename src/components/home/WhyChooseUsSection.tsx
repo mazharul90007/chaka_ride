@@ -89,7 +89,7 @@ function FeatureBlock({
         transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
       }}
       className={cn(
-        "flex gap-4 rounded-2xl border border-(--brand-primary)/10 bg-white/80 dark:bg-slate-800/80 p-5 shadow-sm",
+        "flex gap-4 rounded-lg border border-(--brand-primary)/10 bg-white/80 dark:bg-slate-800/80 p-5 shadow-sm",
         "backdrop-blur-sm transition-[box-shadow,border-color] duration-300 hover:border-(--brand-primary)/18 hover:shadow-md sm:p-6",
         row,
         side === "left" ? "lg:justify-end lg:text-right" : "lg:text-left",
